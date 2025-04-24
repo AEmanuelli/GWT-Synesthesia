@@ -1,0 +1,89 @@
+program: SSD_eval/SSD_compare.py
+method: bayes
+metric:
+  name: kl_division_pondéréé
+  goal: maximize
+parameters:
+  # -------------------------
+  # Architecture Parameters
+  # -------------------------
+  # Global workspace architecture
+  global_workspace.latent_dim:
+    values: [12]
+  
+  # -------------------------
+  # Encoder Parameters
+  # -------------------------
+  global_workspace.encoders.hidden_dim:
+    values: [256]
+  global_workspace.encoders.n_layers:
+    values: [1]
+  
+  # -------------------------
+  # Decoder Parameters
+  # -------------------------
+  global_workspace.decoders.hidden_dim:
+    values: [256]
+  global_workspace.decoders.n_layers:
+    values: [0]
+  
+  # -------------------------
+  # Loss Coefficients
+  # -------------------------
+  global_workspace.loss_coefficients.cycles:
+    distribution: uniform
+    min: 0.1
+    max: 10.0
+  global_workspace.loss_coefficients.contrastives:
+    distribution: uniform
+    min: 0.01
+    max: 1
+  global_workspace.loss_coefficients.demi_cycles:
+    distribution: uniform
+    min: 0.0
+    max: 10
+  global_workspace.loss_coefficients.translations:
+    distribution: uniform
+    min: 0.5
+    max: 10.0
+  
+  # -------------------------
+  # Training Parameters
+  # -------------------------
+  training.optim.lr:
+    distribution: log_uniform_values
+    min: 1e-5
+    max: 1e-3
+  training.optim.weight_decay:
+    distribution: log_uniform_values
+    min: 1e-6
+    max: 1e-3
+  training.optim.max_lr:
+    distribution: log_uniform_values
+    min: 1e-4
+    max: 5e-3
+  # training.max_steps:
+  #   values: []
+  training.batch_size:
+    values: [16, 32, 64, 128, 256]
+  
+
+
+
+  # -------------------------
+  # Custom Parameters
+  # -------------------------
+  my_hparams.temperature:
+    distribution: uniform
+    min: 0.01
+    max: 0.9
+  my_hparams.alpha:
+    distribution: uniform
+    min: 1
+    max: 5
+
+early_terminate:
+  type: hyperband
+  min_iter: 1000
+  eta: 3
+  s: 2
