@@ -1,0 +1,22 @@
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/callbacks/model_checkpoint.py:654: Checkpoint directory /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 2) (bis) High_translations (10) v5/checkpoints exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [1]
+
+  | Name          | Type                  | Params | Mode
+----------------------------------------------------------------
+0 | gw_mod        | GWModule              | 6.3 M  | train
+1 | selection_mod | SingleDomainSelection | 0      | train
+2 | loss_mod      | GWLosses2Domains      | 6.3 M  | train
+----------------------------------------------------------------
+484 K     Trainable params
+5.8 M     Non-trainable params
+6.3 M     Total params
+25.254    Total estimated model params size (MB)
+43        Modules in train mode
+35        Modules in eval mode
+Epoch 2:  61%|████████████████████████████████████████████████▍                              | 149/243 [00:21<00:13,  7.04it/s, v_num=tiz4]
+                                                                                                                                           
+
+Detected KeyboardInterrupt, attempting graceful shutdown ...

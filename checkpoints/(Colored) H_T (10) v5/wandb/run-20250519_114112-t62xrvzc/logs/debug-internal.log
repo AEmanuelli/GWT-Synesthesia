@@ -1,0 +1,7 @@
+{"time":"2025-05-19T11:41:12.548733574+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/wandb/run-20250519_114112-t62xrvzc/logs/debug-core.log"}
+{"time":"2025-05-19T11:41:12.909183719+02:00","level":"INFO","msg":"created new stream","id":"t62xrvzc"}
+{"time":"2025-05-19T11:41:12.909246599+02:00","level":"INFO","msg":"stream: started","id":"t62xrvzc"}
+{"time":"2025-05-19T11:41:12.909273743+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"t62xrvzc"}
+{"time":"2025-05-19T11:41:12.909337879+02:00","level":"INFO","msg":"handler: started","stream_id":"t62xrvzc"}
+{"time":"2025-05-19T11:41:12.909349475+02:00","level":"INFO","msg":"sender: started","stream_id":"t62xrvzc"}
+{"time":"2025-05-19T11:41:13.396255389+02:00","level":"INFO","msg":"Starting system monitor"}

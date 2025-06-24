@@ -1,0 +1,19 @@
+{"time":"2025-05-20T15:13:07.167304732+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 2) High_translations (10) v5/wandb/run-20250520_151307-0xdvjopg/logs/debug-core.log"}
+{"time":"2025-05-20T15:13:07.54306968+02:00","level":"INFO","msg":"created new stream","id":"0xdvjopg"}
+{"time":"2025-05-20T15:13:07.543133654+02:00","level":"INFO","msg":"stream: started","id":"0xdvjopg"}
+{"time":"2025-05-20T15:13:07.545387657+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"0xdvjopg"}
+{"time":"2025-05-20T15:13:07.545556276+02:00","level":"INFO","msg":"handler: started","stream_id":"0xdvjopg"}
+{"time":"2025-05-20T15:13:07.545754225+02:00","level":"INFO","msg":"sender: started","stream_id":"0xdvjopg"}
+{"time":"2025-05-20T15:13:08.013385456+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T17:00:23.588491622+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/0xdvjopg/file_stream\": EOF"}
+{"time":"2025-05-20T17:02:53.742025715+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/0xdvjopg/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-20T17:44:43.183966231+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/0xdvjopg/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T17:45:08.851151204+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-20T18:45:00.760847213+02:00","level":"INFO","msg":"stream: closing","id":"0xdvjopg"}
+{"time":"2025-05-20T18:45:00.760893671+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-20T18:45:00.760925646+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-20T18:45:01.479509204+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-20T18:45:01.937248632+02:00","level":"INFO","msg":"handler: closed","stream_id":"0xdvjopg"}
+{"time":"2025-05-20T18:45:01.937301868+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"0xdvjopg"}
+{"time":"2025-05-20T18:45:01.937330814+02:00","level":"INFO","msg":"sender: closed","stream_id":"0xdvjopg"}
+{"time":"2025-05-20T18:45:01.937381023+02:00","level":"INFO","msg":"stream: closed","id":"0xdvjopg"}

@@ -1,0 +1,19 @@
+{"time":"2025-05-13T11:54:33.884421459+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/High_cycle - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250513_115433-41hq3456/logs/debug-core.log"}
+{"time":"2025-05-13T11:54:34.199728066+02:00","level":"INFO","msg":"created new stream","id":"41hq3456"}
+{"time":"2025-05-13T11:54:34.199823977+02:00","level":"INFO","msg":"stream: started","id":"41hq3456"}
+{"time":"2025-05-13T11:54:34.199832012+02:00","level":"INFO","msg":"sender: started","stream_id":"41hq3456"}
+{"time":"2025-05-13T11:54:34.199850639+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"41hq3456"}
+{"time":"2025-05-13T11:54:34.199853835+02:00","level":"INFO","msg":"handler: started","stream_id":"41hq3456"}
+{"time":"2025-05-13T11:54:34.617624387+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T19:46:29.760211179+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-13T19:54:33.631878978+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-13T19:59:05.343566379+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-13T21:02:46.85283369+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T21:02:46.852918841+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T21:02:47.597258098+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T21:02:47.84904604+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-13T21:02:47.861894133+02:00","level":"INFO","msg":"stream: closing","id":"41hq3456"}
+{"time":"2025-05-13T21:02:47.861931322+02:00","level":"INFO","msg":"handler: closed","stream_id":"41hq3456"}
+{"time":"2025-05-13T21:02:47.861946959+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"41hq3456"}
+{"time":"2025-05-13T21:02:47.861962594+02:00","level":"INFO","msg":"sender: closed","stream_id":"41hq3456"}
+{"time":"2025-05-13T21:02:47.862042898+02:00","level":"INFO","msg":"stream: closed","id":"41hq3456"}

@@ -1,0 +1,18 @@
+{"time":"2025-05-18T09:06:39.151546634+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 1) H_alpha (5) v5/wandb/run-20250518_090639-mtolt0g5/logs/debug-core.log"}
+{"time":"2025-05-18T09:06:39.476059496+02:00","level":"INFO","msg":"created new stream","id":"mtolt0g5"}
+{"time":"2025-05-18T09:06:39.476147754+02:00","level":"INFO","msg":"stream: started","id":"mtolt0g5"}
+{"time":"2025-05-18T09:06:39.47620744+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"mtolt0g5"}
+{"time":"2025-05-18T09:06:39.476246878+02:00","level":"INFO","msg":"handler: started","stream_id":"mtolt0g5"}
+{"time":"2025-05-18T09:06:39.476329422+02:00","level":"INFO","msg":"sender: started","stream_id":"mtolt0g5"}
+{"time":"2025-05-18T09:06:39.860874518+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-18T10:21:10.563500625+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/mtolt0g5/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-18T17:56:28.170539729+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/mtolt0g5/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-18T19:52:15.594575375+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-18T19:52:15.594970607+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-18T19:52:16.327133667+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-18T19:52:16.596629549+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading console lines 23-45","runtime_seconds":0.054782703}],"total_operations":1}}
+{"time":"2025-05-18T19:52:16.803537103+02:00","level":"INFO","msg":"stream: closing","id":"mtolt0g5"}
+{"time":"2025-05-18T19:52:16.803559342+02:00","level":"INFO","msg":"handler: closed","stream_id":"mtolt0g5"}
+{"time":"2025-05-18T19:52:16.80356888+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"mtolt0g5"}
+{"time":"2025-05-18T19:52:16.803638857+02:00","level":"INFO","msg":"sender: closed","stream_id":"mtolt0g5"}
+{"time":"2025-05-18T19:52:16.803644908+02:00","level":"INFO","msg":"stream: closed","id":"mtolt0g5"}

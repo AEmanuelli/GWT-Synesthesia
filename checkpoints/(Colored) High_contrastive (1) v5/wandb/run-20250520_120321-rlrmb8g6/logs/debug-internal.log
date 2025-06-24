@@ -1,0 +1,8 @@
+{"time":"2025-05-20T12:03:21.080850349+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Colored) High_contrastive (1) v5/wandb/run-20250520_120321-rlrmb8g6/logs/debug-core.log"}
+{"time":"2025-05-20T12:03:21.510190479+02:00","level":"INFO","msg":"created new stream","id":"rlrmb8g6"}
+{"time":"2025-05-20T12:03:21.510258076+02:00","level":"INFO","msg":"stream: started","id":"rlrmb8g6"}
+{"time":"2025-05-20T12:03:21.510294039+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"rlrmb8g6"}
+{"time":"2025-05-20T12:03:21.510553218+02:00","level":"INFO","msg":"handler: started","stream_id":"rlrmb8g6"}
+{"time":"2025-05-20T12:03:21.510583987+02:00","level":"INFO","msg":"sender: started","stream_id":"rlrmb8g6"}
+{"time":"2025-05-20T12:03:22.047161906+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T13:21:38.483787272+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/rlrmb8g6/file_stream\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}

@@ -1,0 +1,6 @@
+{"time":"2025-05-19T13:13:12.65816031+02:00","level":"INFO","msg":"main: starting server","port-filename":"/tmp/tmpap30c_an/port-2688279.txt","pid":2688279,"log-level":0,"disable-analytics":false,"shutdown-on-parent-exit":false}
+{"time":"2025-05-19T13:13:12.660475848+02:00","level":"INFO","msg":"server is running","addr":{"IP":"127.0.0.1","Port":33997,"Zone":""}}
+{"time":"2025-05-19T13:13:12.661128445+02:00","level":"INFO","msg":"Will exit if parent process dies.","ppid":2688279}
+{"time":"2025-05-19T13:13:12.779974141+02:00","level":"INFO","msg":"connection: ManageConnectionData: new connection created","id":"127.0.0.1:40180"}
+{"time":"2025-05-19T13:13:13.168669054+02:00","level":"INFO","msg":"handleInformInit: received","streamId":"jt0ggy7u","id":"127.0.0.1:40180"}
+{"time":"2025-05-19T13:13:13.665942791+02:00","level":"INFO","msg":"handleInformInit: stream started","streamId":"jt0ggy7u","id":"127.0.0.1:40180"}

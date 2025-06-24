@@ -1,0 +1,21 @@
+{"time":"2025-05-17T11:37:43.583686426+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 1) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250517_113743-328g9wxq/logs/debug-core.log"}
+{"time":"2025-05-17T11:37:43.898962477+02:00","level":"INFO","msg":"created new stream","id":"328g9wxq"}
+{"time":"2025-05-17T11:37:43.899033463+02:00","level":"INFO","msg":"stream: started","id":"328g9wxq"}
+{"time":"2025-05-17T11:37:43.899054478+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"328g9wxq"}
+{"time":"2025-05-17T11:37:43.899072761+02:00","level":"INFO","msg":"sender: started","stream_id":"328g9wxq"}
+{"time":"2025-05-17T11:37:43.899075109+02:00","level":"INFO","msg":"handler: started","stream_id":"328g9wxq"}
+{"time":"2025-05-17T11:37:44.332221803+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-17T13:56:29.908776185+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/328g9wxq/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-17T14:26:44.903340743+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/328g9wxq/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-17T16:11:29.903968976+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/328g9wxq/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-17T16:11:32.019097849+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/328g9wxq/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-17T18:46:45.071487018+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/328g9wxq/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-17T20:45:00.097599174+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-17T20:45:00.097902994+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-17T20:45:00.812923795+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-17T20:45:01.062579043+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-17T20:45:01.077078822+02:00","level":"INFO","msg":"stream: closing","id":"328g9wxq"}
+{"time":"2025-05-17T20:45:01.077133671+02:00","level":"INFO","msg":"handler: closed","stream_id":"328g9wxq"}
+{"time":"2025-05-17T20:45:01.077154409+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"328g9wxq"}
+{"time":"2025-05-17T20:45:01.077206676+02:00","level":"INFO","msg":"sender: closed","stream_id":"328g9wxq"}
+{"time":"2025-05-17T20:45:01.077274114+02:00","level":"INFO","msg":"stream: closed","id":"328g9wxq"}

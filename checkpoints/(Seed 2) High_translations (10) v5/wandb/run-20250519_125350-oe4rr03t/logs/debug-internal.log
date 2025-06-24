@@ -1,0 +1,11 @@
+{"time":"2025-05-19T12:53:50.895004915+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 2) High_translations (10) v5/wandb/run-20250519_125350-oe4rr03t/logs/debug-core.log"}
+{"time":"2025-05-19T12:53:51.207494939+02:00","level":"INFO","msg":"created new stream","id":"oe4rr03t"}
+{"time":"2025-05-19T12:53:51.207589386+02:00","level":"INFO","msg":"stream: started","id":"oe4rr03t"}
+{"time":"2025-05-19T12:53:51.20760666+02:00","level":"INFO","msg":"sender: started","stream_id":"oe4rr03t"}
+{"time":"2025-05-19T12:53:51.207605257+02:00","level":"INFO","msg":"handler: started","stream_id":"oe4rr03t"}
+{"time":"2025-05-19T12:53:51.207617199+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"oe4rr03t"}
+{"time":"2025-05-19T12:53:51.742498362+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-19T18:07:22.306670198+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/oe4rr03t/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T01:55:37.302025539+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/oe4rr03t/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T09:25:22.302082812+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/oe4rr03t/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T13:48:49.188410132+02:00","level":"WARN","msg":"sender: taking a long time","seconds":1012.698399009,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true mailbox_slot:\"4pldvsh94meo\" connection_id:\"127.0.0.1:46972\")"}

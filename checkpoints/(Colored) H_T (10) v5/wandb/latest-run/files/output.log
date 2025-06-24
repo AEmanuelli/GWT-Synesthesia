@@ -1,0 +1,47 @@
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/callbacks/model_checkpoint.py:654: Checkpoint directory /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [1]
+
+  | Name          | Type                  | Params | Mode
+----------------------------------------------------------------
+0 | gw_mod        | GWModule              | 6.3 M  | train
+1 | selection_mod | SingleDomainSelection | 0      | train
+2 | loss_mod      | GWLosses2Domains      | 6.3 M  | train
+----------------------------------------------------------------
+485 K     Trainable params
+5.8 M     Non-trainable params
+6.3 M     Total params
+25.260    Total estimated model params size (MB)
+43        Modules in train mode
+35        Modules in eval mode
+Epoch 617:  28%|██████████████████████▏                                                       | 69/243 [00:13<00:34,  5.02it/s, v_num=magz]       
+Validation DataLoader 0: 100%|█████████████████████████████████████████████████████████████████████████████| 25/25 [00:02<00:00,  8.70it/s]       
+`Trainer.fit` stopped: `max_steps=150000` reached.
+Restoring states from the checkpoint path at /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/epoch=599.ckpt
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [1]
+Loaded model weights from the checkpoint at /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/epoch=599.ckpt
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃[1m [0m[1m               Validate metric                [0m[1m [0m┃[1m [0m[1m                 DataLoader 0                 [0m[1m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│[36m [0m[36m      val/contrastive_v_latents_and_attr      [0m[36m [0m│[35m [0m[35m              0.6442059278488159              [0m[35m [0m│
+│[36m [0m[36mval/contrastive_v_latents_and_attr_logit_scale[0m[36m [0m│[35m [0m[35m              14.285717964172363              [0m[35m [0m│
+│[36m [0m[36m               val/contrastives               [0m[36m [0m│[35m [0m[35m              0.6442059278488159              [0m[35m [0m│
+│[36m [0m[36m       val/cycle_attr_through_v_latents       [0m[36m [0m│[35m [0m[35m            0.0030261706560850143             [0m[35m [0m│
+│[36m [0m[36m  val/cycle_attr_through_v_latents_loss_attr  [0m[36m [0m│[35m [0m[35m            0.0018083181930705905             [0m[35m [0m│
+│[36m [0m[36m  val/cycle_attr_through_v_latents_loss_cat   [0m[36m [0m│[35m [0m[35m             0.001217853045091033             [0m[35m [0m│
+│[36m [0m[36m       val/cycle_v_latents_through_attr       [0m[36m [0m│[35m [0m[35m              0.0092627527192235              [0m[35m [0m│
+│[36m [0m[36m                  val/cycles                  [0m[36m [0m│[35m [0m[35m             0.006144462153315544             [0m[35m [0m│
+│[36m [0m[36m             val/demi_cycle_attr              [0m[36m [0m│[35m [0m[35m            0.0010474859736859798             [0m[35m [0m│
+│[36m [0m[36m        val/demi_cycle_attr_loss_attr         [0m[36m [0m│[35m [0m[35m            0.0010459517361596227             [0m[35m [0m│
+│[36m [0m[36m         val/demi_cycle_attr_loss_cat         [0m[36m [0m│[35m [0m[35m            1.534339958197961e-06             [0m[35m [0m│
+│[36m [0m[36m           val/demi_cycle_v_latents           [0m[36m [0m│[35m [0m[35m             0.008101928979158401             [0m[35m [0m│
+│[36m [0m[36m               val/demi_cycles                [0m[36m [0m│[35m [0m[35m             0.004574707709252834             [0m[35m [0m│
+│[36m [0m[36m                   val/loss                   [0m[36m [0m│[35m [0m[35m             0.026665564626455307             [0m[35m [0m│
+│[36m [0m[36m      val/translation_attr_to_v_latents       [0m[36m [0m│[35m [0m[35m            0.0037192171439528465             [0m[35m [0m│
+│[36m [0m[36m      val/translation_v_latents_to_attr       [0m[36m [0m│[35m [0m[35m            0.0025852832477539778             [0m[35m [0m│
+│[36m [0m[36m val/translation_v_latents_to_attr_loss_attr  [0m[36m [0m│[35m [0m[35m            0.0017237013671547174             [0m[35m [0m│
+│[36m [0m[36m  val/translation_v_latents_to_attr_loss_cat  [0m[36m [0m│[35m [0m[35m            0.0008615820552222431             [0m[35m [0m│
+│[36m [0m[36m               val/translations               [0m[36m [0m│[35m [0m[35m            0.0031522507779300213             [0m[35m [0m│
+└────────────────────────────────────────────────┴────────────────────────────────────────────────┘

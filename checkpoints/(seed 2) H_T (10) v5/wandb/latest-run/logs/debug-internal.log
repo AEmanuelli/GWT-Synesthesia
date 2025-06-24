@@ -1,0 +1,17 @@
+{"time":"2025-05-18T20:51:02.91380679+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 2) H_T (10) v5/wandb/run-20250518_205102-1vq33zd7/logs/debug-core.log"}
+{"time":"2025-05-18T20:51:03.236987441+02:00","level":"INFO","msg":"created new stream","id":"1vq33zd7"}
+{"time":"2025-05-18T20:51:03.237068494+02:00","level":"INFO","msg":"stream: started","id":"1vq33zd7"}
+{"time":"2025-05-18T20:51:03.237092831+02:00","level":"INFO","msg":"sender: started","stream_id":"1vq33zd7"}
+{"time":"2025-05-18T20:51:03.237091301+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"1vq33zd7"}
+{"time":"2025-05-18T20:51:03.237113238+02:00","level":"INFO","msg":"handler: started","stream_id":"1vq33zd7"}
+{"time":"2025-05-18T20:51:03.680617427+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-18T22:18:12.618754332+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-19T07:44:46.563488723+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-19T07:44:46.563643371+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-19T07:44:47.25751206+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-19T07:44:47.492059985+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-19T07:44:47.505088661+02:00","level":"INFO","msg":"stream: closing","id":"1vq33zd7"}
+{"time":"2025-05-19T07:44:47.505115533+02:00","level":"INFO","msg":"handler: closed","stream_id":"1vq33zd7"}
+{"time":"2025-05-19T07:44:47.505130899+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"1vq33zd7"}
+{"time":"2025-05-19T07:44:47.505210542+02:00","level":"INFO","msg":"sender: closed","stream_id":"1vq33zd7"}
+{"time":"2025-05-19T07:44:47.505261325+02:00","level":"INFO","msg":"stream: closed","id":"1vq33zd7"}

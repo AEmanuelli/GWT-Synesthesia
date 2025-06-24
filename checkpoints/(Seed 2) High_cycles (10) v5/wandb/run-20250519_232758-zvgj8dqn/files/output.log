@@ -1,0 +1,19 @@
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [1]
+
+  | Name          | Type                  | Params | Mode
+----------------------------------------------------------------
+0 | gw_mod        | GWModule              | 6.3 M  | train
+1 | selection_mod | SingleDomainSelection | 0      | train
+2 | loss_mod      | GWLosses2Domains      | 6.3 M  | train
+----------------------------------------------------------------
+484 K     Trainable params
+5.8 M     Non-trainable params
+6.3 M     Total params
+25.254    Total estimated model params size (MB)
+43        Modules in train mode
+35        Modules in eval mode
+Epoch 347: 100%|██████████████████| 243/243 [01:08<00:00,  3.53it/s, v_num=8dqn]
+                                                                                

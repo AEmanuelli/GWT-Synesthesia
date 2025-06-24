@@ -1,0 +1,15 @@
+{"time":"2025-05-18T20:51:02.36534647+02:00","level":"INFO","msg":"main: starting server","port-filename":"/tmp/tmph2zdleou/port-4113231.txt","pid":4113231,"log-level":0,"disable-analytics":false,"shutdown-on-parent-exit":false}
+{"time":"2025-05-18T20:51:02.36965353+02:00","level":"INFO","msg":"server is running","addr":{"IP":"127.0.0.1","Port":39985,"Zone":""}}
+{"time":"2025-05-18T20:51:02.369766781+02:00","level":"INFO","msg":"Will exit if parent process dies.","ppid":4113231}
+{"time":"2025-05-18T20:51:02.540140928+02:00","level":"INFO","msg":"connection: ManageConnectionData: new connection created","id":"127.0.0.1:53520"}
+{"time":"2025-05-18T20:51:02.913299962+02:00","level":"INFO","msg":"handleInformInit: received","streamId":"1vq33zd7","id":"127.0.0.1:53520"}
+{"time":"2025-05-18T20:51:03.23708128+02:00","level":"INFO","msg":"handleInformInit: stream started","streamId":"1vq33zd7","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:47.505035703+02:00","level":"INFO","msg":"handleInformFinish: finish message received","streamId":"1vq33zd7","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:47.505275729+02:00","level":"INFO","msg":"handleInformFinish: stream closed","streamId":"1vq33zd7","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:48.498164971+02:00","level":"INFO","msg":"handleInformTeardown: server teardown initiated","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:48.49822276+02:00","level":"INFO","msg":"handleInformTeardown: server shutdown complete","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:48.498241033+02:00","level":"INFO","msg":"server is shutting down"}
+{"time":"2025-05-19T07:44:48.498243394+02:00","level":"INFO","msg":"connection: closing","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:48.49844533+02:00","level":"INFO","msg":"connection: closed successfully","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:48.49846172+02:00","level":"INFO","msg":"connection: ManageConnectionData: connection closed","id":"127.0.0.1:53520"}
+{"time":"2025-05-19T07:44:48.498474853+02:00","level":"INFO","msg":"server is closed"}

@@ -1,0 +1,16 @@
+{"time":"2025-05-17T23:53:02.329467436+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 2) H_Co (10) v5/wandb/run-20250517_235302-katkqupy/logs/debug-core.log"}
+{"time":"2025-05-17T23:53:02.651199617+02:00","level":"INFO","msg":"created new stream","id":"katkqupy"}
+{"time":"2025-05-17T23:53:02.651263186+02:00","level":"INFO","msg":"stream: started","id":"katkqupy"}
+{"time":"2025-05-17T23:53:02.652598449+02:00","level":"INFO","msg":"sender: started","stream_id":"katkqupy"}
+{"time":"2025-05-17T23:53:02.652683321+02:00","level":"INFO","msg":"handler: started","stream_id":"katkqupy"}
+{"time":"2025-05-17T23:53:02.652700877+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"katkqupy"}
+{"time":"2025-05-17T23:53:03.101291233+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-18T10:22:33.158218175+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-18T10:22:33.158477489+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-18T10:22:33.859284404+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-18T10:22:34.052636815+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-18T10:22:34.063677149+02:00","level":"INFO","msg":"stream: closing","id":"katkqupy"}
+{"time":"2025-05-18T10:22:34.063700311+02:00","level":"INFO","msg":"handler: closed","stream_id":"katkqupy"}
+{"time":"2025-05-18T10:22:34.063710054+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"katkqupy"}
+{"time":"2025-05-18T10:22:34.063730104+02:00","level":"INFO","msg":"sender: closed","stream_id":"katkqupy"}
+{"time":"2025-05-18T10:22:34.063760944+02:00","level":"INFO","msg":"stream: closed","id":"katkqupy"}

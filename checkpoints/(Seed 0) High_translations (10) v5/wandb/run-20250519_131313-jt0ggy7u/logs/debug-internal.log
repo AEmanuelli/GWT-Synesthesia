@@ -1,0 +1,12 @@
+{"time":"2025-05-19T13:13:13.168942252+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 0) High_translations (10) v5/wandb/run-20250519_131313-jt0ggy7u/logs/debug-core.log"}
+{"time":"2025-05-19T13:13:13.665868167+02:00","level":"INFO","msg":"created new stream","id":"jt0ggy7u"}
+{"time":"2025-05-19T13:13:13.665933499+02:00","level":"INFO","msg":"stream: started","id":"jt0ggy7u"}
+{"time":"2025-05-19T13:13:13.666178418+02:00","level":"INFO","msg":"sender: started","stream_id":"jt0ggy7u"}
+{"time":"2025-05-19T13:13:13.666181565+02:00","level":"INFO","msg":"handler: started","stream_id":"jt0ggy7u"}
+{"time":"2025-05-19T13:13:13.666224058+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"jt0ggy7u"}
+{"time":"2025-05-19T13:13:14.099943341+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-19T18:23:29.626828988+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/jt0ggy7u/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T07:17:19.622056552+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-20T13:26:42.239279529+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-20T13:35:38.836841677+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/jt0ggy7u/file_stream\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-20T13:48:50.715335083+02:00","level":"WARN","msg":"sender: taking a long time","seconds":706.619887644,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true mailbox_slot:\"oicw4ks5jva3\" connection_id:\"127.0.0.1:40180\")"}

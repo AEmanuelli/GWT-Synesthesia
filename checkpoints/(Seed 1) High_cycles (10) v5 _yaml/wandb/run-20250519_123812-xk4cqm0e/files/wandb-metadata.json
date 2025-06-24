@@ -1,0 +1,44 @@
+{
+  "os": "Linux-5.15.0-89-generic-x86_64-with-glibc2.35",
+  "python": "CPython 3.11.11",
+  "startedAt": "2025-05-19T10:38:12.204991Z",
+  "program": "/home/alexis/Desktop/SSD_eval/SSD_Train.py",
+  "codePath": "SSD_eval/SSD_Train.py",
+  "email": "accent.cartilage0r@icloud.com",
+  "root": "checkpoints/training_logs/Removing_colors/(Seed 1) High_cycles (10) v5 _yaml",
+  "host": "Anita",
+  "executable": "/home/alexis/miniconda3/envs/conda_no_color/bin/python",
+  "codePathLocal": "SSD_eval/SSD_Train.py",
+  "cpu_count": 32,
+  "cpu_count_logical": 64,
+  "gpu": "Quadro RTX 5000",
+  "gpu_count": 2,
+  "disk": {
+    "/": {
+      "total": "1006450962432",
+      "used": "764548476928"
+    }
+  },
+  "memory": {
+    "total": "134760345600"
+  },
+  "cpu": {
+    "count": 32,
+    "countLogical": 64
+  },
+  "gpu_nvidia": [
+    {
+      "name": "Quadro RTX 5000",
+      "memoryTotal": "17179869184",
+      "cudaCores": 3072,
+      "architecture": "Turing"
+    },
+    {
+      "name": "Quadro RTX 5000",
+      "memoryTotal": "17179869184",
+      "cudaCores": 3072,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "12.4"
+}

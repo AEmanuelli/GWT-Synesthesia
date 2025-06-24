@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/alexis/Desktop/SSD_eval/SSD_Train.py", line 359, in <module>
+    model, checkpoint_path = train_global_workspace(
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/Desktop/SSD_eval/SSD_Train.py", line 324, in train_global_workspace
+    trainer = Trainer(
+              ^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+    return fn(self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/trainer/trainer.py", line 404, in __init__
+    self._accelerator_connector = _AcceleratorConnector(
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 146, in __init__
+    self._check_device_config_and_set_final_flags(devices=devices, num_nodes=num_nodes)
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 327, in _check_device_config_and_set_final_flags
+    raise MisconfigurationException(
+lightning.fabric.utilities.exceptions.MisconfigurationException: `Trainer(devices=0)` value is not a valid input using cuda accelerator.

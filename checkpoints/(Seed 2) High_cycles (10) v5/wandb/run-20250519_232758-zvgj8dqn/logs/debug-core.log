@@ -1,0 +1,6 @@
+{"time":"2025-05-19T23:27:58.143639484+02:00","level":"INFO","msg":"main: starting server","port-filename":"/tmp/tmpyjyj9mkt/port-784285.txt","pid":784285,"log-level":0,"disable-analytics":false,"shutdown-on-parent-exit":false}
+{"time":"2025-05-19T23:27:58.14703704+02:00","level":"INFO","msg":"server is running","addr":{"IP":"127.0.0.1","Port":45665,"Zone":""}}
+{"time":"2025-05-19T23:27:58.147273982+02:00","level":"INFO","msg":"Will exit if parent process dies.","ppid":784285}
+{"time":"2025-05-19T23:27:58.208156545+02:00","level":"INFO","msg":"connection: ManageConnectionData: new connection created","id":"127.0.0.1:45982"}
+{"time":"2025-05-19T23:27:58.558233681+02:00","level":"INFO","msg":"handleInformInit: received","streamId":"zvgj8dqn","id":"127.0.0.1:45982"}
+{"time":"2025-05-19T23:27:58.952379635+02:00","level":"INFO","msg":"handleInformInit: stream started","streamId":"zvgj8dqn","id":"127.0.0.1:45982"}

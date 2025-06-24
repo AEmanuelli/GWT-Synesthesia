@@ -1,0 +1,15 @@
+{"time":"2025-05-15T16:51:49.073790289+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/High contrastive - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250515_165149-lzh2lkdv/logs/debug-core.log"}
+{"time":"2025-05-15T16:51:49.400121355+02:00","level":"INFO","msg":"created new stream","id":"lzh2lkdv"}
+{"time":"2025-05-15T16:51:49.400201552+02:00","level":"INFO","msg":"stream: started","id":"lzh2lkdv"}
+{"time":"2025-05-15T16:51:49.400227925+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"lzh2lkdv"}
+{"time":"2025-05-15T16:51:49.400239472+02:00","level":"INFO","msg":"sender: started","stream_id":"lzh2lkdv"}
+{"time":"2025-05-15T16:51:49.400340499+02:00","level":"INFO","msg":"handler: started","stream_id":"lzh2lkdv"}
+{"time":"2025-05-15T16:51:49.957079578+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-15T16:53:48.12823616+02:00","level":"INFO","msg":"stream: closing","id":"lzh2lkdv"}
+{"time":"2025-05-15T16:53:48.128300167+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-15T16:53:48.128392436+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-15T16:53:48.882920438+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-15T16:53:49.246695366+02:00","level":"INFO","msg":"handler: closed","stream_id":"lzh2lkdv"}
+{"time":"2025-05-15T16:53:49.246781052+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"lzh2lkdv"}
+{"time":"2025-05-15T16:53:49.246796193+02:00","level":"INFO","msg":"sender: closed","stream_id":"lzh2lkdv"}
+{"time":"2025-05-15T16:53:49.246902388+02:00","level":"INFO","msg":"stream: closed","id":"lzh2lkdv"}

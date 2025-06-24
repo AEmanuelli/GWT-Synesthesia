@@ -1,0 +1,972 @@
+_wandb:
+    value:
+        cli_version: 0.19.9
+        m:
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/translation_v_latents_to_attr_loss_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/ref_attr-v_latents_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/contrastive_v_latents_and_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/translations
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/cycle_v_latents_through_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/ref_attr-v_latents_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/cycle_attr_through_v_latents_loss_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/demi_cycle_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/ref_v_latents_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/demi_cycles
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/cycle_attr_through_v_latents_loss_cat
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/translation_v_latents_to_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/cycle_attr_through_v_latents
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/translations
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/demi_cycle_v_latents
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/cycle_attr_through_v_latents_loss_cat
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/ref_attr-v_latents_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/ref_attr-v_latents_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/demi_cycle_attr_loss_cat
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/translation_attr_to_v_latents
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/translation_attr_to_v_latents
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/ref_v_latents_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/translation_v_latents_to_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/loss
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/translation_v_latents_to_attr_loss_cat
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/loss
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/contrastive_v_latents_and_attr_logit_scale
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/demi_cycle_attr_loss_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/contrastives
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/ref_attr-v_latents_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/ref_attr-v_latents_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/cycles
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/demi_cycle_v_latents
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/demi_cycles
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/cycles
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/contrastives
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_attr_to_attr.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/demi_cycle_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/cycle_attr_through_v_latents_loss_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/contrastive_v_latents_and_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/ref_v_latents_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/demi_cycle_attr_loss_cat
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/demi_cycle_attr_loss_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_v_latents.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/translation_v_latents_to_attr_loss_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/cycle_v_latents_through_attr
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/translation_v_latents_to_attr_loss_cat
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_attr_to_attr.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_attr_to_attr.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_attr.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_attr_to_attr.width
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val/contrastive_v_latents_and_attr_logit_scale
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_v_latents.format
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/ref_v_latents_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/ref_v_latents_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/ref_v_latents_v_latents.count
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_cycle_v_latents_to_attr._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": lr-AdamW
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train/cycle_attr_through_v_latents
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_cycle_v_latents_to_v_latents.height
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/val/pred_trans_v_latents_to_v_latents.filenames
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": epoch
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": images/train/pred_trans_v_latents_to_v_latents._type
+              "5": 1
+              "6":
+                - 1
+                - 3
+              "7": []
+        python_version: 3.11.11
+        t:
+            "1":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 55
+                - 106
+            "2":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 55
+                - 106
+            "3":
+                - 2
+                - 7
+                - 13
+                - 23
+                - 55
+                - 66
+            "4": 3.11.11
+            "5": 0.19.9
+            "6": 4.50.3
+            "8":
+                - 5
+            "12": 0.19.9
+            "13": linux-x86_64
+alpha:
+    value: 1
+batch_size:
+    value: 2056
+decoder_layers:
+    value: 2
+decoder_size:
+    value: 256
+encoder_layers:
+    value: 2
+encoder_size:
+    value: 256
+exclude_colors:
+    value: false
+fusion_activation_fn:
+    value: tanh
+latent_dim:
+    value: 12
+learn_logit_scale:
+    value: false
+loss_coefs:
+    value:
+        contrastives: 1
+        cycles: 1
+        demi_cycles: 1
+        translations: 1
+lr_base:
+    value: 1e-05
+max_lr:
+    value: 0.00015
+max_steps:
+    value: 150000
+optim_lr:
+    value: 1e-05
+optim_weight_decay:
+    value: 1e-06
+scheduler_args:
+    value: null
+seed:
+    value: 2
+temperature:
+    value: 1
+weight_decay:
+    value: 1e-06
+workspace_dim:
+    value: 12

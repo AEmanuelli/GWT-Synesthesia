@@ -1,0 +1,10 @@
+{"time":"2025-05-20T01:49:49.394739065+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 2) High_contrastive (1) v5/wandb/run-20250520_014949-uylz9hsc/logs/debug-core.log"}
+{"time":"2025-05-20T01:49:49.769183919+02:00","level":"INFO","msg":"created new stream","id":"uylz9hsc"}
+{"time":"2025-05-20T01:49:49.769248631+02:00","level":"INFO","msg":"stream: started","id":"uylz9hsc"}
+{"time":"2025-05-20T01:49:49.771188082+02:00","level":"INFO","msg":"handler: started","stream_id":"uylz9hsc"}
+{"time":"2025-05-20T01:49:49.771237752+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"uylz9hsc"}
+{"time":"2025-05-20T01:49:49.777211245+02:00","level":"INFO","msg":"sender: started","stream_id":"uylz9hsc"}
+{"time":"2025-05-20T01:49:50.227569019+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T07:34:50.915060077+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/uylz9hsc/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-20T11:57:35.24034319+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/uylz9hsc/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T12:58:35.240092651+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/uylz9hsc/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}

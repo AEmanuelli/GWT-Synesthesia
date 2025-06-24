@@ -1,0 +1,11 @@
+{"time":"2025-05-16T17:13:46.209404249+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 1) Base_params - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250516_171346-sfavxsmg/logs/debug-core.log"}
+{"time":"2025-05-16T17:13:46.526174293+02:00","level":"INFO","msg":"created new stream","id":"sfavxsmg"}
+{"time":"2025-05-16T17:13:46.526259095+02:00","level":"INFO","msg":"stream: started","id":"sfavxsmg"}
+{"time":"2025-05-16T17:13:46.52629761+02:00","level":"INFO","msg":"handler: started","stream_id":"sfavxsmg"}
+{"time":"2025-05-16T17:13:46.526308911+02:00","level":"INFO","msg":"sender: started","stream_id":"sfavxsmg"}
+{"time":"2025-05-16T17:13:46.526297224+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"sfavxsmg"}
+{"time":"2025-05-16T17:13:46.998761839+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-16T20:16:22.706179161+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/sfavxsmg/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-16T20:16:43.223659011+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-16T20:17:15.59408664+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T21:03:49.257552226+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}

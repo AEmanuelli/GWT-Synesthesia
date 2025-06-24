@@ -1,0 +1,23 @@
+{"time":"2025-05-20T19:16:34.207098003+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 2) (bis) High_contrastive (10) v5/wandb/run-20250520_191634-eia4lyu3/logs/debug-core.log"}
+{"time":"2025-05-20T19:16:34.583233493+02:00","level":"INFO","msg":"created new stream","id":"eia4lyu3"}
+{"time":"2025-05-20T19:16:34.583317335+02:00","level":"INFO","msg":"stream: started","id":"eia4lyu3"}
+{"time":"2025-05-20T19:16:34.590081095+02:00","level":"INFO","msg":"sender: started","stream_id":"eia4lyu3"}
+{"time":"2025-05-20T19:16:34.59020937+02:00","level":"INFO","msg":"handler: started","stream_id":"eia4lyu3"}
+{"time":"2025-05-20T19:16:34.590261545+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"eia4lyu3"}
+{"time":"2025-05-20T19:16:35.035820089+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T20:03:13.118562406+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-20T21:41:00.81379077+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/eia4lyu3/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T22:16:05.99071797+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/eia4lyu3/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:13.514567069+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/eia4lyu3/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:26.003821953+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-20T22:35:51.787778942+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/eia4lyu3/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-21T13:26:51.787467932+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/eia4lyu3/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-21T20:21:01.41507115+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-21T20:21:01.415452703+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-21T20:21:02.090366116+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-21T20:21:02.343741216+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-21T20:21:02.357881633+02:00","level":"INFO","msg":"stream: closing","id":"eia4lyu3"}
+{"time":"2025-05-21T20:21:02.35793361+02:00","level":"INFO","msg":"handler: closed","stream_id":"eia4lyu3"}
+{"time":"2025-05-21T20:21:02.357956043+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"eia4lyu3"}
+{"time":"2025-05-21T20:21:02.357979191+02:00","level":"INFO","msg":"sender: closed","stream_id":"eia4lyu3"}
+{"time":"2025-05-21T20:21:02.358064467+02:00","level":"INFO","msg":"stream: closed","id":"eia4lyu3"}

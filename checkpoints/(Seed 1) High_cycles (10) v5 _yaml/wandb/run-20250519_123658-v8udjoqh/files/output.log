@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/home/alexis/Desktop/SSD_eval/SSD_Train.py", line 359, in <module>
+    model, checkpoint_path = train_global_workspace(
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/Desktop/SSD_eval/SSD_Train.py", line 324, in train_global_workspace
+    trainer = Trainer(
+              ^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/utilities/argparse.py", line 70, in insert_env_defaults
+    return fn(self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/trainer/trainer.py", line 404, in __init__
+    self._accelerator_connector = _AcceleratorConnector(
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 147, in __init__
+    self._set_parallel_devices_and_init_accelerator()
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/trainer/connectors/accelerator_connector.py", line 377, in _set_parallel_devices_and_init_accelerator
+    self._devices_flag = accelerator_cls.parse_devices(self._devices_flag)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/pytorch/accelerators/cuda.py", line 88, in parse_devices
+    return _parse_gpu_ids(devices, include_cuda=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/fabric/utilities/device_parser.py", line 103, in _parse_gpu_ids
+    return _sanitize_gpu_ids(gpus, include_cuda=include_cuda, include_mps=include_mps)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alexis/miniconda3/envs/conda_no_color/lib/python3.11/site-packages/lightning/fabric/utilities/device_parser.py", line 136, in _sanitize_gpu_ids
+    raise MisconfigurationException(
+lightning.fabric.utilities.exceptions.MisconfigurationException: You requested gpu: [0, 1]
+ But your machine only has: [0]

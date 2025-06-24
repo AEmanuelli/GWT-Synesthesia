@@ -1,0 +1,6 @@
+{"time":"2025-05-19T12:53:50.380775642+02:00","level":"INFO","msg":"main: starting server","port-filename":"/tmp/tmpbilt99be/port-2545277.txt","pid":2545277,"log-level":0,"disable-analytics":false,"shutdown-on-parent-exit":false}
+{"time":"2025-05-19T12:53:50.385289279+02:00","level":"INFO","msg":"Will exit if parent process dies.","ppid":2545277}
+{"time":"2025-05-19T12:53:50.385276014+02:00","level":"INFO","msg":"server is running","addr":{"IP":"127.0.0.1","Port":40697,"Zone":""}}
+{"time":"2025-05-19T12:53:50.558169223+02:00","level":"INFO","msg":"connection: ManageConnectionData: new connection created","id":"127.0.0.1:46972"}
+{"time":"2025-05-19T12:53:50.894785483+02:00","level":"INFO","msg":"handleInformInit: received","streamId":"oe4rr03t","id":"127.0.0.1:46972"}
+{"time":"2025-05-19T12:53:51.207611379+02:00","level":"INFO","msg":"handleInformInit: stream started","streamId":"oe4rr03t","id":"127.0.0.1:46972"}

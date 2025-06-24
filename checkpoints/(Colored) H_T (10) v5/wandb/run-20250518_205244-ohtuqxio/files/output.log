@@ -1,0 +1,47 @@
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [1]
+
+  | Name          | Type                  | Params | Mode
+----------------------------------------------------------------
+0 | gw_mod        | GWModule              | 6.3 M  | train
+1 | selection_mod | SingleDomainSelection | 0      | train
+2 | loss_mod      | GWLosses2Domains      | 6.3 M  | train
+----------------------------------------------------------------
+485 K     Trainable params
+5.8 M     Non-trainable params
+6.3 M     Total params
+25.260    Total estimated model params size (MB)
+43        Modules in train mode
+35        Modules in eval mode
+Epoch 1234:  57%|▌| 138/243 [00:22                                                                                                                
+Validation DataLoader 0: 100%|█| 2                                                                                                                
+`Trainer.fit` stopped: `max_steps=300000` reached.
+Restoring states from the checkpoint path at /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/epoch=1233.ckpt
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [1]
+Loaded model weights from the checkpoint at /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/epoch=1233.ckpt
+┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃[1m [0m[1m  Validate   [0m[1m [0m┃[1m                [0m┃
+┃[1m [0m[1m   metric    [0m[1m [0m┃[1m [0m[1m DataLoader 0 [0m[1m [0m┃
+┡━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│[36m [0m[36mval/contrast…[0m[36m [0m│[35m [0m[35m0.52895975112…[0m[35m [0m│
+│[36m [0m[36mval/contrast…[0m[36m [0m│[35m [0m[35m14.2857179641…[0m[35m [0m│
+│[36m [0m[36mval/contrast…[0m[36m [0m│[35m [0m[35m0.52895975112…[0m[35m [0m│
+│[36m [0m[36mval/cycle_at…[0m[36m [0m│[35m [0m[35m0.00203164992…[0m[35m [0m│
+│[36m [0m[36mval/cycle_at…[0m[36m [0m│[35m [0m[35m0.00200919271…[0m[35m [0m│
+│[36m [0m[36mval/cycle_at…[0m[36m [0m│[35m [0m[35m2.24567957047…[0m[35m [0m│
+│[36m [0m[36mval/cycle_v_…[0m[36m [0m│[35m [0m[35m0.00645766546…[0m[35m [0m│
+│[36m [0m[36m val/cycles  [0m[36m [0m│[35m [0m[35m0.00424465769…[0m[35m [0m│
+│[36m [0m[36mval/demi_cyc…[0m[36m [0m│[35m [0m[35m0.00178861804…[0m[35m [0m│
+│[36m [0m[36mval/demi_cyc…[0m[36m [0m│[35m [0m[35m0.00176843686…[0m[35m [0m│
+│[36m [0m[36mval/demi_cyc…[0m[36m [0m│[35m [0m[35m2.01815528271…[0m[35m [0m│
+│[36m [0m[36mval/demi_cyc…[0m[36m [0m│[35m [0m[35m0.00464779138…[0m[35m [0m│
+│[36m [0m[36mval/demi_cyc…[0m[36m [0m│[35m [0m[35m0.00321820471…[0m[35m [0m│
+│[36m [0m[36m  val/loss   [0m[36m [0m│[35m [0m[35m0.02011960931…[0m[35m [0m│
+│[36m [0m[36mval/translat…[0m[36m [0m│[35m [0m[35m19.3507747650…[0m[35m [0m│
+│[36m [0m[36mval/translat…[0m[36m [0m│[35m [0m[35m1.53006279468…[0m[35m [0m│
+│[36m [0m[36mval/translat…[0m[36m [0m│[35m [0m[35m0.28290244936…[0m[35m [0m│
+│[36m [0m[36mval/translat…[0m[36m [0m│[35m [0m[35m1.24716043472…[0m[35m [0m│
+│[36m [0m[36mval/translat…[0m[36m [0m│[35m [0m[35m10.4404191970…[0m[35m [0m│
+└───────────────┴────────────────┘

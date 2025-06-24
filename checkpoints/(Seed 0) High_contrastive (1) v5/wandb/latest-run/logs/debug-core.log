@@ -1,0 +1,6 @@
+{"time":"2025-05-20T00:24:12.275468681+02:00","level":"INFO","msg":"main: starting server","port-filename":"/tmp/tmpvnqegl6e/port-955893.txt","pid":955893,"log-level":0,"disable-analytics":false,"shutdown-on-parent-exit":false}
+{"time":"2025-05-20T00:24:12.277769517+02:00","level":"INFO","msg":"server is running","addr":{"IP":"127.0.0.1","Port":41289,"Zone":""}}
+{"time":"2025-05-20T00:24:12.277998774+02:00","level":"INFO","msg":"Will exit if parent process dies.","ppid":955893}
+{"time":"2025-05-20T00:24:12.420359814+02:00","level":"INFO","msg":"connection: ManageConnectionData: new connection created","id":"127.0.0.1:60304"}
+{"time":"2025-05-20T00:24:12.841205055+02:00","level":"INFO","msg":"handleInformInit: received","streamId":"tgyaocci","id":"127.0.0.1:60304"}
+{"time":"2025-05-20T00:24:13.246879434+02:00","level":"INFO","msg":"handleInformInit: stream started","streamId":"tgyaocci","id":"127.0.0.1:60304"}

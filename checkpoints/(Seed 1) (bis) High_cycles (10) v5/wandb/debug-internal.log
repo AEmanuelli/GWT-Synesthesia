@@ -1,0 +1,22 @@
+{"time":"2025-05-20T19:02:47.266033764+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 1) (bis) High_cycles (10) v5/wandb/run-20250520_190247-g0cm7379/logs/debug-core.log"}
+{"time":"2025-05-20T19:02:47.637477889+02:00","level":"INFO","msg":"created new stream","id":"g0cm7379"}
+{"time":"2025-05-20T19:02:47.637538558+02:00","level":"INFO","msg":"stream: started","id":"g0cm7379"}
+{"time":"2025-05-20T19:02:47.63901819+02:00","level":"INFO","msg":"sender: started","stream_id":"g0cm7379"}
+{"time":"2025-05-20T19:02:47.639115471+02:00","level":"INFO","msg":"handler: started","stream_id":"g0cm7379"}
+{"time":"2025-05-20T19:02:47.639108516+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"g0cm7379"}
+{"time":"2025-05-20T19:02:48.070275242+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T22:16:08.777745609+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/g0cm7379/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:31.255840528+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/g0cm7379/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:37.3896883+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-20T22:16:40.610711493+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/g0cm7379/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T23:38:57.988417789+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-21T07:36:25.688585068+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/g0cm7379/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-21T09:27:21.847684434+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-21T09:27:21.848012206+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-21T09:27:22.573189158+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-21T09:27:22.815104351+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-21T09:27:22.829862618+02:00","level":"INFO","msg":"stream: closing","id":"g0cm7379"}
+{"time":"2025-05-21T09:27:22.829910146+02:00","level":"INFO","msg":"handler: closed","stream_id":"g0cm7379"}
+{"time":"2025-05-21T09:27:22.829931279+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"g0cm7379"}
+{"time":"2025-05-21T09:27:22.830000098+02:00","level":"INFO","msg":"sender: closed","stream_id":"g0cm7379"}
+{"time":"2025-05-21T09:27:22.830058343+02:00","level":"INFO","msg":"stream: closed","id":"g0cm7379"}

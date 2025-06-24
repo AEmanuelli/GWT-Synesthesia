@@ -1,0 +1,18 @@
+{"time":"2025-05-18T08:40:48.65706624+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 2) H_alpha (5) v5/wandb/run-20250518_084048-vpuuc6ik/logs/debug-core.log"}
+{"time":"2025-05-18T08:40:48.981262488+02:00","level":"INFO","msg":"created new stream","id":"vpuuc6ik"}
+{"time":"2025-05-18T08:40:48.981325922+02:00","level":"INFO","msg":"stream: started","id":"vpuuc6ik"}
+{"time":"2025-05-18T08:40:48.981342023+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"vpuuc6ik"}
+{"time":"2025-05-18T08:40:48.981368928+02:00","level":"INFO","msg":"sender: started","stream_id":"vpuuc6ik"}
+{"time":"2025-05-18T08:40:48.981356396+02:00","level":"INFO","msg":"handler: started","stream_id":"vpuuc6ik"}
+{"time":"2025-05-18T08:40:49.465176258+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-18T16:07:35.067861646+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/vpuuc6ik/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-18T18:23:20.067896511+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/vpuuc6ik/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-18T19:33:54.823090889+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-18T19:33:54.82318234+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-18T19:33:55.645541103+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-18T19:33:55.825624984+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 33012-33020, summary, console lines 18-18","runtime_seconds":0.17978501}],"total_operations":1}}
+{"time":"2025-05-18T19:33:56.07098788+02:00","level":"INFO","msg":"stream: closing","id":"vpuuc6ik"}
+{"time":"2025-05-18T19:33:56.071021527+02:00","level":"INFO","msg":"handler: closed","stream_id":"vpuuc6ik"}
+{"time":"2025-05-18T19:33:56.07103778+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"vpuuc6ik"}
+{"time":"2025-05-18T19:33:56.071053557+02:00","level":"INFO","msg":"sender: closed","stream_id":"vpuuc6ik"}
+{"time":"2025-05-18T19:33:56.071155072+02:00","level":"INFO","msg":"stream: closed","id":"vpuuc6ik"}

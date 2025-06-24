@@ -1,0 +1,24 @@
+{"time":"2025-05-20T19:10:49.446474237+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 0) (bis) High_contrastive (10) v5/wandb/run-20250520_191049-kp650hiv/logs/debug-core.log"}
+{"time":"2025-05-20T19:10:49.80353555+02:00","level":"INFO","msg":"created new stream","id":"kp650hiv"}
+{"time":"2025-05-20T19:10:49.803596806+02:00","level":"INFO","msg":"stream: started","id":"kp650hiv"}
+{"time":"2025-05-20T19:10:49.805247749+02:00","level":"INFO","msg":"handler: started","stream_id":"kp650hiv"}
+{"time":"2025-05-20T19:10:49.805308418+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"kp650hiv"}
+{"time":"2025-05-20T19:10:49.805535631+02:00","level":"INFO","msg":"sender: started","stream_id":"kp650hiv"}
+{"time":"2025-05-20T19:10:50.181947416+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T21:25:36.677855706+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-20T22:16:26.355095534+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-20T22:16:28.037753954+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/kp650hiv/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:35.632282108+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/kp650hiv/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:45.028726326+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/kp650hiv/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-21T03:53:37.349268709+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/kp650hiv/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-21T18:11:22.5079192+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/kp650hiv/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-21T19:51:42.543562689+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-21T20:13:07.284285762+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-21T20:13:07.284394782+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-21T20:13:08.041101728+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-21T20:13:08.283361829+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-21T20:13:08.298763533+02:00","level":"INFO","msg":"stream: closing","id":"kp650hiv"}
+{"time":"2025-05-21T20:13:08.298790872+02:00","level":"INFO","msg":"handler: closed","stream_id":"kp650hiv"}
+{"time":"2025-05-21T20:13:08.298801787+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"kp650hiv"}
+{"time":"2025-05-21T20:13:08.298846276+02:00","level":"INFO","msg":"sender: closed","stream_id":"kp650hiv"}
+{"time":"2025-05-21T20:13:08.298901605+02:00","level":"INFO","msg":"stream: closed","id":"kp650hiv"}

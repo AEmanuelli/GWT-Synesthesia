@@ -1,0 +1,17 @@
+{"time":"2025-05-18T10:27:15.026882188+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Colored) H_alpha (5) v5/wandb/run-20250518_102715-1cpskxby/logs/debug-core.log"}
+{"time":"2025-05-18T10:27:15.336659733+02:00","level":"INFO","msg":"created new stream","id":"1cpskxby"}
+{"time":"2025-05-18T10:27:15.336725385+02:00","level":"INFO","msg":"stream: started","id":"1cpskxby"}
+{"time":"2025-05-18T10:27:15.336751687+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"1cpskxby"}
+{"time":"2025-05-18T10:27:15.336804188+02:00","level":"INFO","msg":"handler: started","stream_id":"1cpskxby"}
+{"time":"2025-05-18T10:27:15.336762679+02:00","level":"INFO","msg":"sender: started","stream_id":"1cpskxby"}
+{"time":"2025-05-18T10:27:15.742689941+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-18T15:50:16.475919152+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/1cpskxby/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-18T20:46:52.650046545+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-18T20:46:52.650151194+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-18T20:46:53.377408007+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-18T20:46:53.618268859+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-18T20:46:53.630416465+02:00","level":"INFO","msg":"stream: closing","id":"1cpskxby"}
+{"time":"2025-05-18T20:46:53.630438229+02:00","level":"INFO","msg":"handler: closed","stream_id":"1cpskxby"}
+{"time":"2025-05-18T20:46:53.630453562+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"1cpskxby"}
+{"time":"2025-05-18T20:46:53.63046942+02:00","level":"INFO","msg":"sender: closed","stream_id":"1cpskxby"}
+{"time":"2025-05-18T20:46:53.630542242+02:00","level":"INFO","msg":"stream: closed","id":"1cpskxby"}

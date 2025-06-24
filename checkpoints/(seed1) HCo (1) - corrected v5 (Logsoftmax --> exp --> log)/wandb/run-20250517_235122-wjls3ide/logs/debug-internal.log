@@ -1,0 +1,7 @@
+{"time":"2025-05-17T23:51:22.14324949+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed1) HCo (1) - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250517_235122-wjls3ide/logs/debug-core.log"}
+{"time":"2025-05-17T23:51:22.468915612+02:00","level":"INFO","msg":"created new stream","id":"wjls3ide"}
+{"time":"2025-05-17T23:51:22.469009078+02:00","level":"INFO","msg":"stream: started","id":"wjls3ide"}
+{"time":"2025-05-17T23:51:22.469039884+02:00","level":"INFO","msg":"sender: started","stream_id":"wjls3ide"}
+{"time":"2025-05-17T23:51:22.469046902+02:00","level":"INFO","msg":"handler: started","stream_id":"wjls3ide"}
+{"time":"2025-05-17T23:51:22.469070154+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"wjls3ide"}
+{"time":"2025-05-17T23:51:22.862780379+02:00","level":"INFO","msg":"Starting system monitor"}

@@ -1,0 +1,15 @@
+{"time":"2025-05-20T19:16:33.72897228+02:00","level":"INFO","msg":"main: starting server","port-filename":"/tmp/tmpjvn6sqni/port-2386574.txt","pid":2386574,"log-level":0,"disable-analytics":false,"shutdown-on-parent-exit":false}
+{"time":"2025-05-20T19:16:33.731689627+02:00","level":"INFO","msg":"Will exit if parent process dies.","ppid":2386574}
+{"time":"2025-05-20T19:16:33.731714871+02:00","level":"INFO","msg":"server is running","addr":{"IP":"127.0.0.1","Port":43577,"Zone":""}}
+{"time":"2025-05-20T19:16:33.829219487+02:00","level":"INFO","msg":"connection: ManageConnectionData: new connection created","id":"127.0.0.1:43186"}
+{"time":"2025-05-20T19:16:34.206786147+02:00","level":"INFO","msg":"handleInformInit: received","streamId":"eia4lyu3","id":"127.0.0.1:43186"}
+{"time":"2025-05-20T19:16:34.583328284+02:00","level":"INFO","msg":"handleInformInit: stream started","streamId":"eia4lyu3","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:02.357561353+02:00","level":"INFO","msg":"handleInformFinish: finish message received","streamId":"eia4lyu3","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:02.358079777+02:00","level":"INFO","msg":"handleInformFinish: stream closed","streamId":"eia4lyu3","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:03.350680613+02:00","level":"INFO","msg":"handleInformTeardown: server teardown initiated","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:03.350746066+02:00","level":"INFO","msg":"handleInformTeardown: server shutdown complete","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:03.350763477+02:00","level":"INFO","msg":"server is shutting down"}
+{"time":"2025-05-21T20:21:03.350772863+02:00","level":"INFO","msg":"connection: closing","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:03.351074871+02:00","level":"INFO","msg":"connection: closed successfully","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:03.351115659+02:00","level":"INFO","msg":"connection: ManageConnectionData: connection closed","id":"127.0.0.1:43186"}
+{"time":"2025-05-21T20:21:03.351136133+02:00","level":"INFO","msg":"server is closed"}

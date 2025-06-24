@@ -1,0 +1,19 @@
+{"time":"2025-05-15T16:53:57.142139567+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/High translation (10) - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250515_165357-ojo028ta/logs/debug-core.log"}
+{"time":"2025-05-15T16:53:57.466540504+02:00","level":"INFO","msg":"created new stream","id":"ojo028ta"}
+{"time":"2025-05-15T16:53:57.466625537+02:00","level":"INFO","msg":"stream: started","id":"ojo028ta"}
+{"time":"2025-05-15T16:53:57.466655134+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"ojo028ta"}
+{"time":"2025-05-15T16:53:57.466675625+02:00","level":"INFO","msg":"handler: started","stream_id":"ojo028ta"}
+{"time":"2025-05-15T16:53:57.466732335+02:00","level":"INFO","msg":"sender: started","stream_id":"ojo028ta"}
+{"time":"2025-05-15T16:53:57.928645275+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-15T20:31:38.563934831+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": unexpected EOF"}
+{"time":"2025-05-15T20:36:19.256524461+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-15T23:52:16.452678405+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T01:58:54.902546465+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-16T01:58:54.902679456+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-16T01:58:55.844960128+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-16T01:58:55.905104673+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 32986-33020, summary, console lines 17-45","runtime_seconds":0.059449699}],"total_operations":1}}
+{"time":"2025-05-16T01:58:56.126941863+02:00","level":"INFO","msg":"stream: closing","id":"ojo028ta"}
+{"time":"2025-05-16T01:58:56.126981674+02:00","level":"INFO","msg":"handler: closed","stream_id":"ojo028ta"}
+{"time":"2025-05-16T01:58:56.127002192+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ojo028ta"}
+{"time":"2025-05-16T01:58:56.127067908+02:00","level":"INFO","msg":"sender: closed","stream_id":"ojo028ta"}
+{"time":"2025-05-16T01:58:56.127135846+02:00","level":"INFO","msg":"stream: closed","id":"ojo028ta"}

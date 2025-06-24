@@ -1,0 +1,21 @@
+{"time":"2025-05-21T13:48:50.306647944+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 2) (ter) High_translation (10) v5/wandb/run-20250521_134850-1obnnfxk/logs/debug-core.log"}
+{"time":"2025-05-21T13:48:50.73619742+02:00","level":"INFO","msg":"created new stream","id":"1obnnfxk"}
+{"time":"2025-05-21T13:48:50.736273327+02:00","level":"INFO","msg":"stream: started","id":"1obnnfxk"}
+{"time":"2025-05-21T13:48:50.736299128+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"1obnnfxk"}
+{"time":"2025-05-21T13:48:50.736324877+02:00","level":"INFO","msg":"sender: started","stream_id":"1obnnfxk"}
+{"time":"2025-05-21T13:48:50.736467903+02:00","level":"INFO","msg":"handler: started","stream_id":"1obnnfxk"}
+{"time":"2025-05-21T13:48:51.235776373+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-21T19:14:36.873351528+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/1obnnfxk/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-22T03:39:22.802807779+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-22T04:41:58.367127517+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-22T05:19:21.9184212+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/graphql","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}
+{"time":"2025-05-22T05:36:58.655669071+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-22T06:40:56.320921375+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-22T06:40:56.321121194+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-22T06:40:57.103480454+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-22T06:40:57.323600796+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history steps 32991-33020, summary, console lines 17-45","runtime_seconds":0.219630308}],"total_operations":1}}
+{"time":"2025-05-22T06:40:57.350992379+02:00","level":"INFO","msg":"stream: closing","id":"1obnnfxk"}
+{"time":"2025-05-22T06:40:57.351053973+02:00","level":"INFO","msg":"handler: closed","stream_id":"1obnnfxk"}
+{"time":"2025-05-22T06:40:57.351082049+02:00","level":"INFO","msg":"sender: closed","stream_id":"1obnnfxk"}
+{"time":"2025-05-22T06:40:57.351074678+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"1obnnfxk"}
+{"time":"2025-05-22T06:40:57.351159918+02:00","level":"INFO","msg":"stream: closed","id":"1obnnfxk"}

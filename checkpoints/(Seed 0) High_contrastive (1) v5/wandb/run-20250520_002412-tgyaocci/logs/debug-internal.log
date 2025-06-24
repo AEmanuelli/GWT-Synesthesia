@@ -1,0 +1,7 @@
+{"time":"2025-05-20T00:24:12.841444964+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 0) High_contrastive (1) v5/wandb/run-20250520_002412-tgyaocci/logs/debug-core.log"}
+{"time":"2025-05-20T00:24:13.246818322+02:00","level":"INFO","msg":"created new stream","id":"tgyaocci"}
+{"time":"2025-05-20T00:24:13.246870407+02:00","level":"INFO","msg":"stream: started","id":"tgyaocci"}
+{"time":"2025-05-20T00:24:13.248883827+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"tgyaocci"}
+{"time":"2025-05-20T00:24:13.249070817+02:00","level":"INFO","msg":"handler: started","stream_id":"tgyaocci"}
+{"time":"2025-05-20T00:24:13.249256803+02:00","level":"INFO","msg":"sender: started","stream_id":"tgyaocci"}
+{"time":"2025-05-20T00:24:13.705983113+02:00","level":"INFO","msg":"Starting system monitor"}

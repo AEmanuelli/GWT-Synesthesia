@@ -1,0 +1,65 @@
+_wandb:
+    value:
+        cli_version: 0.19.9
+        m:
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+        python_version: 3.11.11
+        t:
+            "1":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 55
+                - 106
+            "2":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 55
+                - 106
+            "3":
+                - 7
+                - 13
+                - 23
+                - 55
+                - 66
+            "4": 3.11.11
+            "5": 0.19.9
+            "6": 4.50.3
+            "8":
+                - 5
+            "12": 0.19.9
+            "13": linux-x86_64
+alpha:
+    value: 1
+batch_size:
+    value: 2056
+decoder_layers:
+    value: 2
+decoder_size:
+    value: 256
+encoder_layers:
+    value: 2
+encoder_size:
+    value: 256
+exclude_colors:
+    value: true
+latent_dim:
+    value: 12
+lr_base:
+    value: 1e-05
+max_lr:
+    value: 0.00015
+max_steps:
+    value: 300000
+seed:
+    value: 1
+temperature:
+    value: 1
+weight_decay:
+    value: 1e-06

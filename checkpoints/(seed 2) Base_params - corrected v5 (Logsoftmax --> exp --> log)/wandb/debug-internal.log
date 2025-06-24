@@ -1,0 +1,27 @@
+{"time":"2025-05-16T14:21:18.600825731+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 2) Base_params - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250516_142118-4s0q8ov9/logs/debug-core.log"}
+{"time":"2025-05-16T14:21:18.916582445+02:00","level":"INFO","msg":"created new stream","id":"4s0q8ov9"}
+{"time":"2025-05-16T14:21:18.916665897+02:00","level":"INFO","msg":"stream: started","id":"4s0q8ov9"}
+{"time":"2025-05-16T14:21:18.916691414+02:00","level":"INFO","msg":"sender: started","stream_id":"4s0q8ov9"}
+{"time":"2025-05-16T14:21:18.91672248+02:00","level":"INFO","msg":"handler: started","stream_id":"4s0q8ov9"}
+{"time":"2025-05-16T14:21:18.916692229+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"4s0q8ov9"}
+{"time":"2025-05-16T14:21:19.316911823+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-16T17:10:34.787245148+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/4s0q8ov9/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-16T20:16:36.635914686+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-16T20:16:37.471839766+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T20:16:38.199756852+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T20:16:38.681437005+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T20:16:59.945645764+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/4s0q8ov9/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-16T20:17:07.176602844+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/4s0q8ov9/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-16T20:17:08.811328718+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T20:17:09.686652429+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-16T20:17:10.331807193+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-16T20:17:11.109709331+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-17T00:41:46.89971435+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-17T00:41:46.900011042+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-17T00:41:47.602117321+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-17T00:41:47.831465803+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-17T00:41:47.841318032+02:00","level":"INFO","msg":"stream: closing","id":"4s0q8ov9"}
+{"time":"2025-05-17T00:41:47.841354541+02:00","level":"INFO","msg":"handler: closed","stream_id":"4s0q8ov9"}
+{"time":"2025-05-17T00:41:47.841370705+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"4s0q8ov9"}
+{"time":"2025-05-17T00:41:47.841393902+02:00","level":"INFO","msg":"sender: closed","stream_id":"4s0q8ov9"}
+{"time":"2025-05-17T00:41:47.841466082+02:00","level":"INFO","msg":"stream: closed","id":"4s0q8ov9"}

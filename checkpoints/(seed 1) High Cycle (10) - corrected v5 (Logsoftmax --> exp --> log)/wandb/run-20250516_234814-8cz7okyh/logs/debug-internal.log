@@ -1,0 +1,7 @@
+{"time":"2025-05-16T23:48:14.46224335+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 1) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250516_234814-8cz7okyh/logs/debug-core.log"}
+{"time":"2025-05-16T23:48:14.777434732+02:00","level":"INFO","msg":"created new stream","id":"8cz7okyh"}
+{"time":"2025-05-16T23:48:14.777527073+02:00","level":"INFO","msg":"stream: started","id":"8cz7okyh"}
+{"time":"2025-05-16T23:48:14.777553438+02:00","level":"INFO","msg":"sender: started","stream_id":"8cz7okyh"}
+{"time":"2025-05-16T23:48:14.777599996+02:00","level":"INFO","msg":"handler: started","stream_id":"8cz7okyh"}
+{"time":"2025-05-16T23:48:14.777575548+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"8cz7okyh"}
+{"time":"2025-05-16T23:48:15.293551408+02:00","level":"INFO","msg":"Starting system monitor"}

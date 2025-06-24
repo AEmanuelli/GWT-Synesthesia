@@ -1,0 +1,7 @@
+{"time":"2025-05-17T23:52:51.53728292+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(seed 2) H_Co (10) v5/wandb/run-20250517_235251-kypmms5b/logs/debug-core.log"}
+{"time":"2025-05-17T23:52:51.857188177+02:00","level":"INFO","msg":"created new stream","id":"kypmms5b"}
+{"time":"2025-05-17T23:52:51.857260397+02:00","level":"INFO","msg":"stream: started","id":"kypmms5b"}
+{"time":"2025-05-17T23:52:51.857304946+02:00","level":"INFO","msg":"handler: started","stream_id":"kypmms5b"}
+{"time":"2025-05-17T23:52:51.857289596+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"kypmms5b"}
+{"time":"2025-05-17T23:52:51.857308992+02:00","level":"INFO","msg":"sender: started","stream_id":"kypmms5b"}
+{"time":"2025-05-17T23:52:52.269568786+02:00","level":"INFO","msg":"Starting system monitor"}

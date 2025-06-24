@@ -1,0 +1,15 @@
+{"time":"2025-05-20T18:49:13.014606003+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 2) (bis) High_translations (10) v5/wandb/run-20250520_184913-h2gbco7z/logs/debug-core.log"}
+{"time":"2025-05-20T18:49:13.319510114+02:00","level":"INFO","msg":"created new stream","id":"h2gbco7z"}
+{"time":"2025-05-20T18:49:13.319570182+02:00","level":"INFO","msg":"stream: started","id":"h2gbco7z"}
+{"time":"2025-05-20T18:49:13.319588726+02:00","level":"INFO","msg":"handler: started","stream_id":"h2gbco7z"}
+{"time":"2025-05-20T18:49:13.319588915+02:00","level":"INFO","msg":"sender: started","stream_id":"h2gbco7z"}
+{"time":"2025-05-20T18:49:13.319631553+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"h2gbco7z"}
+{"time":"2025-05-20T18:49:13.820841521+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T18:59:30.722906357+02:00","level":"INFO","msg":"stream: closing","id":"h2gbco7z"}
+{"time":"2025-05-20T18:59:30.722951142+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-20T18:59:30.722993831+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-20T18:59:31.414764226+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-20T18:59:31.893838282+02:00","level":"INFO","msg":"handler: closed","stream_id":"h2gbco7z"}
+{"time":"2025-05-20T18:59:31.893913024+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"h2gbco7z"}
+{"time":"2025-05-20T18:59:31.89394133+02:00","level":"INFO","msg":"sender: closed","stream_id":"h2gbco7z"}
+{"time":"2025-05-20T18:59:31.894054757+02:00","level":"INFO","msg":"stream: closed","id":"h2gbco7z"}

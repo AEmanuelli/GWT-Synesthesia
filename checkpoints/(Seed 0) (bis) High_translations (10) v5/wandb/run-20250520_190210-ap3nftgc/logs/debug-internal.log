@@ -1,0 +1,27 @@
+{"time":"2025-05-20T19:02:10.159131177+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"checkpoints/training_logs/Removing_colors/(Seed 0) (bis) High_translations (10) v5/wandb/run-20250520_190210-ap3nftgc/logs/debug-core.log"}
+{"time":"2025-05-20T19:02:10.579666058+02:00","level":"INFO","msg":"created new stream","id":"ap3nftgc"}
+{"time":"2025-05-20T19:02:10.57974154+02:00","level":"INFO","msg":"stream: started","id":"ap3nftgc"}
+{"time":"2025-05-20T19:02:10.579766157+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"ap3nftgc"}
+{"time":"2025-05-20T19:02:10.579789439+02:00","level":"INFO","msg":"handler: started","stream_id":"ap3nftgc"}
+{"time":"2025-05-20T19:02:10.579809304+02:00","level":"INFO","msg":"sender: started","stream_id":"ap3nftgc"}
+{"time":"2025-05-20T19:02:11.11576901+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-20T19:46:56.625103515+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T20:41:56.6274556+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-20T22:16:01.788791165+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:09.192114147+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:18.603439063+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:33.132265532+02:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream","body":"{\"error\":\"context deadline exceeded\"}"}
+{"time":"2025-05-20T22:16:38.256808978+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-20T22:25:26.619373297+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-21T03:09:11.619044327+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/lexman-psl/Removing_colors/ap3nftgc/file_stream\": dial tcp 35.186.228.49:443: connect: connection refused"}
+{"time":"2025-05-21T05:36:51.569756765+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-05-21T06:44:55.640929215+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-21T09:14:25.346749753+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-21T09:14:25.346987093+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-21T09:14:26.082726854+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-21T09:14:26.299193506+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-05-21T09:14:26.312616077+02:00","level":"INFO","msg":"stream: closing","id":"ap3nftgc"}
+{"time":"2025-05-21T09:14:26.312663105+02:00","level":"INFO","msg":"handler: closed","stream_id":"ap3nftgc"}
+{"time":"2025-05-21T09:14:26.312690738+02:00","level":"INFO","msg":"sender: closed","stream_id":"ap3nftgc"}
+{"time":"2025-05-21T09:14:26.312683303+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ap3nftgc"}
+{"time":"2025-05-21T09:14:26.312790157+02:00","level":"INFO","msg":"stream: closed","id":"ap3nftgc"}

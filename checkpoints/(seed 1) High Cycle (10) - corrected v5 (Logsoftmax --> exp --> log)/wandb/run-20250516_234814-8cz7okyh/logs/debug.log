@@ -1,0 +1,24 @@
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_setup.py:_flush():67] Current SDK version is 0.19.9
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_setup.py:_flush():67] Configure stats pid to 1627833
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_setup.py:_flush():67] Loading settings from /home/alexis/.config/wandb/settings
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_setup.py:_flush():67] Loading settings from /home/alexis/Desktop/wandb/settings
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_setup.py:_flush():67] Loading settings from environment variables
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_init.py:setup_run_log_directory():662] Logging user logs to checkpoints/training_logs/Removing_colors/(seed 1) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250516_234814-8cz7okyh/logs/debug.log
+2025-05-16 23:48:14,451 INFO    MainThread:1627833 [wandb_init.py:setup_run_log_directory():663] Logging internal logs to checkpoints/training_logs/Removing_colors/(seed 1) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/wandb/run-20250516_234814-8cz7okyh/logs/debug-internal.log
+2025-05-16 23:48:14,452 INFO    MainThread:1627833 [wandb_init.py:init():781] calling init triggers
+2025-05-16 23:48:14,452 INFO    MainThread:1627833 [wandb_init.py:init():786] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-05-16 23:48:14,452 INFO    MainThread:1627833 [wandb_init.py:init():809] starting backend
+2025-05-16 23:48:14,452 INFO    MainThread:1627833 [wandb_init.py:init():813] sending inform_init request
+2025-05-16 23:48:14,458 INFO    MainThread:1627833 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-05-16 23:48:14,458 INFO    MainThread:1627833 [wandb_init.py:init():823] backend started and connected
+2025-05-16 23:48:14,463 INFO    MainThread:1627833 [wandb_init.py:init():915] updated telemetry
+2025-05-16 23:48:14,464 INFO    MainThread:1627833 [wandb_init.py:init():939] communicating run to backend with 90.0 second timeout
+2025-05-16 23:48:15,290 INFO    MainThread:1627833 [wandb_init.py:init():1014] starting run threads in backend
+2025-05-16 23:48:15,606 INFO    MainThread:1627833 [wandb_run.py:_console_start():2454] atexit reg
+2025-05-16 23:48:15,606 INFO    MainThread:1627833 [wandb_run.py:_redirect():2306] redirect: wrap_raw
+2025-05-16 23:48:15,607 INFO    MainThread:1627833 [wandb_run.py:_redirect():2371] Wrapping output streams.
+2025-05-16 23:48:15,607 INFO    MainThread:1627833 [wandb_run.py:_redirect():2394] Redirects installed.
+2025-05-16 23:48:15,609 INFO    MainThread:1627833 [wandb_init.py:init():1056] run started, returning control to user process
+2025-05-16 23:48:15,610 INFO    MainThread:1627833 [wandb_run.py:_config_callback():1327] config_cb None None {'temperature': 1, 'alpha': 1, 'encoder_size': 256, 'decoder_size': 256, 'encoder_layers': 2, 'decoder_layers': 2, 'latent_dim': 12, 'lr_base': 1e-05, 'max_lr': 0.00015, 'weight_decay': 1e-06, 'max_steps': 300000, 'batch_size': 2056, 'seed': 1, 'exclude_colors': False}
+2025-05-16 23:48:17,249 INFO    MainThread:1627833 [wandb_run.py:_config_callback():1327] config_cb None None {'optim_lr': 1e-05, 'optim_weight_decay': 1e-06, 'scheduler_args': None, 'workspace_dim': 12, 'loss_coefs': {'cycles': 10, 'contrastives': 0.1, 'demi_cycles': 1.0, 'translations': 1.0}, 'learn_logit_scale': False, 'fusion_activation_fn': 'tanh'}
