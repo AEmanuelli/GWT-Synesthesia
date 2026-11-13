@@ -1,0 +1,11 @@
+# conda env create -f environment.yml && conda activate gwt-synesthesia
+# puis : pip install --no-deps "$SHIMMER_SSD_FORK"   (voir README.md §2)
+name: gwt-synesthesia
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - git
+  - pip:
+      - -r requirements.txt

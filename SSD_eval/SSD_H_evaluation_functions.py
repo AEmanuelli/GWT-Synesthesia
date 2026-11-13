@@ -285,6 +285,13 @@ class HueShapeAnalyzer:
         # Handle potential string representation of lists/tuples
         if isinstance(df["location"].iloc[0], str):
              df["location"] = df["location"].apply(ast.literal_eval)
+        # La palette doit correspondre à celle du générateur du jeu de test
+        # (SSD_generate_evalset.py : generate_fixed_colors(n_colors)), sinon color_index
+        # pointe vers de mauvaises teintes dans le vecteur d'attributs (Modèles Complets).
+        n_colors_in_csv = int(df["color_index"].max()) + 1
+        if n_colors_in_csv != len(self.rgb_colors):
+            LOGGER.info(f"Palette ajustée à {n_colors_in_csv} couleurs (au lieu de {len(self.rgb_colors)}).")
+            self.rgb_colors, self.hls_colors = generate_fixed_colors(n_colors_in_csv)
         if use_fixed_reference:
             fixed_color = self.rgb_colors[reference_color_idx]
             # Ensure it's a list of lists/tuples if needed by downstream code

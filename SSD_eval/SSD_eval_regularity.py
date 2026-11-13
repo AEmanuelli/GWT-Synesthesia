@@ -1,9 +1,23 @@
 
+"""Critère de Régularité pour UN modèle (mémoire §2.3.2).
+
+Compare, avec des tests de Kolmogorov-Smirnov, les distributions de couleurs
+reconstruites entre catégories d'un même attribut, pour les chemins
+traduction / demi-cycle / cycle complet.
+
+    python SSD_eval/SSD_eval_regularity.py --checkpoint checkpoints/runs/high_cycles_seed0/checkpoints/last.ckpt
+    python SSD_eval/SSD_eval_regularity.py --checkpoint ... --with-colors   # Modèle Complet
+"""
+import argparse
+import sys
 from pathlib import Path
 import torch
 from shimmer.modules.global_workspace import GlobalWorkspace2Domains
 
 from shimmer_ssd.config import DomainModuleVariant, LoadedDomainConfig
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import paths  # noqa: E402
 from SSD_utils import binning_config_6144, default_binning_config
 
 from shimmer_ssd.modules.domains import load_pretrained_domains
@@ -43,7 +57,7 @@ def load_global_workspace(gw_checkpoint: Path, config: dict) -> GlobalWorkspace2
 
 
 def eval_regularity(
-    dataset_csv="./evaluation_set/attributes.csv", 
+    dataset_csv=str(paths.EVALSET_DIR / "attributes.csv"), 
     full_attr=True, 
     run_id=None,  
     checkpoint_base_path=None, 
@@ -101,7 +115,7 @@ def eval_regularity(
     print("_______________________________________________________________________________")
 
     # Define output directory
-    output_base = f"./test_regularity/{name}"
+    output_base = str(paths.RESULTS_DIR / "regularity" / name)
     run_specific_part = f"results_{config_suffix}"
     if run_id:
         run_specific_part += f"_{run_id}"
@@ -125,11 +139,11 @@ def eval_regularity(
         "domains": [
             LoadedDomainConfig(
                 domain_type=DomainModuleVariant.v_latents,
-                checkpoint_path=Path("/mnt/HD2/alexis_data/checkpoints_backup/checkpoints/domain_v.ckpt"),
+                checkpoint_path=paths.DOMAIN_V_CKPT,
             ),
             LoadedDomainConfig(
                 domain_type=attr_domain_type,
-                checkpoint_path=Path("/mnt/HD2/alexis_data/checkpoints_backup/checkpoints/domain_attr.ckpt"),
+                checkpoint_path=paths.DOMAIN_ATTR_CKPT,
                 args=my_hparams,
             ),
         ],
@@ -187,170 +201,38 @@ def eval_regularity(
 
 
 DEBUG_MODE = False
-
-# # # Define DEBUG_MODE globally or pass via args
-# # DEBUG_MODE = False # Set to True for quick tests without full processing
+version = "regularity"
 
 
-
-
-
-
-# PREVIOUS ANALYSIS NAMES 
-
-# sidequest1 ######  /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/gw/version_colorFalse_boa56wxb/last. ###### encoders_size = 256, n_encoders = 2, n_decoders = 1,
-# sidequest2 #######
-# version_2l0yrcqq #####
-# sidequest2_1536_(test) 
-# best_valoss_model ###### /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/gw/version_phvker4h/epoch=49.ckpt ##### encoders_size = 128, n_encoders = 1, n_decoders = 2,
-# high_cycle_and_converged ###### /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/gw/version_7ig35528/epoch=49.ckpt ##### encoders_size = 256, n_encoders = 1, n_decoders = 0,
-# base_params_1202 ###### /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/training_logs/Removing_colors/Base_params/Removing_colors/Base_params/version_colorTrue_None/checkpoints/epoch=1202.ckpt ##### encoders_size = 256, n_encoders = 2, n_decoders = 2,
-# high_cycle_(10)_300K ###### /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/training_logs/Removing_colors/high_cycle/Removing_colors/high_cycle/version_colorTrue_None/checkpoints/last.ckpt ##### encoders_size = 256, n_encoders = 2, n_decoders = 2,
-# Base_params_Final_scheduler ###### /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/training_logs/DEBUG/Final_scheduler/checkpoints/epoch=1229.ckpt ##### encoders_size = 256, n_encoders = 2, n_decoders = 2,
-# ongoing_temp_05_alpha2_new_scheduler_1_reverb ###### /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/training_logs/Removing_colors/temp_05_alpha2_new_scheduler/checkpoints/last.ckpt ##### encoders_size = 256, n_encoders = 2, n_decoders = 2,
-# Side_quest_2  /mnt/HD2/alexis_data/checkpoints_backup/checkpoints/training_logs/shimmer-ssd_sidequests/Side_quest_2/checkpoints/epoch=1215.ckpt
-
-
-# POSSIBLE DATASETSColored_Base_
-
-# evaluation_set/attributes.csv
-# blind_evaluation_set_1536/attributes.csv
-# blind_evaluation_set_192/attributes.csv
-# evaluation_set_6144/attributes.csv
-
-parrallel = False
-conditioning = True
-barycentre = True
-
-# name = "TEST Séquentiel"
-# full_attr = False
-# checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/Base_params - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"
-num_bins = 15
-# name = f"Seed0_High_cycle_{num_bins}_bins_and new traduction"
-version = "High_cycle_v5"
-name = "HighTranslation_v5seed2"
-full_attr = False
-
-# checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 0) High_cycles (10) v5/checkpoints/last.ckpt"
-checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 2) (ter) High_translation (10) v5/checkpoints/last.ckpt"
-dataset_csv = "/home/alexis/Desktop/evaluation_set_examples/attributes.csv"
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--checkpoint", required=True, help="Checkpoint .ckpt du Global Workspace")
+    parser.add_argument("--with-colors", action="store_true", help="Le modèle est un Modèle Complet (contrôle)")
+    parser.add_argument("--name", default=None, help="Sous-dossier de sortie dans results/regularity/")
+    parser.add_argument("--run-id", default="seed0")
+    parser.add_argument("--dataset-csv", default=str(paths.EVALSET_DIR / "attributes.csv"))
+    parser.add_argument("--num-bins", type=int, default=15, help="Bins des histogrammes (15 dans le mémoire)")
+    parser.add_argument("--parallel", action="store_true")
+    return parser.parse_args(argv)
 
 
 if __name__ == "__main__":
-    # checkpoint_base_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/last-v2.ckpt"
-     # my_hparams = {"temperature": 0.7, "alpha": 1.3}
-    # debug_base_params = "/mnt/HD2/alexis_data/checkpoints_backup/checkpoints/training_logs/Removing_colors/Basem_modified_cycle/checkpoints/epoch=716.ckpt"
-    # checkpoint_base_path = debug_base_params
+    args = parse_args()
     eval_regularity(
-        full_attr=full_attr,  # Avec couleurs
-        run_id="High_cycle0",
-        checkpoint_base_path=checkpoint_path,
+        full_attr=args.with_colors,
+        run_id=args.run_id,
+        checkpoint_base_path=args.checkpoint,
         encoders_size=256,
         n_encoders=2,
         n_decoders=2,
-        name=f"DEBUG_EXAMPLES/{name}",
-        num_bins=num_bins,
-        dataset_csv=dataset_csv,
+        name=args.name or Path(args.checkpoint).parents[1].name,
+        num_bins=args.num_bins,
+        dataset_csv=args.dataset_csv,
         reverb_n=1,
         rgb=True,
         binning_config=binning_config_6144,
-        tilting=1, 
-        parrallel=parrallel, 
-        conditioning=conditioning,
-        barycentre=barycentre,
+        tilting=1,
+        parrallel=args.parallel,
+        conditioning=True,
+        barycentre=True,
     )
-
-# name = "High_cycle_corrected_v5"
-# checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High_cycle - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"
-
-
-# name = "High_alpha_corrected_v5"
-# checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High alpha 5 (color) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" #Truly no color
-
-# name = "High_contrastive_v5"
-# checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"
-# full_attr = False
-# checkpoint_path = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"
-# full_attr = True
-
-
-# name = "High_translation_v5"
-#checkpoint_path = /home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High translation (10) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"
-
-
-# def run_10_bins():
-#     """Lance l'évaluation avec couleurs"""
-#     print("=== DÉMARRAGE DE L'ÉVALUATION 6144 ===")
-#     # Importation du module contenant eval_regularity
-#     eval_regularity(
-#         full_attr=full_attr,  # Avec couleurs
-#         run_id="sweep0",
-#         checkpoint_base_path=checkpoint_path,
-#         encoders_size=256,
-#         n_encoders=2,
-#         n_decoders=2,
-#         name=f"6144_gray/{name}_6144_gray",
-#         num_bins=10,
-#         dataset_csv="/home/alexis/Desktop/evaluation_set_6144_gray/attributes.csv",
-#         reverb_n=1,
-#         rgb=True,
-#         binning_config=binning_config_6144,
-#         tilting=1, 
-#         parrallel=parrallel, 
-#         conditioning=conditioning,
-#         barycentre=barycentre,
-#     )
-#     print("=== FIN DE L'ÉVALUATION AVEC COULEURS ===")
-
-# def run_50_bins():
-#     """Lance l'évaluation sans couleurs"""
-#     print("=== DÉMARRAGE DE L'ÉVALUATION 19200 ===")
-    
-#     eval_regularity(
-#         full_attr=full_attr,  # Sans couleurs
-#         run_id="sweep0",
-#         checkpoint_base_path=checkpoint_path,
-#         encoders_size=256,
-#         n_encoders=2,
-#         n_decoders=2,
-#         name=f"19200/{name}",
-#         num_bins=50,
-#         dataset_csv="/home/alexis/Desktop/evaluation_set/attributes.csv",
-#         reverb_n=1,
-#         rgb=True,
-#         # binning_config=binning_config_6144,
-#         tilting=1, 
-#         parrallel=parrallel, 
-#         conditioning=conditioning,
-#         barycentre=barycentre,
-#     )
-#     print("=== FIN DE L'ÉVALUATION SANS COULEURS ===")
-
-# if __name__ == "__main__":
-#     multiprocessing.set_start_method('spawn', force=True)
-#     #     print("Méthode de démarrage multiprocessing définie sur 'spawn'.")
-#     # Création des processus
-#     process_avec_couleurs = multiprocessing.Process(target=run_10_bins)
-#     process_sans_couleurs = multiprocessing.Process(target=run_50_bins)
-    
-#     # Démarrage des processus en parallèle
-#     start_time = time.time()
-#     process_avec_couleurs.start()
-#     process_sans_couleurs.start()
-    
-#     # Attente de la fin des processus
-#     process_avec_couleurs.join()
-#     process_sans_couleurs.join()
-    
-#     # Calcul du temps d'exécution total
-#     duration = time.time() - start_time
-#     print(f"Exécution terminée en {duration:.2f} secondes")
-    
-#     # Vérification des résultats
-#     output_dir_avec = Path(f"./test_regularity/{name}_6144_gray/results_sans_couleurs_sweep0/within_model_comparison_summary.json")
-#     output_dir_sans = Path(f"./test_regularity/{name}/results_sans_couleurs_sweep0/within_model_comparison_summary.json")
-    
-#     print("\nRapport final:")
-#     print(f"Résultats avec 6144: {'Disponibles' if output_dir_avec.exists() else 'Non disponibles'}")
-#     print(f"Résultats 19200: {'Disponibles' if output_dir_sans.exists() else 'Non disponibles'}")
-

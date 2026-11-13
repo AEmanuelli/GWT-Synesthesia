@@ -255,13 +255,9 @@ def compare_color_distribution(colors, title, is_hls=False, n_samples=100, seed=
     plt.savefig(title)
     plt.show()
 
-n_samples = 100
-seed = 0
-# Generate colors
-rgb_colors, hls_colors = generate_fixed_colors_original(n_samples=n_samples)
-
-# Compare color distributions for HLS values
-compare_color_distribution(hls_colors, title='hls_distribution', is_hls=True)
+# Exemple (désactivé : s'exécutait à chaque import et écrivait hls_distribution.png) :
+# rgb_colors, hls_colors = generate_fixed_colors_original(n_samples=100)
+# compare_color_distribution(hls_colors, title='hls_distribution', is_hls=True)
 
 
 
@@ -809,7 +805,7 @@ def _process_half_cycle_path(global_workspace: Any, v_latent_vector: torch.Tenso
     return half_cycle_image_np, half_cycle_mask, half_cycle_shape_color
 
 
-from shimmer.modules import SingleDomainSelection, FixedSharedSelection, DynamicQueryAttention
+# (import inutilisé de FixedSharedSelection / DynamicQueryAttention retiré : absents de shimmer public)
 def _process_full_cycle_path(global_workspace: Any, v_latent_vector: torch.Tensor, 
                             device: torch.device, n: int = 10, selection_module = SingleDomainSelection(), barycentre = False,
                             )-> Tuple[np.ndarray, np.ndarray, np.ndarray]:

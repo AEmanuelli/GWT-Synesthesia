@@ -1,0 +1,39 @@
+# Environnement de référence : Python 3.11, versions relevées dans les logs W&B
+# des runs d'origine (mai 2025). Installation : voir README.md (ou scripts/setup_env.sh).
+#
+# Pour un GPU CUDA, installez d'abord torch/torchvision depuis https://pytorch.org
+# (ex. --index-url https://download.pytorch.org/whl/cu121), puis ce fichier.
+
+torch==2.5.1
+torchvision==0.20.1
+lightning==2.5.1
+torchmetrics==1.7.0
+numpy==1.26.4
+scipy==1.15.2
+pandas==2.2.3
+matplotlib==3.10.1
+seaborn==0.13.2
+opencv-python==4.11.0.86
+pillow==10.4.0
+tqdm==4.66.6
+click==8.1.8
+pydantic==2.11.1
+tokenizers==0.21.1
+transformers>=4.44.2,<5.0.0
+rich>=13.4.2,<14.0.0
+ruamel-yaml>=0.18.6,<1.0.0
+pyyaml>=6.0
+wandb==0.19.9
+ipywidgets>=8.0      # notebooks
+
+# Bibliothèques du laboratoire (ruflab), figées sur les commits de mai 2025
+shimmer @ git+https://github.com/ruflab/shimmer.git@d729e5e202b017880fd7c94183adccac02d45b7f
+simple-shapes-dataset @ git+https://github.com/ruflab/simple-shapes-dataset.git@e81a7cfde880043cf46f9d010e8292a2891b289a
+cfg-tools @ git+https://github.com/ruflab/cfg-tools.git@4cdb0d0c2cd846381b7f2425299b25b3524ff151
+migrate-ckpt @ git+https://github.com/ruflab/migrate-ckpt.git@v0.2.0
+attributes-to-language @ git+https://github.com/ruflab/attributes-to-language.git@v0.4.0
+auto-sbatch @ git+https://github.com/ruflab/auto-sbatch.git@main
+
+# shimmer-ssd : version MODIFIÉE pendant le stage (variante `attr_legacy_no_color`,
+# module attributs avec `alpha`/`temperature`, correction LogSoftmax, etc.).
+# Elle s'installe séparément avec --no-deps, voir README.md §2 et scripts/setup_env.sh.

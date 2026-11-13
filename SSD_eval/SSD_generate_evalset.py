@@ -1,5 +1,13 @@
-# generate_ssd.py
+"""Génère le jeu de test structuré du mémoire (§2.1.2).
+
+Par défaut : 3 formes x 8 tailles (7..14 px) x 16 positions (4x4) x 16 orientations
+(pas de pi/8) x 25 teintes (HLS, S~0.90, L~0.70) = 153 600 images 32x32.
+
+    python SSD_eval/SSD_generate_evalset.py                 # jeu complet -> data/evaluation_set
+    python SSD_eval/SSD_generate_evalset.py --quick         # mini-jeu de test rapide (~1 min)
+"""
 import os
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2 # Importation nécessaire si generate_image l'utilise implicitement via matplotlib/patches
@@ -13,8 +21,13 @@ from PIL import Image # Importation nécessaire si generate_image l'utilise impl
 from typing import cast
 # Supposons que ces fonctions proviennent de modules externes comme indiqué dans le script original
 # Si elles sont définies localement ou dans un fichier utils spécifique, ajustez l'importation
-from simple_shapes_dataset.cli import generate_image # Assurez-vous que ce module/fonction est accessible
-from SSD_utils import generate_fixed_colors, generate_fixed_colors_original         # Assurez-vous que ce module/fonction est accessible
+import matplotlib
+matplotlib.use("Agg")
+from simple_shapes_dataset.cli import generate_image
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import paths  # noqa: E402
+from SSD_utils import generate_fixed_colors, generate_fixed_colors_original
 
 
 # ====================
@@ -126,26 +139,41 @@ def generate_dataset(output_dir: str, imsize: int = 32, min_scale: int = 7, max_
 # ====================
 # MAIN : ARGUMENTS & EXECUTION
 # ====================
+THESIS_POSITIONS = [8, 13, 18, 24]  # 4 valeurs en x et 4 en y -> 16 positions
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--output-dir", default=str(paths.EVALSET_DIR))
+    parser.add_argument("--n-colors", type=int, default=25, help="Nombre de teintes (25 dans le mémoire)")
+    parser.add_argument("--n-sizes", type=int, default=8)
+    parser.add_argument("--min-scale", type=int, default=7)
+    parser.add_argument("--max-scale", type=int, default=14)
+    parser.add_argument("--n-rotations", type=int, default=16)
+    parser.add_argument("--quick", action="store_true",
+                        help="Mini-jeu (2 teintes, 2 tailles, 4 rotations, 4 positions) pour tester le pipeline")
+    return parser.parse_args(argv)
+
+
 if __name__ == "__main__":
-    rotation = np.array([i*np.pi/8 for i in range(16)])  
-    margin = 8
-    imsize =  32
-    x_positions = [8, 13, 18, 24]
-    y_positions = [13, 18]
-    positions = []
-    for x in x_positions:
-        for y in y_positions:
-            positions.append([x, y])
-        positions_array = np.array(positions)
+    args = parse_args()
+    positions = THESIS_POSITIONS
+    if args.quick:
+        args.n_colors, args.n_sizes, args.n_rotations = 2, 2, 4
+        positions = [8, 24]
+        if args.output_dir == str(paths.EVALSET_DIR):
+            args.output_dir = str(paths.DATA_DIR / "evaluation_set_quick")
+    rotation = np.array([i * 2 * np.pi / args.n_rotations for i in range(args.n_rotations)])
+    positions_array = np.array([[x, y] for x in positions for y in positions])
     generate_dataset(
-        rotations_array = rotation,
-        positions_array = positions_array,
-        output_dir="./evaluation_set_examples",
-        imsize=32, 
-        min_scale=10,
-        max_scale=14,
-        n_sizes=8,
-        n_colors=5,
+        rotations_array=rotation,
+        positions_array=positions_array,
+        output_dir=args.output_dir,
+        imsize=32,
+        min_scale=args.min_scale,
+        max_scale=args.max_scale,
+        n_sizes=args.n_sizes,
+        n_colors=args.n_colors,
         seed=0,
-        gen_col = "normal",
+        gen_col="normal",
     )

@@ -1,3 +1,20 @@
+"""Évaluation principale du mémoire (chapitre 3) : Régularité + Arbitraire.
+
+Pour chaque configuration de experiments/thesis_runs.yaml :
+  1. évalue chaque instance (seed) sur le jeu de test structuré : extraction des
+     couleurs reconstruites pour les chemins traduction / demi-cycle / cycle complet
+     et tests KS entre catégories d'attributs (critère de Régularité) ;
+  2. compare les instances deux à deux (tests KS) pour les attributs significatifs
+     (critère d'Arbitraire).
+
+    python SSD_eval/SSD_eval_arbitrary.py --all
+    python SSD_eval/SSD_eval_arbitrary.py --experiment high_cycles --experiment base_params
+    python SSD_eval/SSD_eval_arbitrary.py --all --use-original-names   # poids publiés (noms d'origine)
+"""
+import sys
+from pathlib import Path as _Path
+sys.path.insert(0, str(_Path(__file__).resolve().parent))
+import paths  # noqa: E402
 # --- Standard Imports ---
 import os
 import pickle
@@ -225,11 +242,11 @@ def run_evaluation(
         "domains": [
             LoadedDomainConfig(
                 domain_type=DomainModuleVariant.v_latents,
-                checkpoint_path=Path("/mnt/HD2/alexis_data/checkpoints_backup/checkpoints/domain_v.ckpt"), # Ensure path is correct
+                checkpoint_path=paths.DOMAIN_V_CKPT,
             ),
             LoadedDomainConfig(
                 domain_type=attr_domain_type,
-                checkpoint_path=Path("/mnt/HD2/alexis_data/checkpoints_backup/checkpoints/domain_attr.ckpt"), # Ensure path is correct
+                checkpoint_path=paths.DOMAIN_ATTR_CKPT,
                 args=my_hparams,
             ),
         ],
@@ -629,105 +646,71 @@ def compare_hue_distribution_for_bin_across_models(
 #                     MAIN EXECUTION
 # ======================================================
 
-ablated_cycle_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High_cycle - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 1) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 2) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    # { "run_id": "colored0", "full_attr": True, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(colored) High cycle (10) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"},
-]
-
-ablated_contrastive_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed1) HCo (1) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 2) H_Co (10) v5/checkpoints/last.ckpt" },
-    # { "run_id": "colored0", "full_attr": True, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt"},
-]
-ablated_translation_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High translation (10) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 1) High_Translation (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 2) H_T (10) v5/checkpoints/last.ckpt" },
-    # { "run_id": "colored0", "full_attr": True, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/last.ckpt"},
-]
-base_configs = [
-        { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": f"/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/Base_params - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" }, # Replace!
-        { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": f"/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 1) Base_params - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-        { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 2) Base_params - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" }, # Replace!
-        # { "run_id": "colored", "full_attr": True, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(colored) Base_params - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" }, # Replace!
-    ]
-
-high_alpha_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/High alpha 5 (color) - corrected v5 (Logsoftmax --> exp --> log)/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 1) H_alpha (5) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(seed 2) H_alpha (5) v5/checkpoints/last.ckpt" },
-    # { "run_id": "colored", "full_attr": True, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_alpha (5) v5/checkpoints/last.ckpt"},
-]
-# corrected model configs
-
-high_contrastive_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 0) (bis) High_contrastive (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 1) (bis) High_contrastive (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 2) (bis) High_contrastive (10) v5/checkpoints/last.ckpt" },
-    # { "run_id": "colored0", "full_attr": True,"gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) High_contrastive (1) v5/checkpoints/last.ckpt"}
-]
-high_cycle_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 0) High_cycles (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 1) (bis) High_cycles (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 2) High_cycles (10) v5/checkpoints/epoch=1225.ckpt" },
-    # { "run_id": "colored0", "full_attr": True, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(colored) High_cycle (10) v5/checkpoints/last.ckpt"},
-]
-
-high_translation_configs = [
-    { "run_id": "seed0", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 0) (ter) High_translation (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed1", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 1) High_Translation (10) v5/checkpoints/last.ckpt" },
-    { "run_id": "seed2", "full_attr": False, "gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 2) (ter) High_translation (10) v5/checkpoints/last.ckpt" },
-    # { "run_id": "colored0", "full_attr": True,"gw_checkpoint_path": "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Colored) H_T (10) v5/checkpoints/last.ckpt"},
-]
+def load_thesis_runs(experiments=None, include_control=False, use_original_names=False):
+    """Construit [(MODEL_VERSION, [config, ...]), ...] à partir de experiments/thesis_runs.yaml."""
+    import yaml
+    with open(paths.THESIS_RUNS_FILE) as f:
+        manifest = yaml.safe_load(f)["experiments"]
+    selected = experiments or list(manifest)
+    out = []
+    for exp_name in selected:
+        if exp_name not in manifest:
+            raise SystemExit(f"Expérience inconnue : {exp_name}. Choix : {list(manifest)}")
+        exp = manifest[exp_name]
+        entries = [(r, False) for r in exp["runs"]]
+        if include_control and exp.get("control"):
+            entries.append((exp["control"], True))
+        configs = []
+        for run, full_attr in entries:
+            run_dir = run["original_run_name"] if use_original_names else run["run_dir"]
+            ckpt = run.get("original_ckpt", run["ckpt"]) if use_original_names else run["ckpt"]
+            configs.append({
+                "run_id": run["run_id"],
+                "full_attr": full_attr,
+                "gw_checkpoint_path": str(paths.gw_checkpoint(run_dir, ckpt)),
+            })
+        out.append((exp_name, configs))
+    return out
 
 
-
-# Define all model versions to evaluate
-REVERB_N = 1
-model_versions_and_configs = [
-    ("High_cycle_v5", high_cycle_configs),
-    ("Base_params_v5", base_configs),
-    ("High_alpha_v5", high_alpha_configs),
-    ("High_contrastive_v5", high_contrastive_configs),
-    ("High_translation_v5", high_translation_configs)
-]
-
-# REVERB_N = 2
-# model_versions_and_configs = [
-#     # ("Base_params_v5_n=2", base_configs),
-#     ("High_cycle_v5_n=2", high_cycle_configs),
-#     # ("High_contrastive_v5_n=2", high_contrastive_configs),
-#     # ("High_alpha_v5_n=2", high_alpha_configs),
-#     ("High_translation_v5_n=2", high_translation_configs)
-# ]
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--all", action="store_true", help="Évaluer les 5 configurations du mémoire")
+    group.add_argument("--experiment", action="append", help="Configuration(s) à évaluer (répétable)")
+    parser.add_argument("--include-control", action="store_true",
+                        help="Ajouter le Modèle Complet aux comparaisons inter-instances (non utilisé dans le mémoire)")
+    parser.add_argument("--use-original-names", action="store_true",
+                        help="Chercher les checkpoints sous leurs noms de dossiers d'origine (poids publiés)")
+    parser.add_argument("--dataset-csv", default=str(paths.EVALSET_DIR / "attributes.csv"))
+    parser.add_argument("--output-dir", default=str(paths.RESULTS_DIR / "arbitrary"))
+    parser.add_argument("--num-bins", type=int, default=15, help="Bins des histogrammes (15 dans le mémoire)")
+    parser.add_argument("--reverb-n", type=int, default=1,
+                        help="Nombre de passages successifs dans le GW (1 dans le mémoire)")
+    parser.add_argument("--parallel", action="store_true")
+    return parser.parse_args(argv)
 
 
-# REVERB_N = 3
-# model_versions_and_configs_n3 = [
-#     ("Base_params_v5_n=3", base_configs),
-#     ("High_cycle_v5_n=3", high_cycle_configs),
-#     ("High_contrastive_v5_n=3", high_contrastive_configs),
-#     ("High_alpha_v5_n=3", high_alpha_configs),
-#     ("High_translation_v5_n=3", high_translation_configs)
-# ]
-
-# model_versions_and_configs = model_versions_and_configs_n3
-
-
-DATASET_CSV = "./evaluation_set_FINAL/attributes.csv"
 NUM_BINS = 15
-PARALLEL = False # Set to True for parallel processing
+PARALLEL = False
 
 if __name__ == "__main__":
+    args = parse_args()
+    NUM_BINS = args.num_bins
+    PARALLEL = args.parallel
+    REVERB_N = args.reverb_n
+    DATASET_CSV = args.dataset_csv
+    model_versions_and_configs = load_thesis_runs(
+        None if args.all else args.experiment,
+        include_control=args.include_control,
+        use_original_names=args.use_original_names,
+    )
     for MODEL_VERSION, model_configs in model_versions_and_configs:
         LOGGER.info(f"\n\n==========================================")
         LOGGER.info(f"=== EVALUATING MODEL VERSION: {MODEL_VERSION} ===")
         LOGGER.info(f"==========================================\n")
         
-        evaluation_parent_dir = f"./FINAL_AVEC_BRUIT_0.01_v4/{MODEL_VERSION}"
+        evaluation_parent_dir = f"{args.output_dir}/{MODEL_VERSION}"
         
         if len(model_configs) < 2:
             LOGGER.error(f"Need >= 2 model configs for {MODEL_VERSION}. Skipping.")

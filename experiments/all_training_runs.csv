@@ -1,0 +1,47 @@
+run_name,seed,exclude_colors,alpha,temperature,batch_size,max_steps,lr_base,max_lr,weight_decay,encoder_size,encoder_layers,decoder_size,decoder_layers,latent_dim,wandb_run_id,checkpoints
+(Colored) Base params - corrected v5 (Logsoftmax --> exp --> log),,,,,,,,,,,,,,,,epoch=624.ckpt last.ckpt
+(Colored) H_T (10) v5,0,false,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,2eeamagz,epoch=0.ckpt epoch=1233.ckpt epoch=599.ckpt last-v1.ckpt last-v2.ckpt last.ckpt
+(Colored) H_alpha (5) v5,1,false,5,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,1cpskxby,epoch=1208.ckpt last.ckpt
+(Colored) High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log),1,false,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,7m21eki9,epoch=611.ckpt last.ckpt
+(Colored) High_contrastive (1) v5,2,false,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,060a6i4a,epoch=46.ckpt epoch=605.ckpt last-v1.ckpt last.ckpt
+(Seed 0) (bis) High_contrastive (10) v5,0,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,kp650hiv,epoch=1231.ckpt last.ckpt
+(Seed 0) (bis) High_translations (10) v5,0,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,ap3nftgc,epoch=1226.ckpt last.ckpt
+(Seed 0) (ter) High_translation (10) v5,0,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,3kcbmg6o,epoch=1167.ckpt last.ckpt
+(Seed 0) High_contrastive (1) v5,,,,,,,,,,,,,,,,epoch=232.ckpt last.ckpt
+(Seed 0) High_cycles (10) v5,0,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,bn4zctp4,epoch=1214.ckpt last.ckpt
+(Seed 0) High_translations (10) v5,0,true,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,be44ghdy,epoch=624.ckpt epoch=9.ckpt last-v1.ckpt last.ckpt
+(Seed 1) (bis) High_contrastive (10) v5,1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,76nqilzy,epoch=1224.ckpt last.ckpt
+(Seed 1) (bis) High_cycles (10) v5,1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,g0cm7379,epoch=1222.ckpt last.ckpt
+(Seed 1) High_Translation (10) v5,1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,lqt8stfk,epoch=888.ckpt last.ckpt
+(Seed 1) High_contrastive (1) v5,,,,,,,,,,,,,,,,epoch=194.ckpt last.ckpt
+(Seed 1) High_cycles (10) v5 _yaml,1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,8td871ey,epoch=688.ckpt last.ckpt
+(Seed 1) High_cycles (10) v5,1,true,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,1yrp20x4,epoch=63.ckpt last.ckpt
+(Seed 2) (bis) High_contrastive (10) v5,2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,eia4lyu3,epoch=1224.ckpt last.ckpt
+(Seed 2) (bis) High_translations (10) v5,2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,amebrf5x,epoch=0.ckpt epoch=1.ckpt epoch=1224.ckpt epoch=13.ckpt epoch=9.ckpt last-v1.ckpt last-v2.ckpt last-v3.ckpt last-v4.ckpt last.ckpt
+(Seed 2) (ter) High_translation (10) v5,2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,1obnnfxk,epoch=948.ckpt last.ckpt
+(Seed 2) High_contrastive (1) v5,,,,,,,,,,,,,,,,epoch=184.ckpt last.ckpt
+(Seed 2) High_cycles (10) v5,2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,97aj2j6y,epoch=1225.ckpt epoch=2.ckpt epoch=346.ckpt last-v1.ckpt last-v2.ckpt last.ckpt
+(Seed 2) High_translations (10) v5,2,true,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,0xdvjopg,epoch=1.ckpt epoch=641.ckpt last-v1.ckpt last.ckpt
+(colored) Base_params - corrected v5 (Logsoftmax --> exp --> log),,,,,,,,,,,,,,,,epoch=871.ckpt last.ckpt
+(colored) High cycle (10) - corrected v5 (Logsoftmax --> exp --> log),0,false,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,bghi8dhk,epoch=1146.ckpt last.ckpt
+(colored) High_cycle (10) v5,0,false,1,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,pol1ll5f,epoch=616.ckpt last.ckpt
+(seed 1) Base params - corrected v5 (Logsoftmax --> exp --> log),,,,,,,,,,,,,,,,epoch=29.ckpt last.ckpt
+(seed 1) Base_params - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,6n56zyp1,epoch=849.ckpt last.ckpt
+(seed 1) H_Co (10) v5,,,,,,,,,,,,,,,,epoch=14.ckpt last.ckpt
+(seed 1) H_T (10) v5,1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,dt9nx38p,epoch=1230.ckpt last.ckpt
+(seed 1) H_alpha (5) v5,1,true,5,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,mtolt0g5,epoch=1209.ckpt last.ckpt
+(seed 1) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,328g9wxq,epoch=1205.ckpt epoch=71.ckpt last-v1.ckpt last.ckpt
+(seed 1) High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,5tdfqdmd,epoch=389.ckpt last.ckpt
+(seed 2) Base_params - corrected v5 (Logsoftmax --> exp --> log),2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,4s0q8ov9,epoch=1231.ckpt last.ckpt
+(seed 2) H_Co (10) v5,2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,katkqupy,epoch=1227.ckpt last.ckpt
+(seed 2) H_T (10) v5,2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,1vq33zd7,epoch=1229.ckpt last.ckpt
+(seed 2) H_alpha (5) v5,2,true,5,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,vpuuc6ik,epoch=1211.ckpt last.ckpt
+(seed 2) High Cycle (10) - corrected v5 (Logsoftmax --> exp --> log),2,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,ty8t2tkm,epoch=1200.ckpt epoch=59.ckpt last-v1.ckpt last.ckpt
+(seed0) High_alpha (10) v5,0,true,10,1,2056,150000,1e-05,0.00015,1e-06,256,2,256,2,12,7mn555qy,epoch=616.ckpt last.ckpt
+(seed1) HCo (1) - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,220000,0.00013,0.00015,1e-06,256,2,256,2,12,9ui0vhhu,epoch=0.ckpt epoch=902.ckpt last-v1.ckpt last.ckpt
+Base_params - corrected v5 (Logsoftmax --> exp --> log),0,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,tcudwzgz,epoch=1233.ckpt last.ckpt
+High alpha 5 (color) - corrected v5 (Logsoftmax --> exp --> log),1,true,5,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,gwu7ao0z,epoch=1230.ckpt last.ckpt
+High contrastive (1) - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,0mjccv8b,epoch=1232.ckpt last.ckpt
+High contrastive - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,lzh2lkdv,epoch=3.ckpt last.ckpt
+High translation (10) - corrected v5 (Logsoftmax --> exp --> log),1,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,ojo028ta,epoch=1232.ckpt last.ckpt
+High_cycle - corrected v5 (Logsoftmax --> exp --> log),0,true,1,1,2056,300000,1e-05,0.00015,1e-06,256,2,256,2,12,41hq3456,epoch=1215.ckpt last.ckpt

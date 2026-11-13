@@ -1,23 +1,31 @@
+"""Entraînement d'un Global Workspace (mémoire §2.2).
+
+Exemples :
+    # Vide sémantique (couleur retirée des attributs), configuration 4, seed 0
+    python SSD_eval/SSD_Train.py --experiment high_cycles --seed 0
+
+    # Modèle Complet de contrôle (couleur présente dans les attributs)
+    python SSD_eval/SSD_Train.py --experiment high_cycles --seed 0 --with-colors
+
+    # Configuration 5 (poids x5 sur les attributs continus)
+    python SSD_eval/SSD_Train.py --experiment high_alpha --attr-alpha 5 --seed 0
+"""
+
+import argparse
+import os
+import sys
+from pathlib import Path
+
 import torch
-from torch.utils.data import default_collate
-from shimmer_ssd.config import load_config
 import torch.nn as nn
 import wandb
 from lightning.pytorch.callbacks import LearningRateMonitor
-import numpy as np
-from torch.utils.data import Subset
-from typing import Any, Dict, List, Tuple
-from simple_shapes_dataset import SimpleShapesDataset
-import pandas as pd
-from simple_shapes_dataset import SimpleShapesDataset, get_default_domains
-from torch.utils.data import Subset # Pour sélectionner des indices spécifiques
-# from torch.utils.data import default_collate # déjà importé
-from pathlib import Path
-from torchvision.transforms import Compose # Pour combiner les transformations
-from torchvision.transforms import ToTensor # Pour utiliser ToTensor
-import numpy as np # déjà importé
+from torch.utils.data import default_collate
 
-# from SSD_Train_copy import setup_logger_and_callbacks_ref
+from shimmer_ssd.config import load_config
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import paths  # noqa: E402
 
 def custom_collate_factory(exclude_colors: bool):
     """Returns a collate function that optionally removes color info."""
@@ -73,7 +81,7 @@ def setup_data_module(config, exclude_colors=True):
     )
 
 
-def setup_global_workspace(config, hparams, exclude_colors=True, apply_custom_init=True, load_from_checkpoint=True):
+def setup_global_workspace(config, hparams, exclude_colors=True, apply_custom_init=True, load_from_checkpoint=None):
     """
     Set up the global workspace model.
     
@@ -92,15 +100,14 @@ def setup_global_workspace(config, hparams, exclude_colors=True, apply_custom_in
     from torch.optim.optimizer import Optimizer
     
     # Set up domain configurations
-    checkpoint_path = Path("./checkpoints")
     domains = [
         LoadedDomainConfig(
             domain_type=DomainModuleVariant.v_latents,
-            checkpoint_path= "/mnt/HD2/alexis_data/checkpoints_backup/checkpoints/domain_v.ckpt"
+            checkpoint_path=paths.DOMAIN_V_CKPT,
         ),
         LoadedDomainConfig(
             domain_type=DomainModuleVariant.attr_legacy_no_color if exclude_colors else DomainModuleVariant.attr_legacy,
-            checkpoint_path=checkpoint_path / "domain_attr.ckpt",
+            checkpoint_path=paths.DOMAIN_ATTR_CKPT,
             args=hparams,
         ),
     ]
@@ -165,26 +172,19 @@ def setup_global_workspace(config, hparams, exclude_colors=True, apply_custom_in
         scheduler=get_scheduler,
     )
     
-    # Load from checkpoint if provided
+    # Optionnel : reprendre les poids d'un GW existant (chemin vers un .ckpt)
     if load_from_checkpoint:
-        print(f"Loading model from checkpoint: {load_from_checkpoint}")
-        # Load default weights
-        CHECKPOINT_PATH = "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors/(Seed 2) High_translations (10) v5/checkpoints/last.ckpt"
+        print(f"Loading weights from checkpoint: {load_from_checkpoint}")
         global_workspace = GlobalWorkspace2Domains.load_from_checkpoint(
-        CHECKPOINT_PATH,
-        domain_mods=domain_modules,
-        gw_encoders=gw_encoders,
-        gw_decoders=gw_decoders,
-    )
-        # Reset the optimizer and scheduler
+            load_from_checkpoint,
+            domain_mods=domain_modules,
+            gw_encoders=gw_encoders,
+            gw_decoders=gw_decoders,
+        )
         global_workspace.optimizer = None
         global_workspace.scheduler = None
-        # Reset the callbacks
         global_workspace.callbacks = None
-        
-        # Reset the training state
-        print(f"Loaded default weights from {CHECKPOINT_PATH}")
-    
+
     return global_workspace, domain_modules
 
 
@@ -208,7 +208,7 @@ def setup_logger_and_callbacks(config,
     from lightning.pytorch.callbacks import ModelCheckpoint
     from shimmer_ssd.logging import LogGWImagesCallback
     
-    output_dir = config.default_root_dir / "training_logs" / project_name / experiment_name
+    output_dir = Path(config.default_root_dir) / experiment_name
 
     # Set up logger
     logger = WandbLogger(
@@ -216,7 +216,9 @@ def setup_logger_and_callbacks(config,
             project=project_name,
             save_dir=output_dir,
             log_model=False, # Usually handled by ModelCheckpoint
-            
+            # Mode hors-ligne si aucune clé W&B n'est configurée
+            offline=not os.environ.get("WANDB_API_KEY"),
+
         )
     
 
@@ -268,7 +270,7 @@ def setup_logger_and_callbacks(config,
     return logger, callbacks, version_dir
 
 
-def train_global_workspace(config, custom_hparams=None, experiment_name="debugging", project_name="shimmer-ssd_debugging", apply_custom_init=True, exclude_colors=True, load_from_checkpoint=True):
+def train_global_workspace(config, custom_hparams=None, experiment_name="debugging", project_name="gwt-synesthesia", apply_custom_init=True, exclude_colors=True, load_from_checkpoint=None):
     """
     Train a global workspace model with the given configuration.
     
@@ -342,28 +344,50 @@ def train_global_workspace(config, custom_hparams=None, experiment_name="debuggi
     
     return global_workspace, checkpoint_dir
 
-torch.autograd.set_detect_anomaly(True)
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--experiment", required=True,
+                        help="Nom du fichier de config (sans .yaml) dans config/, ex. base_params, high_cycles")
+    parser.add_argument("--seed", type=int, default=0, help="Graine (initialisation Kaiming + data)")
+    parser.add_argument("--with-colors", action="store_true",
+                        help="Modèle Complet (contrôle) : garder R,G,B dans le vecteur d'attributs")
+    parser.add_argument("--attr-alpha", type=float, default=1.0,
+                        help="Poids relatif des attributs continus dans la loss attributs (5 pour la configuration 5)")
+    parser.add_argument("--temperature", type=float, default=1.0)
+    parser.add_argument("--max-steps", type=int, default=None, help="Surcharge training.max_steps")
+    parser.add_argument("--run-name", default=None,
+                        help="Nom du dossier de sortie (défaut : <experiment>_seed<seed> ou <experiment>_control)")
+    parser.add_argument("--project", default="gwt-synesthesia", help="Projet W&B")
+    parser.add_argument("--resume-weights", default=None, help="(optionnel) .ckpt de GW dont repartir")
+    parser.add_argument("--detect-anomaly", action="store_true",
+                        help="Active torch.autograd.set_detect_anomaly (activé lors des runs d'origine, très lent)")
+    return parser.parse_args(argv)
+
 
 if __name__ == "__main__":
+    args = parse_args()
+    if args.detect_anomaly:
+        torch.autograd.set_detect_anomaly(True)
 
-    config = load_config("./config", use_cli=False, load_files=["high_cycles.yaml"])
-    config.seed = 0
-    # Set up alpha and temperature
-    custom_hparams = {
-        "temperature": 1,
-        "alpha": 10
-    }
-    config.training.max_steps = 150000
-    # config.global_workspace.loss_coefficients["translations"] = 10
-    # Train the model with optional custom hyperparameters
-    model, checkpoint_path = train_global_workspace(
-        config, 
-        custom_hparams=custom_hparams,
-        project_name="Removing_colors",
-        experiment_name="(seed0) High_alpha (10) v5",
-        apply_custom_init=True,
-        exclude_colors=True,
-        load_from_checkpoint=False
+    config = load_config(paths.CONFIG_DIR, use_cli=False, load_files=[f"{args.experiment}.yaml"])
+    config.seed = args.seed
+    config.dataset.path = paths.DATASET_DIR
+    config.default_root_dir = paths.RUNS_DIR
+    if args.max_steps is not None:
+        config.training.max_steps = args.max_steps
+
+    exclude_colors = not args.with_colors
+    run_name = args.run_name or (
+        f"{args.experiment}_control" if args.with_colors else f"{args.experiment}_seed{args.seed}"
     )
 
-
+    model, checkpoint_dir = train_global_workspace(
+        config,
+        custom_hparams={"temperature": args.temperature, "alpha": args.attr_alpha},
+        project_name=args.project,
+        experiment_name=run_name,
+        apply_custom_init=True,
+        exclude_colors=exclude_colors,
+        load_from_checkpoint=args.resume_weights,
+    )
+    print(f"Done. Checkpoints in {checkpoint_dir}")

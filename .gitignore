@@ -1,4 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
 
-/wandb
-reverberation_reconstruction_1152.mp4
-/__pycache__/
+# Données, poids et résultats (trop volumineux : téléchargés ou régénérés)
+/data/
+/checkpoints/
+/results/
+/wandb/
+*.ckpt
+*.npy
+*.mp4
+
+# Réglages locaux (ne jamais commiter de secrets)
+config/local.yaml
+.env
