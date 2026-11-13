@@ -226,6 +226,26 @@ et ajoute un fichier `SHA256SUMS`. Publier l'archive sur Zenodo (DOI citable) ou
 GitHub Release, puis renseigner l'URL dans `scripts/download_checkpoints.sh`.
 </details>
 
+### Tableaux B.2, 3.1 et E.1
+
+Les scores d'arbitraire (« 2/2 », « 5/16 »…) et les pourcentages de régularité sont
+calculés à partir des résultats d'évaluation :
+
+```bash
+python experiments/make_tables.py results/arbitrary
+```
+
+```bash
+python experiments/make_tables.py results/arbitrary_shape_noise_0.01
+```
+
+Régularité : KS significatif sur la teinte **et** au moins un canal RGB ; arbitraire : KS
+significatif sur la teinte entre au moins deux instances. Le dénominateur (« catégories
+ayant contribué à la régularité, sur les trois instances ») se lit par défaut comme
+l'union des catégories sur les instances (`--denominator union`, cohérent avec les
+dénominateurs ≤ 16 des tableaux pour l'orientation) ; `--denominator sum` donne la somme
+par instance. `--details` liste les catégories retenues pour chaque instance.
+
 ### Annexe E : « Mais où est encodée la saturation ? »
 
 L'annexe E refait le test d'arbitraire en ajoutant un petit bruit gaussien
@@ -259,6 +279,7 @@ bash scripts/evaluate_annex_E.sh
 | §2.3.1 Extraction des couleurs | `SSD_eval/SSD_utils.py`, `HueShapeAnalyzer` (`SSD_eval/SSD_H_evaluation_functions.py`) |
 | §2.3.2 Critère de Régularité | `SSD_eval/SSD_eval_regularity.py`, `HueShapeAnalyzer.analyze_dataset` |
 | §2.3.2 Critère d'Arbitraire | `SSD_eval/SSD_eval_arbitrary.py` |
+| Tableaux B.2, 3.1, E.1 | `experiments/make_tables.py` |
 | Annexe E (Traduction Bruitée, tableau E.1) | `scripts/evaluate_annex_E.sh`, `--shape-noise` dans `SSD_eval/SSD_eval_arbitrary.py`, `SHAPE_NOISE_SCALE` dans `SSD_eval/SSD_utils.py` |
 | §2.3.3 Les 5 configurations × 3 instances | `config/`, `experiments/thesis_runs.yaml`, `scripts/train_all.sh` |
 | Figures du chapitre 3 | `SSD_eval/SSD_visualize_functions.py`, `archive/scripts/Figures_*.py` |
