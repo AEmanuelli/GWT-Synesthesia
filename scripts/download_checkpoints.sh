@@ -14,7 +14,8 @@ import json, sys
 files = json.load(sys.stdin)["files"]
 tars = [f for f in files if f["key"].endswith(".tar.gz")]
 if len(tars) != 1:
-    sys.exit(f"Archive .tar.gz introuvable ou multiple dans le record : {[f[\"key\"] for f in files]}")
+    keys = [f["key"] for f in files]
+    sys.exit("Archive .tar.gz introuvable ou multiple dans le record : " + str(keys))
 print(tars[0]["links"]["self"])
 ')"
 fi
