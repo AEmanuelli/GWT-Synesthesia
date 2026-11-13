@@ -284,12 +284,20 @@ docs/                    mémoire (PDF)
   « (Seed 0) (bis) High_translations (10) » a δ = 10 et « High translation (10) -
   corrected » a α = 1. Le manifeste `experiments/thesis_runs.yaml` stocke pour chaque
   run l'empreinte attendue (`expect`), vérifiable avec `scripts/identify_checkpoints.py`.
-- **Contrôles à confirmer.** Le contrôle de la configuration 3 (« (Colored)
-  High_contrastive (1) v5 ») s'est arrêté à 11 421 pas, et celui de la configuration 4
-  a suivi un planning de 150 000 pas. Des runs de contrôle plus complets existent
-  (« (Colored) High contrastive (1) - corrected v5 », « (colored) High cycle (10) -
-  corrected v5 »). Plusieurs runs « vide sémantique » se sont aussi arrêtés avant
-  300 000 pas (ex. base seed 1 : 206 550 pas).
+- **Contrôles (Modèles Complets).** Les contrôles des configurations 3 et 4 ont été
+  entraînés sur un planning de 150 000 pas (et non 300 000). Le dossier
+  « (Colored) High_contrastive (1) v5 » contient deux lancements : le checkpoint du
+  mémoire est `epoch=605.ckpt` (le `last.ckpt` est une relance avortée à l'epoch 46).
+  Plusieurs runs « vide sémantique » se sont arrêtés avant 300 000 pas
+  (ex. base seed 1 : 206 550 pas).
+- **Vérification par le tableau B.1.** `python experiments/check_table_B1.py
+  export_wandb.csv` recalcule, à partir d'un export CSV de W&B, les losses de validation
+  moyennes du tableau B.1 pour les runs du manifeste. Quatre contrôles sur cinq
+  correspondent au millième près sur les 5 losses (le 5ᵉ, H_T, à ±0,002) ; les moyennes
+  « vide sémantique » sont à 1–2 % près (l'export W&B donne la dernière valeur loggée,
+  le mémoire a pu en lire une autre). Pour la configuration 1, le tableau correspond
+  exactement à la moyenne des seules graines 1 et 2 : il a vraisemblablement été calculé
+  avant l'ajout de la 3ᵉ instance.
 - **Graines de la configuration 5.** Deux des trois instances d'origine ont été lancées
   avec `seed=1` (voir `experiments/all_training_runs.csv`). La réplication utilise
   les graines 0, 1, 2.

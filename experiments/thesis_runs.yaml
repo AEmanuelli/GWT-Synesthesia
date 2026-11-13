@@ -16,8 +16,8 @@
 # `expect` = empreinte du checkpoint d'origine (epoch, pas, coefficients de loss,
 #   couleur dans les attributs, durée du planning de LR), relevée dans les fichiers
 #   eux-mêmes. scripts/identify_checkpoints.py s'en sert pour retrouver les fichiers.
-# À CONFIRMER : les contrôles high_contrastive (arrêté à 11 421 pas) et high_cycles
-#   (planning de 150 000 pas) — voir README §8.
+# Vérification : les losses de validation W&B de ces runs reproduisent le tableau B.1
+#   du mémoire (voir README §8 et experiments/check_table_B1.py).
 
 experiments:
   base_params:
@@ -72,7 +72,10 @@ experiments:
     control:
       {run_id: colored, seed: 2, run_dir: high_contrastive_control, ckpt: last.ckpt,
        original_run_name: "(Colored) High_contrastive (1) v5",
-       expect: {epoch: 46, global_step: 11421, loss_coefs: {translations: 1, contrastives: 1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 300000}}
+       # Le dossier contient 2 lancements : epoch=605 (run W&B 060a6i4a, celui du tableau B.1)
+       # et une relance avortée epoch=46 (last.ckpt). On prend le premier.
+       original_ckpt: "epoch=605.ckpt", wandb_run_id: 060a6i4a,
+       expect: {epoch: 605, global_step: 147258, loss_coefs: {translations: 1, contrastives: 1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 150000}}
 
   high_cycles:
     config: high_cycles.yaml
@@ -102,6 +105,7 @@ experiments:
       # propre, on utilise ici les graines 0, 1, 2.
       - {run_id: seed0, seed: 0, run_dir: high_alpha_seed0, ckpt: last.ckpt,
          original_run_name: "High alpha 5 (color) - corrected v5 (Logsoftmax --> exp --> log)",
+         wandb_name: "High alpha 5 - corrected v5 (Logsoftmax --> exp --> log)",
          original_seed: 1,
          expect: {epoch: 1230, global_step: 299133, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed1, seed: 1, run_dir: high_alpha_seed1, ckpt: last.ckpt,
