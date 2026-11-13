@@ -703,7 +703,7 @@ def process_analysis_attributes(
                 path_stats_summary[path_name]['total'] += 1
 
                 # Use our refactored _compare_distributions_between_bins function
-                metrics, flag = _compare_distributions_between_bins(
+                comparison = _compare_distributions_between_bins(
                     path_name=path_name,
                     attribute=attr,
                     bin1_name=bin1_name,
@@ -714,6 +714,10 @@ def process_analysis_attributes(
                     rgb=rgb,   # Pass the rgb paramete
                     conditioning=conditioning
                 )
+                if comparison is None:
+                    # Catégorie sans données valides (ex. mini-jeu de test) : comparaison ignorée
+                    continue
+                metrics, flag = comparison
 
                 bin_comparison_results_for_path[(bin1_name, bin2_name)] = metrics
                 

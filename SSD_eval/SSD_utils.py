@@ -9,6 +9,8 @@ from tqdm import tqdm
 import colorsys
 import os 
 import pickle
+import logging
+LOGGER = logging.getLogger(__name__)
 
 from torchvision.transforms import ToTensor
 from PIL import Image
@@ -1550,7 +1552,11 @@ def bin_h_processed_samples_with_paths(
     # Ajouter les exemples diversifiés au dictionnaire final
     examples_by_attr['diverse_examples'] = diverse_examples_collector
     print_diverse_examples_stats(examples_by_attr)
-    create_diverse_example_plate(examples_by_attr, save_path='diverse_examples_plate.png')
+    # Écrit dans le dossier de résultats (et non dans le dossier courant)
+    create_diverse_example_plate(
+        examples_by_attr,
+        save_path=os.path.join(os.environ.get("GWT_RESULTS_DIR", "results"), "diverse_examples_plate.png"),
+    )
 
 
 def create_diverse_example_plate(
