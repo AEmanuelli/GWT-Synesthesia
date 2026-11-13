@@ -186,12 +186,30 @@ reconstructions (critère d'Additionnalité, évalué qualitativement dans le m�
 
 ### Utiliser les poids du stage plutôt que ré-entraîner
 
-Si les poids d'origine sont publiés (voir §8), décompressez-les dans `checkpoints/runs/`
-sous leurs noms d'origine (colonne `original_run_name` du manifeste), puis :
+Les 20 Global Workspaces évalués dans le mémoire (5 configurations × 3 graines + 5
+contrôles) sont publiés dans une archive (voir `GWT_CKPT_URL` dans
+[`scripts/download_checkpoints.sh`](scripts/download_checkpoints.sh)) :
+
+```bash
+bash scripts/download_checkpoints.sh
+```
 
 ```bash
 bash scripts/evaluate_all.sh --use-original-names
 ```
+
+<details><summary>Pour l'auteur : publier l'archive</summary>
+
+Sur la machine contenant les checkpoints d'origine :
+
+```bash
+python scripts/package_checkpoints.py --src "/chemin/vers/training_logs/Removing_colors" --out gwt_synesthesia_checkpoints.tar.gz
+```
+
+Le script vérifie chaque fichier (archive torch complète), suit les liens `last.ckpt`
+et ajoute un fichier `SHA256SUMS`. Publier l'archive sur Zenodo (DOI citable) ou en
+GitHub Release, puis renseigner l'URL dans `scripts/download_checkpoints.sh`.
+</details>
 
 ## 6. Correspondance mémoire ↔ code
 
@@ -230,10 +248,9 @@ docs/                    mémoire (PDF)
 ## 8. Écarts connus et points d'attention
 
 - **Poids entraînés.** Les fichiers `.ckpt` présents dans l'historique git (dossier
-  `checkpoints/` des commits précédents) sont **tronqués** (archives zip incomplètes,
-  toutes coupées à 2,5–2,75 Mo) et ne peuvent pas être chargés. Ils ont été retirés de
-  la branche. Les poids complets doivent être republiés (ex. GitHub Release ou Zenodo)
-  pour permettre une évaluation sans ré-entraînement.
+  `checkpoints/` des commits précédents) sont **tronqués** (archives zip incomplètes)
+  et ne peuvent pas être chargés. Ils ont été retirés ; utiliser l'archive publiée
+  (voir §5).
 - **Fork `shimmer-ssd`.** Voir §2 : sans cette version modifiée, l'entraînement et
   l'évaluation ne peuvent pas s'exécuter.
 - **`shimmer` possiblement modifié aussi.** Le code d'origine importait
