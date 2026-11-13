@@ -82,17 +82,17 @@ conda activate gwt-synesthesia
 ```
 
 ```bash
-pip install --no-deps "git+https://github.com/AEmanuelli/shimmer-ssd.git@8e615310cab3488e5e79a4ad8b898bde52104aca"
+pip install --no-deps "git+https://github.com/AEmanuelli/shimmer-ssd.git@21f8271f163ec72950e147ebe1e192d467ef7f2a"
 ```
 
 > **Bibliothèques modifiées.** Ce projet utilise les forks de l'auteur des trois
-> bibliothèques du laboratoire, figés sur leur commit « Final » du 24/06/2025 :
+> bibliothèques du laboratoire, figés sur leur état pendant les entraînements (mai 2025) :
 >
 > | Fork | Commit | Modifications par rapport à ruflab |
 > |---|---|---|
-> | [`AEmanuelli/shimmer-ssd`](https://github.com/AEmanuelli/shimmer-ssd) | `8e61531` | variante de domaine `attr_legacy_no_color`, module attributs paramétré par `alpha`/`temperature`, décodeur attributs dédié, option `exclude_colors` du callback d'images |
-> | [`AEmanuelli/shimmer`](https://github.com/AEmanuelli/shimmer) | `b03860e` | `GWDecoder_legacy` (`gw_module.py`) ; pondération des losses de cycle (`losses.py`, voir §8) |
-> | [`AEmanuelli/simple-shapes-dataset`](https://github.com/AEmanuelli/simple-shapes-dataset) | `a6ced8c` | option `use_color_attributes` du data module ; option de téléchargement d'une version allégée |
+> | [`AEmanuelli/shimmer-ssd`](https://github.com/AEmanuelli/shimmer-ssd) | `21f8271` (11/04/2025) | variante de domaine `attr_legacy_no_color`, module attributs paramétré par `alpha`/`temperature`, décodeur attributs dédié, option `exclude_colors` du callback d'images |
+> | [`AEmanuelli/shimmer`](https://github.com/AEmanuelli/shimmer) | `fdb8e2f` (28/02/2025) | décodeur attributs `GWDecoder_legacy` (`gw_module.py`) |
+> | [`AEmanuelli/simple-shapes-dataset`](https://github.com/AEmanuelli/simple-shapes-dataset) | `34d45cd` (27/03/2025) | option `use_color_attributes` du data module ; option de téléchargement d'une version allégée |
 >
 > `setup_env.sh` installe les trois et vérifie que la bonne version de `shimmer-ssd` est
 > présente.
@@ -266,14 +266,14 @@ docs/                    mémoire (PDF)
   `checkpoints/` des commits précédents) sont **tronqués** (archives zip incomplètes)
   et ne peuvent pas être chargés. Ils ont été retirés ; utiliser l'archive publiée
   (voir §5).
-- **Pondération des losses de cycle (à vérifier).** Le fork `shimmer` (commit « Final »
-  du 24/06/2025, postérieur aux entraînements de mai) multiplie par 3 le poids de la 2ᵉ
-  loss de cycle dans `broadcast_loss` (moyenne renormalisée : poids 0,5 et 1,5). Le
-  mémoire ne le mentionne pas. Si les runs du mémoire ont été entraînés sans cette
-  pondération, il faut épingler le commit précédent `fdb8e2f` dans `requirements.txt`.
-  Test : dans W&B, comparer `val/cycles` aux deux métriques détaillées
-  `val/from_…_through_…_loss` d'un même run : moyenne simple sans pondération,
-  0,5 × la 1ʳᵉ + 1,5 × la 2ᵉ avec.
+- **Commits « Final » des forks (24/06/2025) non utilisés.** Postérieurs aux
+  entraînements, ils changent la loss : `shimmer` pondère ×3 la 2ᵉ loss de cycle et
+  `shimmer-ssd` pondère ×2 la rotation dans la loss des attributs. Les logs W&B montrent
+  qu'aucune des deux n'était active : sur les 1 235 points de validation de
+  « (Seed 0) High_cycles (10) v5 », `val/cycles` est la moyenne simple des deux cycles
+  (écart max 3·10⁻⁸) et la loss de cycle des attributs vaut `loss_attr + loss_cat`
+  (écart max 7·10⁻⁹). Les forks sont donc figés sur les commits précédents. De plus,
+  les deux commits « Final » sont incompatibles entre eux (`downlad_file` renommé).
 - **Taux d'apprentissage (erratum du mémoire).** Le mémoire (§2.2.3) indique un
   OneCycleLR de 2.6e-5 à 2e-6. Les 20 checkpoints évalués contiennent l'état de leur
   scheduler : `base_lrs = 3.95e-4`, `max_lr = 1.5e-4`, dernier LR ≈ 7.9e-5 en fin de

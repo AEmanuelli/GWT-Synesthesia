@@ -26,16 +26,16 @@ pyyaml>=6.0
 wandb==0.19.9
 ipywidgets>=8.0      # notebooks
 
-# Forks de l'auteur (versions modifiées pendant le stage), figés sur le commit "Final"
-# du 24/06/2025. Voir README §2 pour la liste des modifications.
-shimmer @ git+https://github.com/AEmanuelli/shimmer.git@b03860e742c5615a7b2509d08168c7251be389d4
-simple-shapes-dataset @ git+https://github.com/AEmanuelli/simple-shapes-dataset.git@a6ced8c4191f07b73b422818b6e14dba16e52d4d
+# Forks de l'auteur (versions modifiées pendant le stage), figés sur leur état pendant
+# les entraînements de mai 2025 (vérifié sur les logs W&B, voir README §2 et §8).
+shimmer @ git+https://github.com/AEmanuelli/shimmer.git@fdb8e2f4ae151311295889fc5cbd49b121055152
+simple-shapes-dataset @ git+https://github.com/AEmanuelli/simple-shapes-dataset.git@34d45cdf4fcf0e9ef1d074fb20d89769bf73d9d2
 # Bibliothèques du laboratoire (ruflab)
 cfg-tools @ git+https://github.com/ruflab/cfg-tools.git@4cdb0d0c2cd846381b7f2425299b25b3524ff151
 migrate-ckpt @ git+https://github.com/ruflab/migrate-ckpt.git@v0.2.0
 attributes-to-language @ git+https://github.com/ruflab/attributes-to-language.git@v0.4.0
 auto-sbatch @ git+https://github.com/ruflab/auto-sbatch.git@main
 
-# shimmer-ssd : fork de l'auteur (github.com/AEmanuelli/shimmer-ssd, commit 8e61531).
+# shimmer-ssd : fork de l'auteur (github.com/AEmanuelli/shimmer-ssd, commit 21f8271).
 # Il s'installe séparément avec --no-deps (scripts/setup_env.sh), car son pyproject
 # référence les forks ci-dessus sur @main, ce qui entrerait en conflit avec les commits figés.

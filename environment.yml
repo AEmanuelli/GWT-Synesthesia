@@ -1,5 +1,5 @@
 # conda env create -f environment.yml && conda activate gwt-synesthesia
-# puis : pip install --no-deps "git+https://github.com/AEmanuelli/shimmer-ssd.git@8e615310cab3488e5e79a4ad8b898bde52104aca"
+# puis : pip install --no-deps "git+https://github.com/AEmanuelli/shimmer-ssd.git@21f8271f163ec72950e147ebe1e192d467ef7f2a"
 name: gwt-synesthesia
 channels:
   - conda-forge
