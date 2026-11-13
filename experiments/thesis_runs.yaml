@@ -13,6 +13,11 @@
 #     avec experiments/all_training_runs.csv et les poids publiés.
 # `seed` = graine réellement enregistrée dans W&B pour ce run (voir all_training_runs.csv).
 # `ckpt` = fichier de checkpoint évalué dans le mémoire.
+# `expect` = empreinte du checkpoint d'origine (epoch, pas, coefficients de loss,
+#   couleur dans les attributs, durée du planning de LR), relevée dans les fichiers
+#   eux-mêmes. scripts/identify_checkpoints.py s'en sert pour retrouver les fichiers.
+# À CONFIRMER : les contrôles high_contrastive (arrêté à 11 421 pas) et high_cycles
+#   (planning de 150 000 pas) — voir README §8.
 
 experiments:
   base_params:
@@ -20,57 +25,73 @@ experiments:
     attr_alpha: 1
     runs:
       - {run_id: seed0, seed: 0, run_dir: base_params_seed0, ckpt: last.ckpt,
-         original_run_name: "Base_params - corrected v5 (Logsoftmax --> exp --> log)"}
+         original_run_name: "Base_params - corrected v5 (Logsoftmax --> exp --> log)",
+         expect: {epoch: 1233, global_step: 299862, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed1, seed: 1, run_dir: base_params_seed1, ckpt: last.ckpt,
-         original_run_name: "(seed 1) Base_params - corrected v5 (Logsoftmax --> exp --> log)"}
+         original_run_name: "(seed 1) Base_params - corrected v5 (Logsoftmax --> exp --> log)",
+         expect: {epoch: 849, global_step: 206550, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed2, seed: 2, run_dir: base_params_seed2, ckpt: last.ckpt,
-         original_run_name: "(seed 2) Base_params - corrected v5 (Logsoftmax --> exp --> log)"}
+         original_run_name: "(seed 2) Base_params - corrected v5 (Logsoftmax --> exp --> log)",
+         expect: {epoch: 1231, global_step: 299376, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
     control:
       {run_id: colored, seed: 0, run_dir: base_params_control, ckpt: last.ckpt,
-       original_run_name: "(colored) Base_params - corrected v5 (Logsoftmax --> exp --> log)"}
+       original_run_name: "(colored) Base_params - corrected v5 (Logsoftmax --> exp --> log)",
+       expect: {epoch: 871, global_step: 211896, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 300000}}
 
   high_translation:
     config: high_translation.yaml
     attr_alpha: 1
     runs:
       - {run_id: seed0, seed: 0, run_dir: high_translation_seed0, ckpt: last.ckpt,
-         original_run_name: "(Seed 0) (ter) High_translation (10) v5"}
+         original_run_name: "(Seed 0) (ter) High_translation (10) v5",
+         expect: {epoch: 1167, global_step: 283824, loss_coefs: {translations: 10, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed1, seed: 1, run_dir: high_translation_seed1, ckpt: last.ckpt,
-         original_run_name: "(Seed 1) High_Translation (10) v5"}
+         original_run_name: "(Seed 1) High_Translation (10) v5",
+         expect: {epoch: 888, global_step: 216027, loss_coefs: {translations: 10, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed2, seed: 2, run_dir: high_translation_seed2, ckpt: last.ckpt,
-         original_run_name: "(Seed 2) (ter) High_translation (10) v5"}
+         original_run_name: "(Seed 2) (ter) High_translation (10) v5",
+         expect: {epoch: 948, global_step: 230607, loss_coefs: {translations: 10, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
     control:
       {run_id: colored, seed: 0, run_dir: high_translation_control, ckpt: last.ckpt,
-       original_run_name: "(Colored) H_T (10) v5"}
+       original_run_name: "(Colored) H_T (10) v5",
+       expect: {epoch: 1233, global_step: 299862, loss_coefs: {translations: 10, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 300000}}
 
   high_contrastive:
     config: high_contrastive.yaml
     attr_alpha: 1
     runs:
       - {run_id: seed0, seed: 0, run_dir: high_contrastive_seed0, ckpt: last.ckpt,
-         original_run_name: "(Seed 0) (bis) High_contrastive (10) v5"}
+         original_run_name: "(Seed 0) (bis) High_contrastive (10) v5",
+         expect: {epoch: 1231, global_step: 299376, loss_coefs: {translations: 1, contrastives: 1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed1, seed: 1, run_dir: high_contrastive_seed1, ckpt: last.ckpt,
-         original_run_name: "(Seed 1) (bis) High_contrastive (10) v5"}
+         original_run_name: "(Seed 1) (bis) High_contrastive (10) v5",
+         expect: {epoch: 1224, global_step: 297675, loss_coefs: {translations: 1, contrastives: 1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed2, seed: 2, run_dir: high_contrastive_seed2, ckpt: last.ckpt,
-         original_run_name: "(Seed 2) (bis) High_contrastive (10) v5"}
+         original_run_name: "(Seed 2) (bis) High_contrastive (10) v5",
+         expect: {epoch: 1224, global_step: 297675, loss_coefs: {translations: 1, contrastives: 1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
     control:
       {run_id: colored, seed: 2, run_dir: high_contrastive_control, ckpt: last.ckpt,
-       original_run_name: "(Colored) High_contrastive (1) v5"}
+       original_run_name: "(Colored) High_contrastive (1) v5",
+       expect: {epoch: 46, global_step: 11421, loss_coefs: {translations: 1, contrastives: 1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 300000}}
 
   high_cycles:
     config: high_cycles.yaml
     attr_alpha: 1
     runs:
       - {run_id: seed0, seed: 0, run_dir: high_cycles_seed0, ckpt: last.ckpt,
-         original_run_name: "(Seed 0) High_cycles (10) v5"}
+         original_run_name: "(Seed 0) High_cycles (10) v5",
+         expect: {epoch: 1214, global_step: 295245, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 10}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed1, seed: 1, run_dir: high_cycles_seed1, ckpt: last.ckpt,
-         original_run_name: "(Seed 1) (bis) High_cycles (10) v5"}
+         original_run_name: "(Seed 1) (bis) High_cycles (10) v5",
+         expect: {epoch: 1222, global_step: 297189, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 10}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed2, seed: 2, run_dir: high_cycles_seed2, ckpt: last.ckpt,
          original_run_name: "(Seed 2) High_cycles (10) v5",
-         original_ckpt: "epoch=1225.ckpt"}
+         original_ckpt: "epoch=1225.ckpt",
+         expect: {epoch: 1225, global_step: 297918, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 10}, colors_in_attr: false, total_steps: 300000}}
     control:
       {run_id: colored, seed: 0, run_dir: high_cycles_control, ckpt: last.ckpt,
-       original_run_name: "(colored) High_cycle (10) v5"}
+       original_run_name: "(colored) High_cycle (10) v5",
+       expect: {epoch: 616, global_step: 149931, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 10}, colors_in_attr: true, total_steps: 150000}}
 
   high_alpha:
     config: high_alpha.yaml
@@ -81,11 +102,15 @@ experiments:
       # propre, on utilise ici les graines 0, 1, 2.
       - {run_id: seed0, seed: 0, run_dir: high_alpha_seed0, ckpt: last.ckpt,
          original_run_name: "High alpha 5 (color) - corrected v5 (Logsoftmax --> exp --> log)",
-         original_seed: 1}
+         original_seed: 1,
+         expect: {epoch: 1230, global_step: 299133, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed1, seed: 1, run_dir: high_alpha_seed1, ckpt: last.ckpt,
-         original_run_name: "(seed 1) H_alpha (5) v5"}
+         original_run_name: "(seed 1) H_alpha (5) v5",
+         expect: {epoch: 1209, global_step: 294030, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
       - {run_id: seed2, seed: 2, run_dir: high_alpha_seed2, ckpt: last.ckpt,
-         original_run_name: "(seed 2) H_alpha (5) v5"}
+         original_run_name: "(seed 2) H_alpha (5) v5",
+         expect: {epoch: 1211, global_step: 294516, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: false, total_steps: 300000}}
     control:
       {run_id: colored, seed: 1, run_dir: high_alpha_control, ckpt: last.ckpt,
-       original_run_name: "(Colored) H_alpha (5) v5"}
+       original_run_name: "(Colored) H_alpha (5) v5",
+       expect: {epoch: 1208, global_step: 293787, loss_coefs: {translations: 1, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 300000}}

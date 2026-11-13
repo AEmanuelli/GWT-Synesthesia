@@ -1,10 +1,13 @@
 """Empaquette les checkpoints utilisés dans le mémoire pour publication (Zenodo / GitHub Release).
 
-À lancer sur la machine qui contient les checkpoints d'origine :
+À lancer sur la machine qui contient les checkpoints d'origine, de préférence après
+scripts/identify_checkpoints.py (qui retrouve les fichiers par leur contenu) :
 
-    python scripts/package_checkpoints.py \
-        --src "/home/alexis/Desktop/checkpoints/training_logs/Removing_colors" \
-        --out gwt_synesthesia_checkpoints.tar.gz
+    python scripts/package_checkpoints.py --located located_checkpoints.yaml
+
+ou, si les dossiers ont gardé leurs noms d'origine :
+
+    python scripts/package_checkpoints.py --src ".../training_logs/Removing_colors"
 
 Lit experiments/thesis_runs.yaml, copie pour chaque run (3 graines + contrôle,
 5 configurations) le checkpoint évalué dans le mémoire, en suivant les liens
@@ -25,22 +28,30 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def iter_runs(manifest):
-    for exp in manifest["experiments"].values():
+    for exp_name, exp in manifest["experiments"].items():
         for run in exp["runs"] + ([exp["control"]] if exp.get("control") else []):
-            yield run["original_run_name"], run.get("original_ckpt", run["ckpt"])
+            yield f"{exp_name}/{run['run_id']}", run["original_run_name"], run.get("original_ckpt", run["ckpt"])
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--src", required=True, type=Path,
-                        help="Dossier contenant les dossiers de runs (noms d'origine)")
+    src = parser.add_mutually_exclusive_group(required=True)
+    src.add_argument("--located", type=Path, help="Fichier produit par identify_checkpoints.py")
+    src.add_argument("--src", type=Path, help="Dossier contenant les dossiers de runs (noms d'origine)")
     parser.add_argument("--out", default="gwt_synesthesia_checkpoints.tar.gz", type=Path)
     args = parser.parse_args()
 
     manifest = yaml.safe_load(open(REPO_ROOT / "experiments" / "thesis_runs.yaml"))
+    located = yaml.safe_load(open(args.located)) if args.located else {}
     files, missing, broken = [], [], []
-    for run_name, ckpt in iter_runs(manifest):
-        path = (args.src / run_name / "checkpoints" / ckpt).resolve()
+    for label, run_name, ckpt in iter_runs(manifest):
+        if args.located:
+            if label not in located:
+                missing.append(f"{label} (non identifié)")
+                continue
+            path = Path(located[label]).resolve()
+        else:
+            path = (args.src / run_name / "checkpoints" / ckpt).resolve()
         if not path.is_file():
             missing.append(str(path))
         elif not zipfile.is_zipfile(path):

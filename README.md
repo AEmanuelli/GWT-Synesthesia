@@ -131,9 +131,10 @@ Une configuration = un fichier dans [`config/`](config/). Les coefficients
 | 4 | Emphase Cycle-Complet | `high_cycles.yaml` | 1 | 0.1 | 1 | 10 | |
 | 5 | Emphase Attributs Continus | `high_alpha.yaml` | 1 | 0.1 | 1 | 1 | `--attr-alpha 5` |
 
-Hyperparamètres communs : GW de dimension 12, encodeurs/décodeurs MLP (256 unités
-cachées), AdamW (weight decay 1e-6), OneCycleLR (`max_lr` 1.5e-4), batch 2056,
-300 000 pas, initialisation Kaiming, gradient clipping 1.0.
+Hyperparamètres communs (mémoire §2.2.3, vérifiés dans les checkpoints d'origine) :
+GW de dimension 12, encodeurs/décodeurs MLP (256 unités cachées), AdamW (weight decay
+1e-6), batch 2056, 300 000 pas, initialisation Kaiming, gradient clipping 1.0.
+Taux d'apprentissage : voir §8.
 
 ```bash
 # Un run « vide sémantique » (couleur retirée des attributs)
@@ -198,12 +199,21 @@ bash scripts/download_checkpoints.sh
 bash scripts/evaluate_all.sh --use-original-names
 ```
 
-<details><summary>Pour l'auteur : publier l'archive</summary>
+<details><summary>Pour l'auteur : retrouver et publier les checkpoints</summary>
 
-Sur la machine contenant les checkpoints d'origine :
+Sur la machine contenant les checkpoints d'origine, retrouver les 20 fichiers par leur
+contenu (dossier d'origine, epoch, pas, coefficients, couleur), quels que soient leurs
+noms ou emplacements actuels. Le croisement W&B (optionnel) vérifie graine, alpha,
+couleur et meilleure val/loss :
 
 ```bash
-python scripts/package_checkpoints.py --src "/chemin/vers/training_logs/Removing_colors" --out gwt_synesthesia_checkpoints.tar.gz
+python scripts/identify_checkpoints.py ~/Desktop /mnt/HD2 --wandb ENTITY/PROJECT
+```
+
+Puis empaqueter les fichiers identifiés :
+
+```bash
+python scripts/package_checkpoints.py --located located_checkpoints.yaml --out gwt_synesthesia_checkpoints.tar.gz
 ```
 
 Le script vérifie chaque fichier (archive torch complète), suit les liens `last.ckpt`
@@ -258,13 +268,28 @@ docs/                    mémoire (PDF)
   publique de `shimmer` (import inutilisé, retiré). L'environnement du stage utilisait
   donc probablement un `shimmer` modifié lui aussi (la correction « LogSoftmax → exp →
   log » peut s'y trouver). Le cas échéant, le publier et le désigner avec `SHIMMER_FORK`.
-- **Taux d'apprentissage.** Le mémoire (§2.2.3) indique un OneCycleLR de 2.6e-5 à 2e-6 ;
-  le code effectivement exécuté utilise `OneCycleLR(max_lr=1.5e-4, div_factor=0.38,
-  final_div_factor=5, pct_start=0.03)`. C'est le code qui fait foi.
+- **Taux d'apprentissage (erratum du mémoire).** Le mémoire (§2.2.3) indique un
+  OneCycleLR de 2.6e-5 à 2e-6. Les 20 checkpoints évalués contiennent l'état de leur
+  scheduler : `base_lrs = 3.95e-4`, `max_lr = 1.5e-4`, dernier LR ≈ 7.9e-5 en fin de
+  run, soit `OneCycleLR(max_lr=1.5e-4, div_factor=0.38, final_div_factor=5,
+  pct_start=0.03)`, ce que fait le code. Pour reproduire les modèles du mémoire, on
+  garde donc ces valeurs.
+- **Architecture des MLP.** Les encodeurs ont 4 couches linéaires
+  (12→256→256→256→12), soit 3 couches cachées de 256 (le mémoire dit « quatre couches
+  cachées »).
 - **« 300 000 epochs »** dans le mémoire correspond à 300 000 *pas* d'optimisation
   (`max_steps`).
-- **Configuration 3.** Le mémoire indique β = 1 ; les runs utilisés portaient le nom
-  « High_contrastive (10) ». `config/high_contrastive.yaml` suit le mémoire (β = 1).
+- **Noms de runs trompeurs.** Les coefficients enregistrés dans les checkpoints font foi :
+  les runs « High_contrastive (10) » ont bien β = 1 (conforme au mémoire) ; à l'inverse,
+  « (Seed 0) (bis) High_translations (10) » a δ = 10 et « High translation (10) -
+  corrected » a α = 1. Le manifeste `experiments/thesis_runs.yaml` stocke pour chaque
+  run l'empreinte attendue (`expect`), vérifiable avec `scripts/identify_checkpoints.py`.
+- **Contrôles à confirmer.** Le contrôle de la configuration 3 (« (Colored)
+  High_contrastive (1) v5 ») s'est arrêté à 11 421 pas, et celui de la configuration 4
+  a suivi un planning de 150 000 pas. Des runs de contrôle plus complets existent
+  (« (Colored) High contrastive (1) - corrected v5 », « (colored) High cycle (10) -
+  corrected v5 »). Plusieurs runs « vide sémantique » se sont aussi arrêtés avant
+  300 000 pas (ex. base seed 1 : 206 550 pas).
 - **Graines de la configuration 5.** Deux des trois instances d'origine ont été lancées
   avec `seed=1` (voir `experiments/all_training_runs.csv`). La réplication utilise
   les graines 0, 1, 2.
