@@ -15,6 +15,7 @@ import sys
 from pathlib import Path as _Path
 sys.path.insert(0, str(_Path(__file__).resolve().parent))
 import paths  # noqa: E402
+import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
 # --- Standard Imports ---
 import os
 import pickle

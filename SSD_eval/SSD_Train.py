@@ -26,6 +26,7 @@ from shimmer_ssd.config import load_config
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import paths  # noqa: E402
+import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
 
 def custom_collate_factory(exclude_colors: bool):
     """Returns a collate function that optionally removes color info."""

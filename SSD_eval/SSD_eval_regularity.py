@@ -18,6 +18,7 @@ from shimmer_ssd.config import DomainModuleVariant, LoadedDomainConfig
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import paths  # noqa: E402
+import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
 from SSD_utils import binning_config_6144, default_binning_config
 
 from shimmer_ssd.modules.domains import load_pretrained_domains
