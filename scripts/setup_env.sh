@@ -12,9 +12,7 @@ command -v "$PYTHON" >/dev/null || { echo "Python 3.11 requis (variable PYTHON=.
 . .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
-# Si shimmer a aussi été modifié localement, SHIMMER_FORK=git+https://... le remplace
-if [ -n "${SHIMMER_FORK:-}" ]; then pip install --no-deps --force-reinstall "$SHIMMER_FORK"; fi
-# Version modifiée de shimmer-ssd (sans dépendances : elles sont figées ci-dessus)
+# Fork shimmer-ssd de l'auteur (sans dépendances : elles sont figées dans requirements.txt)
 pip install --no-deps "$SHIMMER_SSD_FORK"
 
 python - <<'PY'
