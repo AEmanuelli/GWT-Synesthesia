@@ -3,6 +3,7 @@
 Code du mémoire de M2 d'Alexis Emanuelli :
 **« Synesthésie artificielle dans un modèle inspiré de la Global Workspace Theory »**
 ([PDF](docs/EMANUELLI_Memoire_M2.pdf)).
+Poids des modèles entraînés : [Zenodo, record 24208192](https://zenodo.org/records/24208192).
 
 On entraîne un Global Workspace (GW) bimodal (image ↔ vecteur d'attributs) sur le
 [Simple Shapes Dataset](https://github.com/ruflab/simple-shapes-dataset), en retirant
@@ -188,8 +189,9 @@ reconstructions (critère d'Additionnalité, évalué qualitativement dans le m�
 ### Utiliser les poids du stage plutôt que ré-entraîner
 
 Les 20 Global Workspaces évalués dans le mémoire (5 configurations × 3 graines + 5
-contrôles) sont publiés dans une archive (voir `GWT_CKPT_URL` dans
-[`scripts/download_checkpoints.sh`](scripts/download_checkpoints.sh)) :
+contrôles) sont publiés sur [Zenodo (record 24208192)](https://zenodo.org/records/24208192).
+[`scripts/download_checkpoints.sh`](scripts/download_checkpoints.sh) retrouve l'archive
+via l'API Zenodo, vérifie les sommes SHA-256 et l'installe dans `checkpoints/runs/` :
 
 ```bash
 bash scripts/download_checkpoints.sh
@@ -313,6 +315,12 @@ docs/                    mémoire (PDF)
   mais les opérations CUDA ne sont pas strictement déterministes : on attend une
   réplication des *conclusions* (régularité / arbitraire), pas des p-values identiques
   au bit près.
+
+## Citer
+
+> Emanuelli, A. (2025). *Synesthésie artificielle dans un modèle inspiré de la Global
+> Workspace Theory* [Mémoire de M2]. Code : https://github.com/AEmanuelli/GWT-Synesthesia.
+> Poids des modèles : Zenodo, https://zenodo.org/records/24208192.
 
 ## Références
 
