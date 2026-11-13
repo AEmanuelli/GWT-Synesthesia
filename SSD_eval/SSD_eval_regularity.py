@@ -214,11 +214,19 @@ def parse_args(argv=None):
     parser.add_argument("--dataset-csv", default=str(paths.EVALSET_DIR / "attributes.csv"))
     parser.add_argument("--num-bins", type=int, default=15, help="Bins des histogrammes (15 dans le mémoire)")
     parser.add_argument("--parallel", action="store_true")
+    parser.add_argument("--shape-noise", type=float, default=0.0,
+                        help="Bruit sur les attributs de forme en traduction (0.01 = Annexe E)")
+    parser.add_argument("--shape-noise-seed", type=int, default=42)
     return parser.parse_args(argv)
 
 
 if __name__ == "__main__":
     args = parse_args()
+    import SSD_utils
+    SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
+    SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
+    if args.shape_noise > 0 and args.name is None:
+        args.name = f"{Path(args.checkpoint).parents[1].name}_shape_noise_{args.shape_noise:g}"
     eval_regularity(
         full_attr=args.with_colors,
         run_id=args.run_id,

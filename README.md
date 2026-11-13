@@ -226,6 +226,28 @@ et ajoute un fichier `SHA256SUMS`. Publier l'archive sur Zenodo (DOI citable) ou
 GitHub Release, puis renseigner l'URL dans `scripts/download_checkpoints.sh`.
 </details>
 
+### Annexe E : « Mais où est encodée la saturation ? »
+
+L'annexe E refait le test d'arbitraire en ajoutant un petit bruit gaussien
+(amplitude 0,01, graine 42, **le même vecteur pour toutes les instances**) au one-hot
+de la forme, sur le chemin de traduction uniquement (« Traduction Bruitée »,
+tableau E.1, figure E.1). Le bruit est ajouté puis le vecteur est ramené à des valeurs
+positives et renormalisé à une somme de 1.
+
+```bash
+bash scripts/evaluate_annex_E.sh
+```
+
+(`--use-original-names` pour les poids publiés.) Les résultats sont écrits dans
+`results/arbitrary_shape_noise_0.01/` ; la ligne « Traduction » du tableau E.1 correspond
+à l'évaluation sans bruit (`scripts/evaluate_all.sh`, identique au tableau 3.1).
+
+> **Attention (code d'origine).** Dans le code du stage, ce bruit était codé en dur et
+> toujours actif. Le tableau 3.1 du chapitre 3 a pourtant été produit sans bruit (ses
+> valeurs « Traduction » sont celles de la ligne « Traduction » du tableau E.1). Le bruit
+> est désormais une option (`--shape-noise`, 0 par défaut) ; avec une valeur nulle, la
+> traduction est strictement celle d'origine.
+
 ## 6. Correspondance mémoire ↔ code
 
 | Mémoire | Code |
@@ -237,6 +259,7 @@ GitHub Release, puis renseigner l'URL dans `scripts/download_checkpoints.sh`.
 | §2.3.1 Extraction des couleurs | `SSD_eval/SSD_utils.py`, `HueShapeAnalyzer` (`SSD_eval/SSD_H_evaluation_functions.py`) |
 | §2.3.2 Critère de Régularité | `SSD_eval/SSD_eval_regularity.py`, `HueShapeAnalyzer.analyze_dataset` |
 | §2.3.2 Critère d'Arbitraire | `SSD_eval/SSD_eval_arbitrary.py` |
+| Annexe E (Traduction Bruitée, tableau E.1) | `scripts/evaluate_annex_E.sh`, `--shape-noise` dans `SSD_eval/SSD_eval_arbitrary.py`, `SHAPE_NOISE_SCALE` dans `SSD_eval/SSD_utils.py` |
 | §2.3.3 Les 5 configurations × 3 instances | `config/`, `experiments/thesis_runs.yaml`, `scripts/train_all.sh` |
 | Figures du chapitre 3 | `SSD_eval/SSD_visualize_functions.py`, `archive/scripts/Figures_*.py` |
 

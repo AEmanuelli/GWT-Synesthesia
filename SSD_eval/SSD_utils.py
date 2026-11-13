@@ -12,6 +12,11 @@ import pickle
 import logging
 LOGGER = logging.getLogger(__name__)
 
+# Bruit ajouté aux attributs de forme sur le chemin de traduction (Annexe E du mémoire).
+# 0 = traduction standard (chapitre 3) ; 0.01 = "Traduction Bruitée" (Annexe E).
+SHAPE_NOISE_SCALE = float(os.environ.get("GWT_SHAPE_NOISE", "0"))
+SHAPE_NOISE_SEED = int(os.environ.get("GWT_SHAPE_NOISE_SEED", "42"))
+
 from torchvision.transforms import ToTensor
 from PIL import Image
 from scipy.stats import ks_2samp
@@ -2355,23 +2360,24 @@ def _process_translation_path_batch(global_workspace: Any,
     current_attr_vector_batch = batched_attr_vector  # (B, attr_dim)
     batch_size, num_classes = current_one_hot_batch.shape
 
-    # Add same random noise pattern to all one-hot encodings in the batch
-    noise_scale = 0.01
-    generator = torch.Generator()  # Garder sur CPU
-    generator.manual_seed(42)
+    # Annexe E du mémoire ("Traduction Bruitée") : même petit bruit gaussien ajouté au
+    # one-hot de la forme de tous les échantillons (graine fixe), puis renormalisation.
+    # Désactivé par défaut (SHAPE_NOISE_SCALE = 0) : c'est la "Traduction" du chapitre 3.
+    if SHAPE_NOISE_SCALE > 0:
+        generator = torch.Generator()  # Garder sur CPU
+        generator.manual_seed(SHAPE_NOISE_SEED)
 
-    # Générer le bruit sur CPU puis le déplacer sur le bon device
-    noise = torch.randn(num_classes, generator=generator).unsqueeze(0) * noise_scale
-    noise = noise.to(current_one_hot_batch.device)  # Déplacer sur le même device
-    current_one_hot_batch += noise  # Broadcasting automatique
+        # Générer le bruit sur CPU puis le déplacer sur le bon device
+        noise = torch.randn(num_classes, generator=generator).unsqueeze(0) * SHAPE_NOISE_SCALE
+        noise = noise.to(current_one_hot_batch.device)  # Déplacer sur le même device
+        current_one_hot_batch += noise  # Broadcasting automatique
 
-    # Ensure all values are non-negative
-    current_one_hot_batch = torch.clamp(current_one_hot_batch, min=1e-8)
-    
-    # Normalize each one-hot encoding to ensure sum equals 1.0
-    # Using sum along dim=1 to normalize per sample
-    sums = current_one_hot_batch.sum(dim=1, keepdim=True)
-    current_one_hot_batch = current_one_hot_batch / sums
+        # Ensure all values are non-negative
+        current_one_hot_batch = torch.clamp(current_one_hot_batch, min=1e-8)
+
+        # Normalize each one-hot encoding to ensure sum equals 1.0
+        sums = current_one_hot_batch.sum(dim=1, keepdim=True)
+        current_one_hot_batch = current_one_hot_batch / sums
 
 
     # Apply tilting if needed - vectorized on the one_hot batch

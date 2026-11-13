@@ -689,6 +689,11 @@ def parse_args(argv=None):
     parser.add_argument("--reverb-n", type=int, default=1,
                         help="Nombre de passages successifs dans le GW (1 dans le mémoire)")
     parser.add_argument("--parallel", action="store_true")
+    parser.add_argument("--shape-noise", type=float, default=0.0,
+                        help="Bruit ajouté aux attributs de forme sur le chemin de traduction "
+                             "(0 = chapitre 3 ; 0.01 = 'Traduction Bruitée' de l'Annexe E)")
+    parser.add_argument("--shape-noise-seed", type=int, default=42,
+                        help="Graine du bruit (42 dans le mémoire, identique pour toutes les instances)")
     return parser.parse_args(argv)
 
 
@@ -697,6 +702,13 @@ PARALLEL = False
 
 if __name__ == "__main__":
     args = parse_args()
+    import SSD_utils
+    SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
+    SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
+    if args.shape_noise > 0 and args.output_dir == str(paths.RESULTS_DIR / "arbitrary"):
+        # Dossier distinct : les résultats déjà calculés sont réutilisés depuis le cache
+        args.output_dir = str(paths.RESULTS_DIR / f"arbitrary_shape_noise_{args.shape_noise:g}")
+    LOGGER.info(f"Bruit sur les attributs de forme (traduction) : {args.shape_noise} (graine {args.shape_noise_seed})")
     NUM_BINS = args.num_bins
     PARALLEL = args.parallel
     REVERB_N = args.reverb_n
