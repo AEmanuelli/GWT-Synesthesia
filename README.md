@@ -3,7 +3,7 @@
 Code du mémoire de M2 d'Alexis Emanuelli :
 **« Synesthésie artificielle dans un modèle inspiré de la Global Workspace Theory »**
 ([PDF](docs/EMANUELLI_Memoire_M2.pdf)).
-Poids des modèles entraînés : [Zenodo, record 24208192](https://zenodo.org/records/24208192).
+Poids des modèles entraînés : Zenodo, [doi:10.5281/zenodo.24208192](https://doi.org/10.5281/zenodo.24208192).
 
 On entraîne un Global Workspace (GW) bimodal (image ↔ vecteur d'attributs) sur le
 [Simple Shapes Dataset](https://github.com/ruflab/simple-shapes-dataset), en retirant
@@ -320,7 +320,7 @@ docs/                    mémoire (PDF)
 
 > Emanuelli, A. (2025). *Synesthésie artificielle dans un modèle inspiré de la Global
 > Workspace Theory* [Mémoire de M2]. Code : https://github.com/AEmanuelli/GWT-Synesthesia.
-> Poids des modèles : Zenodo, https://zenodo.org/records/24208192.
+> Poids des modèles : Zenodo, https://doi.org/10.5281/zenodo.24208192.
 
 ## Références
 
