@@ -1,13 +1,27 @@
 #!/usr/bin/env bash
 # Étape 2 — Télécharge le Simple Shapes Dataset, les modules de domaine pré-entraînés,
 # pré-calcule les latents du VAE visuel et génère le jeu de test structuré.
-# Usage : bash scripts/download_data.sh [--quick-evalset]
+# Usage : bash scripts/download_data.sh [--eval-only] [--quick-evalset]
+#   --eval-only      : seulement ce qu'il faut pour évaluer des poids existants
+#                      (VAE pré-entraîné + jeu de test), sans le dataset d'entraînement
+#   --quick-evalset  : mini-jeu de test (192 images) pour vérifier le pipeline
 set -euo pipefail
 source "$(dirname "$0")/_common.sh"
 cd "$REPO_ROOT"
 
+EVAL_ONLY=0; QUICK=0
+for arg in "$@"; do
+    case "$arg" in
+        --eval-only) EVAL_ONLY=1 ;;
+        --quick-evalset) QUICK=1 ;;
+        *) echo "Option inconnue : $arg"; exit 1 ;;
+    esac
+done
+
 # 2a. Simple Shapes Dataset (Devillers et al., Zenodo 8112838)
-if [ ! -d "$GWT_DATASET_DIR" ]; then
+if [ "$EVAL_ONLY" = 1 ]; then
+    echo "--eval-only : dataset d'entraînement ignoré"
+elif [ ! -d "$GWT_DATASET_DIR" ]; then
     mkdir -p "$(dirname "$GWT_DATASET_DIR")"
     shapesd download --path "$(dirname "$GWT_DATASET_DIR")" --name "$(basename "$GWT_DATASET_DIR")"
 else
@@ -31,13 +45,13 @@ else
 fi
 
 # 2c. Latents visuels pré-calculés (lus par le dataloader : saved_latents/<split>/vae_v_shimmer.npy)
-if [ ! -f "$GWT_DATASET_DIR/saved_latents/train/vae_v_shimmer.npy" ]; then
+if [ "$EVAL_ONLY" = 0 ] && [ ! -f "$GWT_DATASET_DIR/saved_latents/train/vae_v_shimmer.npy" ]; then
     ssd extract v "$GWT_PRETRAINED_DIR/domain_v.ckpt" \
         --dataset_path "$GWT_DATASET_DIR" --latent_name vae_v_shimmer.npy --config_path "$REPO_ROOT/config"
 fi
 
 # 2d. Jeu de test structuré du mémoire (153 600 images ; ~1 à 2 h sur CPU)
-if [ "${1:-}" = "--quick-evalset" ]; then
+if [ "$QUICK" = 1 ]; then
     python SSD_eval/SSD_generate_evalset.py --quick
 elif [ ! -f "$GWT_EVALSET_DIR/attributes.csv" ]; then
     python SSD_eval/SSD_generate_evalset.py --output-dir "$GWT_EVALSET_DIR"
