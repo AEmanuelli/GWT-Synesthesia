@@ -27,7 +27,7 @@ wandb==0.19.9
 ipywidgets>=8.0      # notebooks
 
 # Forks de l'auteur (versions modifiées pendant le stage), figés sur leur état pendant
-# les entraînements de mai 2025 (vérifié sur les logs W&B, voir README §2 et §8).
+# les entraînements de mai 2025 (vérifié sur les logs W&B, voir README §5 et §6).
 shimmer @ git+https://github.com/AEmanuelli/shimmer.git@fdb8e2f4ae151311295889fc5cbd49b121055152
 simple-shapes-dataset @ git+https://github.com/AEmanuelli/simple-shapes-dataset.git@34d45cdf4fcf0e9ef1d074fb20d89769bf73d9d2
 # Bibliothèques du laboratoire (ruflab)

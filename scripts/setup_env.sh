@@ -20,7 +20,7 @@ python - <<'PY'
 from shimmer_ssd.config import DomainModuleVariant
 assert hasattr(DomainModuleVariant, "attr_legacy_no_color"), (
     "shimmer-ssd installé n'est PAS la version modifiée (attr_legacy_no_color manquant). "
-    "Voir README §2.")
+    "Relancer scripts/setup_env.sh.")
 print("OK : environnement prêt.")
 PY
 echo "Activez-le avec : source .venv/bin/activate"
