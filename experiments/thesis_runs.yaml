@@ -16,8 +16,9 @@
 # `expect` = empreinte du checkpoint d'origine (epoch, pas, coefficients de loss,
 #   couleur dans les attributs, durée du planning de LR), relevée dans les fichiers
 #   eux-mêmes. scripts/identify_checkpoints.py s'en sert pour retrouver les fichiers.
-# Vérification : les losses de validation W&B de ces runs reproduisent le tableau B.1
-#   du mémoire (voir README §8 et experiments/check_table_B1.py).
+# Vérification : les losses de validation de ces runs reproduisent le tableau B.1 du mémoire
+#   (experiments/compute_table_B1.py à partir des checkpoints, check_table_B1.py à partir
+#   d'un export W&B ; voir README §5).
 
 experiments:
   base_params:
