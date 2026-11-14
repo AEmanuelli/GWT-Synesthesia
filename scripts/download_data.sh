@@ -22,8 +22,12 @@ done
 if [ "$EVAL_ONLY" = 1 ]; then
     echo "--eval-only : dataset d'entraînement ignoré"
 elif [ ! -d "$GWT_DATASET_DIR" ]; then
+    # `shapesd download` extrait toujours dans <path>/simple_shapes_dataset
+    if [ "$(basename "$GWT_DATASET_DIR")" != "simple_shapes_dataset" ]; then
+        echo "GWT_DATASET_DIR doit se terminer par /simple_shapes_dataset (reçu : $GWT_DATASET_DIR)"; exit 1
+    fi
     mkdir -p "$(dirname "$GWT_DATASET_DIR")"
-    shapesd download --path "$(dirname "$GWT_DATASET_DIR")" --name "$(basename "$GWT_DATASET_DIR")"
+    shapesd download --path "$(dirname "$GWT_DATASET_DIR")"
 else
     echo "Dataset déjà présent : $GWT_DATASET_DIR"
 fi
@@ -46,8 +50,16 @@ fi
 
 # 2c. Latents visuels pré-calculés (lus par le dataloader : saved_latents/<split>/vae_v_shimmer.npy)
 if [ "$EVAL_ONLY" = 0 ] && [ ! -f "$GWT_DATASET_DIR/saved_latents/train/vae_v_shimmer.npy" ]; then
-    ssd extract v "$GWT_PRETRAINED_DIR/domain_v.ckpt" \
-        --dataset_path "$GWT_DATASET_DIR" --latent_name vae_v_shimmer.npy --config_path "$REPO_ROOT/config"
+    # Équivalent de `ssd extract v`, avec la compatibilité CPU du dépôt (VAE sauvegardé sur GPU)
+    python - "$GWT_PRETRAINED_DIR/domain_v.ckpt" "$REPO_ROOT/config" "$GWT_DATASET_DIR" <<'PY'
+import sys
+from pathlib import Path
+sys.path.insert(0, "SSD_eval")
+import device_compat  # noqa: F401
+from shimmer_ssd.cli.extract import save_v_latents
+checkpoint, config_dir, dataset_dir = map(Path, sys.argv[1:4])
+save_v_latents(checkpoint, config_dir, dataset_dir, "vae_v_shimmer.npy")
+PY
 fi
 
 # 2d. Jeu de test structuré du mémoire (153 600 images ; ~1 à 2 h sur CPU)
