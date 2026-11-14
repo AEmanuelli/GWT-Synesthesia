@@ -10,6 +10,10 @@ Un Global Workspace bimodal (image ↔ vecteur d'attributs) est entraîné sur l
 dans les attributs (« vide sémantique »). On teste ensuite si le modèle associe malgré
 tout des couleurs aux attributs, de façon **régulière** et **propre à chaque instance**.
 
+> **État du dépôt.** La procédure de reproduction est en cours de validation : l'auteur
+> doit encore vérifier de bout en bout l'évaluation des modèles publiés et la
+> correspondance des tableaux obtenus avec ceux du mémoire. Les retours sont bienvenus.
+
 ## 1. Installation
 
 Python 3.11 requis.
