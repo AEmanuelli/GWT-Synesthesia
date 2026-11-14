@@ -27,6 +27,7 @@ from shimmer_ssd.config import load_config
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import paths  # noqa: E402
 import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
+from category_probs import use_category_probabilities  # noqa: E402
 
 def custom_collate_factory(exclude_colors: bool):
     """Returns a collate function that optionally removes color info."""
@@ -146,7 +147,9 @@ def setup_global_workspace(config, hparams, exclude_colors=True, apply_custom_in
         config.global_workspace.decoders.hidden_dim,
         config.global_workspace.decoders.n_layers,
     )
-    
+    # Catégories de forme en probabilités, comme dans les runs du mémoire (voir category_probs.py)
+    use_category_probabilities(domain_modules, gw_decoders)
+
     # Adjust learning rate based on loss coefficients
     # lr = config.training.optim.lr * 3.1 / sum(config.global_workspace.loss_coefficients.values()) #### TODO: check if this is correct
     lr = config.training.optim.lr

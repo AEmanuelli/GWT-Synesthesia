@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import paths  # noqa: E402
 import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
 from SSD_utils import binning_config_6144, default_binning_config
+from category_probs import use_category_probabilities
 
 from shimmer_ssd.modules.domains import load_pretrained_domains
 
@@ -43,6 +44,8 @@ def load_global_workspace(gw_checkpoint: Path, config: dict) -> GlobalWorkspace2
         config["global_workspace"]["decoders"]["hidden_dim"],
         config["global_workspace"]["decoders"]["n_layers"],
     )
+    # Catégories de forme en probabilités, comme à l'entraînement (voir category_probs.py)
+    use_category_probabilities(domain_modules, gw_decoders)
     global_workspace = GlobalWorkspace2Domains.load_from_checkpoint(
         gw_checkpoint,
         domain_mods=domain_modules,
