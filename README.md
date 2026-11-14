@@ -262,11 +262,9 @@ bash scripts/evaluate_annex_E.sh
 `results/arbitrary_shape_noise_0.01/` ; la ligne « Traduction » du tableau E.1 correspond
 à l'évaluation sans bruit (`scripts/evaluate_all.sh`, identique au tableau 3.1).
 
-> **Attention (code d'origine).** Dans le code du stage, ce bruit était codé en dur et
-> toujours actif. Le tableau 3.1 du chapitre 3 a pourtant été produit sans bruit (ses
-> valeurs « Traduction » sont celles de la ligne « Traduction » du tableau E.1). Le bruit
-> est désormais une option (`--shape-noise`, 0 par défaut) ; avec une valeur nulle, la
-> traduction est strictement celle d'origine.
+Le bruit a été introduit pour cette analyse complémentaire, après l'évaluation
+principale : le chapitre 3 (tableau 3.1) correspond à la traduction sans bruit. Il est
+donc désactivé par défaut et s'active avec `--shape-noise 0.01`.
 
 ## 6. Correspondance mémoire ↔ code
 
