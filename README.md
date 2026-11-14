@@ -122,13 +122,48 @@ Ajouter `--with-colors` pour le modèle de contrôle.
 | Tableaux 3.1, B.2, E.1 | `experiments/make_tables.py` |
 | Modèles du mémoire (configuration, graine, run d'origine) | `experiments/thesis_runs.yaml` |
 
-## 5. Bon à savoir
+## 5. Différences avec le mémoire
 
-- **Versions.** `setup_env.sh` installe les versions exactes utilisées en mai 2025, dont les forks de l'auteur de [`shimmer`](https://github.com/AEmanuelli/shimmer), [`shimmer-ssd`](https://github.com/AEmanuelli/shimmer-ssd) et [`simple-shapes-dataset`](https://github.com/AEmanuelli/simple-shapes-dataset) (voir `requirements.txt`).
-- **Taux d'apprentissage.** Le planning effectivement utilisé, et enregistré dans les checkpoints, est `OneCycleLR(max_lr=1.5e-4, div_factor=0.38, final_div_factor=5)`. Le taux part de 3,95e-4 et termine vers 7,9e-5. C'est celui du code (le §2.2.3 du mémoire indique d'autres valeurs).
-- **Durée.** Les « 300 000 epochs » du mémoire sont 300 000 pas d'optimisation.
-- **Chemins.** Tout est rangé dans le dépôt (`data/`, `checkpoints/`, `results/`). Un jeu de test existant peut être réutilisé avec `export GWT_EVALSET_DIR=/chemin/vers/evaluation_set` (autres variables : [`.env.example`](.env.example)).
-- **Reproductibilité.** Certaines opérations GPU ne sont pas déterministes. Un réentraînement reproduit les conclusions, pas les p-values au bit près.
+Relevées dans les checkpoints et les logs d'entraînement des modèles publiés :
+
+- **Durée d'entraînement.** Les modèles n'ont pas tous été entraînés aussi longtemps.
+  Prévu : 300 000 pas (le mémoire écrit « epochs »). Certains entraînements se sont
+  arrêtés plus tôt, et deux contrôles ont été lancés sur un planning de 150 000 pas :
+
+  | Configuration | Modèle | Pas effectués |
+  |---|---|---|
+  | 1. Référence | graine 1 | 206 550 / 300 000 (69 %) |
+  | 1. Référence | contrôle | 211 896 / 300 000 (71 %) |
+  | 2. Emphase Traduction | graine 1 | 216 027 / 300 000 (72 %) |
+  | 2. Emphase Traduction | graine 2 | 230 607 / 300 000 (77 %) |
+  | 2. Emphase Traduction | graine 0 | 283 824 / 300 000 (95 %) |
+  | 3. Emphase Contrastive | contrôle | 147 258 / 150 000 |
+  | 4. Emphase Cycle-Complet | contrôle | 149 931 / 150 000 |
+
+  Les autres modèles sont allés au moins jusqu'à 98 % des 300 000 pas.
+- **Taux d'apprentissage.** Le mémoire (§2.2.3) indique 2,6e-5 → 2e-6. Le planning
+  utilisé est `OneCycleLR(max_lr=1.5e-4, div_factor=0.38, final_div_factor=5)` : le taux
+  part de 3,95e-4 et finit vers 7,9e-5.
+- **Architecture.** Les encodeurs et décodeurs ont 3 couches cachées de 256 unités
+  (12 → 256 → 256 → 256 → 12), et non 4.
+- **Graines de la configuration 5.** Deux des trois instances ont été entraînées avec la
+  même graine (1). Un réentraînement utilise les graines 0, 1 et 2.
+- **Tableau B.1.** Pour la configuration 1 (vide sémantique), les valeurs correspondent à
+  la moyenne des graines 1 et 2 seulement.
+
+## 6. Bon à savoir
+
+- **Versions.** `setup_env.sh` installe les versions exactes utilisées en mai 2025, dont
+  les forks de l'auteur de [`shimmer`](https://github.com/AEmanuelli/shimmer),
+  [`shimmer-ssd`](https://github.com/AEmanuelli/shimmer-ssd) et
+  [`simple-shapes-dataset`](https://github.com/AEmanuelli/simple-shapes-dataset).
+- **Correspondance avec les runs d'origine.** [`experiments/thesis_runs.yaml`](experiments/thesis_runs.yaml)
+  indique, pour chaque modèle publié, sa configuration, sa graine et son nom de run d'origine.
+- **Chemins.** Tout est rangé dans le dépôt (`data/`, `checkpoints/`, `results/`). Un jeu
+  de test existant peut être réutilisé avec `export GWT_EVALSET_DIR=/chemin/vers/evaluation_set`
+  (autres variables : [`.env.example`](.env.example)).
+- **Reproductibilité.** Certaines opérations GPU ne sont pas déterministes : un
+  réentraînement reproduit les conclusions, pas les p-values au bit près.
 
 ## Citer
 
