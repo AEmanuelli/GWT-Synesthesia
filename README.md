@@ -39,6 +39,10 @@ source .venv/bin/activate
 Sans `python3.11` installé : `conda create -y -n py311 python=3.11`, puis
 `PYTHON="$(conda run -n py311 which python)" bash scripts/setup_env.sh`.
 
+Si des fichiers du projet sont déjà sur la machine (modèles, jeu de test…),
+`bash scripts/setup_local.sh` installe l'environnement puis les retrouve et les range
+au bon endroit, ce qui évite de les télécharger ou de les régénérer.
+
 ## 2. Reproduire les résultats avec les modèles publiés
 
 Recommandé : pas d'entraînement, CPU possible (GPU plus rapide).
