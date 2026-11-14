@@ -428,7 +428,8 @@ class HueShapeAnalyzer:
                 examples_by_attr=examples_by_attr,
                 display_examples=display_examples,
                 # represented_input_hues_by_attr=represented_hues_bins, # Pass the bins for H channel
-                rgb=self.rgb # Pass the conditioning flag
+                rgb=self.rgb, # Pass the conditioning flag
+                output_dir=self.output_dir,
             )
             LOGGER.info("Binning complete, saving the results")
             # Save the results to the output directory

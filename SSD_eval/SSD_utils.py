@@ -1379,7 +1379,8 @@ def bin_h_processed_samples_with_paths(
         full_cycle_colors_by_attr,
         examples_by_attr,
         display_examples=True, 
-        rgb=False
+        rgb=False,
+        output_dir=None,
     ):
     """
     Bins processed samples by attribute values and extracts Hue channel values for all paths.
@@ -1557,10 +1558,11 @@ def bin_h_processed_samples_with_paths(
     # Ajouter les exemples diversifiés au dictionnaire final
     examples_by_attr['diverse_examples'] = diverse_examples_collector
     print_diverse_examples_stats(examples_by_attr)
-    # Écrit dans le dossier de résultats (et non dans le dossier courant)
+    # Planche d'exemples du modèle (figures 3.2 et E.1d du mémoire) :
+    # <dossier de résultats du modèle>/diverse_examples_plate.png
     create_diverse_example_plate(
         examples_by_attr,
-        save_path=os.path.join(os.environ.get("GWT_RESULTS_DIR", "results"), "diverse_examples_plate.png"),
+        save_path=output_dir or os.environ.get("GWT_RESULTS_DIR", "results"),
     )
 
 
