@@ -128,7 +128,6 @@ Ajouter `--with-colors` pour le modèle de contrôle.
 - **Taux d'apprentissage.** Le planning effectivement utilisé, et enregistré dans les checkpoints, est `OneCycleLR(max_lr=1.5e-4, div_factor=0.38, final_div_factor=5)`. Le taux part de 3,95e-4 et termine vers 7,9e-5. C'est celui du code (le §2.2.3 du mémoire indique d'autres valeurs).
 - **Durée.** Les « 300 000 epochs » du mémoire sont 300 000 pas d'optimisation.
 - **Chemins.** Tout est rangé dans le dépôt (`data/`, `checkpoints/`, `results/`). Un jeu de test existant peut être réutilisé avec `export GWT_EVALSET_DIR=/chemin/vers/evaluation_set` (autres variables : [`.env.example`](.env.example)).
-- **Provenance des modèles publiés** (runs d'origine, vérifications faites avec les logs W&B) : [`docs/PROVENANCE.md`](docs/PROVENANCE.md).
 - **Reproductibilité.** Certaines opérations GPU ne sont pas déterministes. Un réentraînement reproduit les conclusions, pas les p-values au bit près.
 
 ## Citer
