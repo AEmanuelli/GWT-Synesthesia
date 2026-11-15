@@ -1,0 +1,18 @@
+Cross-Model Hue Distribution Comparison Summary
+Models: seed1 vs seed2
+Attribute: shape
+Bin: egg
+Path: full_cycle
+
+Significance Threshold (alpha): 0.05
+KS Test p-value: 0.000000 (SIGNIFICANT)
+KS Test Statistic: 0.6098
+
+Metrics:
+  - KL(seed1||seed2): 0.8486
+  - KL(seed2||seed1): 5.5129
+  - Symmetric KL: 3.1808
+
+Data points: seed1=51200, seed2=51200
+
+Overlay plot saved to: seed1_vs_seed2_overlay.png

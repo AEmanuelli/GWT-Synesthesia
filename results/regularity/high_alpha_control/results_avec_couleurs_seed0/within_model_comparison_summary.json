@@ -1,0 +1,41 @@
+{
+  "total_comparisons": 489,
+  "significant_comparisons": 2,
+  "significance_alpha": 0.05,
+  "attribute_stats": {
+    "shape": {
+      "total": 9,
+      "significant": 2
+    },
+    "rotation": {
+      "total": 360,
+      "significant": 0
+    },
+    "size": {
+      "total": 84,
+      "significant": 0
+    },
+    "position_x": {
+      "total": 18,
+      "significant": 0
+    },
+    "position_y": {
+      "total": 18,
+      "significant": 0
+    }
+  },
+  "path_stats": {
+    "translated": {
+      "total": 163,
+      "significant": 0
+    },
+    "half_cycle": {
+      "total": 163,
+      "significant": 0
+    },
+    "full_cycle": {
+      "total": 163,
+      "significant": 2
+    }
+  }
+}
