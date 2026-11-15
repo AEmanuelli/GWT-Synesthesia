@@ -166,14 +166,17 @@ Pour vérifier que l'entraînement démarre, sans attendre (possible sans GPU) :
 
 ## 5. Ce qui est reproduit, et les écarts avec le mémoire
 
-Vérification faite avec les modèles publiés et le jeu de test régénéré.
+Vérification faite avec les modèles publiés et le jeu de test régénéré. Les chemins
+Traduction et Demi-Cycle ont été évalués sur deux machines : résultats identiques.
 
 ### Reproduit à l'identique
 
-- **Tableau B.2** (régularité), chemin Traduction, pour les cinq configurations ; chemins
-  Demi-Cycle et Cycle-Complet pour la configuration Référence.
-- **Tableau 3.1** (arbitraire), chemin Traduction : scores d'Orientation (5/16, 14/16, 1/15)
-  et nombre de formes spécifiques (2, 2, 1), avec les formes citées dans le texte du mémoire.
+- **Tableau B.2** (régularité) : en entier, les trois chemins des cinq configurations.
+- **Modèles Complets** : aucune paire régulière sur aucun des trois chemins, pour les
+  quatre contrôles disponibles.
+- **Tableau 3.1** (arbitraire) : scores d'Orientation (5/16, 14/16 et 1/15 en Traduction,
+  8/16 en Cycle-Complet pour Emphase Traduction) et nombre de formes spécifiques (2, 2, 1),
+  avec les formes citées dans le texte du mémoire.
 - **Tableau E.1**, Traduction Bruitée : Forme 3/3 et Orientation 16/16 dans les trois
   configurations concernées, aucune régularité pour Emphase Traduction et Emphase Contrastive.
 - **Figures 3.1, E.1a, E.1b** : histogrammes de teinte identiques classe par classe.
