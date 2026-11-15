@@ -341,7 +341,9 @@ def train_global_workspace(config, custom_hparams=None, experiment_name="debuggi
     
     # 5. Train and validate
     trainer.fit(global_workspace, data_module)
-    trainer.validate(global_workspace, data_module, "best")
+    # Meilleur checkpoint s'il existe (aucun si le run s'arrête avant la première validation)
+    best_path = getattr(trainer.checkpoint_callback, "best_model_path", "")
+    trainer.validate(global_workspace, data_module, "best" if best_path else None)
 
     wandb.finish()
 
@@ -379,6 +381,9 @@ if __name__ == "__main__":
     config.default_root_dir = paths.RUNS_DIR
     if args.max_steps is not None:
         config.training.max_steps = args.max_steps
+    if not torch.cuda.is_available():
+        print("Pas de GPU détecté : entraînement sur CPU (à réserver aux tests courts, --max-steps).")
+        config.training.accelerator = "cpu"
 
     exclude_colors = not args.with_colors
     run_name = args.run_name or (
