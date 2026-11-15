@@ -19,6 +19,7 @@ from shimmer_ssd.config import DomainModuleVariant, LoadedDomainConfig
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import paths  # noqa: E402
 import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
+import SSD_utils
 from SSD_utils import binning_config_6144, default_binning_config
 from category_probs import use_category_probabilities
 
@@ -137,6 +138,7 @@ def eval_regularity(
         print(f"WARNING: Le répertoire {output_dir} existe déjà. Les résultats pourraient être écrasés ou incomplets.")
 
     os.makedirs(output_dir, exist_ok=True)
+    SSD_utils.discard_stale_cache(output_dir)
 
     # Setup config and load model
     config = {
@@ -201,6 +203,7 @@ def eval_regularity(
         parrallel=parrallel,
         conditioning=conditioning,
     )
+    SSD_utils.write_cache_signature(output_dir)
     print("Analysis completed.")
 
 
@@ -225,7 +228,6 @@ def parse_args(argv=None):
 
 if __name__ == "__main__":
     args = parse_args()
-    import SSD_utils
     SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
     if args.shape_noise > 0 and args.name is None:

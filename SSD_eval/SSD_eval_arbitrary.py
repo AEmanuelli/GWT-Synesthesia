@@ -19,6 +19,7 @@ import device_compat  # noqa: E402,F401  (checkpoints GPU -> CPU si pas de GPU)
 # --- Standard Imports ---
 import os
 import pickle
+import shutil
 import argparse
 import numpy as np
 import torch
@@ -58,6 +59,7 @@ except ImportError as e:
     print(f"Error importing project modules: {e}")
     print("Please ensure the script is run from the correct directory or paths are configured.")
     exit(1)
+import SSD_utils
 from SSD_utils import binning_config_6144
 
 # --- Setup Logging ---
@@ -226,6 +228,7 @@ def run_evaluation(
     os.makedirs(output_dir, exist_ok=True)
     LOGGER.info(f"Output directory set to: {output_dir}")
     results_save_path = os.path.join(output_dir, "analysis_results.pkl")
+    SSD_utils.discard_stale_cache(output_dir)
     if os.path.exists(results_save_path):
         LOGGER.warning(f"Loading results from existing file: {results_save_path}")
         # Load existing results if available
@@ -314,6 +317,7 @@ def run_evaluation(
     try:
         with open(results_save_path, 'wb') as f:
             pickle.dump(analysis_results, f)
+        SSD_utils.write_cache_signature(output_dir)
         LOGGER.info(f"Analysis results dictionary saved to: {results_save_path}")
         return results_save_path, analysis_results
     except Exception as e:
@@ -702,7 +706,6 @@ PARALLEL = False
 
 if __name__ == "__main__":
     args = parse_args()
-    import SSD_utils
     SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
     if args.shape_noise > 0 and args.output_dir == str(paths.RESULTS_DIR / "arbitrary"):
@@ -791,6 +794,8 @@ if __name__ == "__main__":
             LOGGER.info(f"\n--- Starting Pairwise Cross-Model Comparison for {len(successful_runs)} Models of {MODEL_VERSION} ---")
             LOGGER.info(f"--- Details will be saved ONLY if comparison KS p-value < {significance_alpha_compare} ---")
             comparison_output_dir = f"{evaluation_parent_dir}/cross_model_comparison_{MODEL_VERSION}_N{len(successful_runs)}"
+            # Entièrement régénéré à chaque exécution : on repart d'un dossier vide
+            shutil.rmtree(comparison_output_dir, ignore_errors=True)
 
             model_pairs = list(itertools.combinations(successful_runs, 2))
             LOGGER.info(f"Performing {len(model_pairs)} pairwise comparisons.")

@@ -17,6 +17,50 @@ LOGGER = logging.getLogger(__name__)
 SHAPE_NOISE_SCALE = float(os.environ.get("GWT_SHAPE_NOISE", "0"))
 SHAPE_NOISE_SEED = int(os.environ.get("GWT_SHAPE_NOISE_SEED", "42"))
 
+# Version de la méthode d'évaluation, enregistrée à côté des résultats mis en cache.
+# 2 : catégories de forme en probabilités à la sortie du décodeur d'attributs
+#     (chemin cycle complet corrigé, voir category_probs.py).
+EVALUATION_VERSION = 2
+CACHE_SIGNATURE_FILE = "evaluation_info.json"
+CACHE_FILES = ("analysis_results.pkl", "binned_results.pkl")
+
+
+def cache_signature() -> dict:
+    """Ce qui doit être identique pour qu'un résultat en cache soit réutilisable."""
+    return {
+        "evaluation_version": EVALUATION_VERSION,
+        "shape_noise": SHAPE_NOISE_SCALE,
+        "shape_noise_seed": SHAPE_NOISE_SEED if SHAPE_NOISE_SCALE > 0 else None,
+    }
+
+
+def discard_stale_cache(output_dir) -> None:
+    """Vide un dossier de résultats produit par une autre version de l'évaluation.
+
+    Sans cela, les résultats en cache seraient réutilisés tels quels (par exemple un
+    cycle complet calculé avant la correction du décodeur d'attributs).
+    """
+    import json
+    import shutil
+    if not any(os.path.exists(os.path.join(output_dir, f)) for f in CACHE_FILES):
+        return
+    try:
+        with open(os.path.join(output_dir, CACHE_SIGNATURE_FILE)) as f:
+            up_to_date = json.load(f) == cache_signature()
+    except (OSError, ValueError):
+        up_to_date = False
+    if not up_to_date:
+        LOGGER.warning(f"Résultats périmés dans {output_dir} : dossier vidé, évaluation refaite.")
+        shutil.rmtree(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
+
+
+def write_cache_signature(output_dir) -> None:
+    import json
+    with open(os.path.join(output_dir, CACHE_SIGNATURE_FILE), "w") as f:
+        json.dump(cache_signature(), f, indent=2)
+
+
 from torchvision.transforms import ToTensor
 from PIL import Image
 from scipy.stats import ks_2samp
