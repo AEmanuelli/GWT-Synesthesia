@@ -55,7 +55,14 @@ experiments:
     control:
       {run_id: colored, seed: 0, run_dir: high_translation_control, ckpt: last.ckpt,
        original_run_name: "(Colored) H_T (10) v5",
-       expect: {epoch: 1233, global_step: 299862, loss_coefs: {translations: 10, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 300000}}
+       # Le dossier contient 2 entraînements complets. Celui du tableau B.1 est le run W&B
+       # 2eeamagz (150 000 pas, meilleur checkpoint epoch=599). L'autre (run ohtuqxio,
+       # last.ckpt = epoch 1233) a été lancé avec un coefficient de traduction entier (10 au
+       # lieu de 10.0), que shimmer ignore : il a été entraîné SANS loss de traduction
+       # (val/translations = 10,44). C'est ce dernier qui figure dans l'archive Zenodo
+       # 24208192 : à remplacer par epoch=599.ckpt (voir README §5).
+       original_ckpt: "epoch=599.ckpt", wandb_run_id: 2eeamagz,
+       expect: {epoch: 599, global_step: 145800, loss_coefs: {translations: 10, contrastives: 0.1, demi_cycles: 1, cycles: 1}, colors_in_attr: true, total_steps: 150000}}
 
   high_contrastive:
     config: high_contrastive.yaml

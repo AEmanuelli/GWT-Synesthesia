@@ -8,7 +8,7 @@ reprend ensuite le logarithme de ces probabilités. Cette modification n'a jamai
 poussée sur le fork public de `shimmer` : avec le fork seul, tout passage par les
 attributs décodés (cycle complet image -> GW -> attributs -> GW -> image) réinjecte
 des logits dans un encodeur qui n'a vu que des probabilités, et la reconstruction
-est inutilisable (erreur 100 à 1000 fois plus grande, voir README §5).
+est inutilisable (erreur 30 à 900 fois plus grande selon le modèle, voir README §5).
 
 Ce module rétablit ce comportement sans toucher aux poids ni aux noms des paramètres :
 les checkpoints publiés se chargent tels quels.
