@@ -7,6 +7,7 @@ __pycache__/
 # Données, poids et résultats (trop volumineux : téléchargés ou régénérés)
 /data/
 /checkpoints/
+/results/
 /wandb/
 *.ckpt
 *.npy
