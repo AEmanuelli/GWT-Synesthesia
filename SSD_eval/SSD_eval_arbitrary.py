@@ -5,7 +5,7 @@ Pour chaque configuration de experiments/thesis_runs.yaml :
      couleurs reconstruites pour les chemins traduction / demi-cycle / cycle complet
      et tests KS entre catégories d'attributs (critère de Régularité) ;
   2. compare les instances deux à deux (tests KS) pour les attributs significatifs
-     (critère d'Arbitraire).
+     dans au moins une instance (critère d'Arbitraire).
 
     python SSD_eval/SSD_eval_arbitrary.py --all
     python SSD_eval/SSD_eval_arbitrary.py --experiment high_cycles --experiment base_params
@@ -733,8 +733,15 @@ if __name__ == "__main__":
 
         # --- Run Evaluation for All Models ---
         model_results_paths = {}
-        analysis_results_first_model = None
         successful_runs = []
+        # Attributs à comparer entre instances : ceux qui présentent au moins une paire de
+        # catégories significative (teinte) dans au moins UNE instance, sur au moins un chemin.
+        # (Le script d'origine ne retenait que ceux de la première instance : un attribut
+        # régulier seulement dans la graine 1 ou 2 n'était jamais comparé, voir README §5.)
+        paths_to_check = ['translated', 'half_cycle', 'full_cycle']
+        significance_alpha_filter = 0.05 # Alpha for the within-instance filtering
+        significance_alpha_compare = 0.05 # Alpha for saving cross-model results
+        all_significant_attributes_union: Dict[str, Set[str]] = {}
 
         LOGGER.info(f"--- Starting Evaluation for {len(model_configs)} Models ---")
         for i, config in enumerate(model_configs):
@@ -750,41 +757,28 @@ if __name__ == "__main__":
                 results_path, analysis_results = eval_result
                 model_results_paths[run_id] = results_path
                 successful_runs.append(run_id)
-                if i == 0: analysis_results_first_model = analysis_results
+                for path_name in paths_to_check:
+                    significant_attributes_current_path = find_significant_bin_comparisons(
+                        analysis_results=analysis_results, path_name=path_name,
+                        alpha=significance_alpha_filter
+                    )
+                    for attr, bins_set in significant_attributes_current_path.items():
+                        all_significant_attributes_union.setdefault(attr, set()).update(bins_set)
                 del analysis_results
                 LOGGER.info(f"Evaluation successful for {run_id}.")
             else:
                 LOGGER.error(f"Evaluation failed for {run_id}.")
 
         # --- Check if Comparison is Possible ---
-        if analysis_results_first_model is None:
-            LOGGER.error(f"Eval failed for first model of {MODEL_VERSION}. Skipping to next version.")
-            continue
-            
         if len(successful_runs) < 2:
             LOGGER.error(f"Need >= 2 successful evals for {MODEL_VERSION}. Skipping to next version.")
             continue
-            
+
         LOGGER.info(f"\nSuccessfully evaluated models for {MODEL_VERSION}: {successful_runs}")
-
-        # --- Filter Attributes based on FIRST Model's Significance (Across Paths) ---
-        paths_to_check = ['translated', 'half_cycle', 'full_cycle']
-        significance_alpha_filter = 0.05 # Alpha for initial filtering based on run 1
-        significance_alpha_compare = 0.05 # Alpha for saving cross-model results
-        all_significant_attributes_union: Dict[str, Set[str]] = {}
-
-        LOGGER.info(f"\n--- Filtering Attributes Based on FIRST Model ({successful_runs[0]}) Significance (p < {significance_alpha_filter}) For Each Path ---")
-        for path_name in paths_to_check:
-            significant_attributes_current_path = find_significant_bin_comparisons(
-                analysis_results=analysis_results_first_model, path_name=path_name,
-                alpha=significance_alpha_filter
-            )
-            for attr, bins_set in significant_attributes_current_path.items():
-                all_significant_attributes_union.setdefault(attr, set()).update(bins_set)
 
         LOGGER.info("\n--- Significance Filtering Summary ---")
         if not all_significant_attributes_union:
-            LOGGER.info(f"No attributes met the filtering criteria (p < {significance_alpha_filter}) in ANY path of the first model for {MODEL_VERSION}.")
+            LOGGER.info(f"No attributes met the filtering criteria (p < {significance_alpha_filter}) in ANY path of ANY instance for {MODEL_VERSION}.")
         else:
             LOGGER.info(f"Attributes showing significance (p < {significance_alpha_filter}) in at least one path (and their bins):")
             for attr, bins_set in all_significant_attributes_union.items():
@@ -809,7 +803,7 @@ if __name__ == "__main__":
                 path1 = model_results_paths[id1]
                 path2 = model_results_paths[id2]
 
-                # Iterate through attributes found significant in the *first* model
+                # Iterate through attributes found significant in at least one instance
                 for attribute, bin_names_set in all_significant_attributes_union.items():
                     # Iterate through the paths ('translated', 'half_cycle', 'full_cycle')
                     for path_name_for_comparison in paths_to_check:
