@@ -62,6 +62,18 @@ save_v_latents(checkpoint, config_dir, dataset_dir, "vae_v_shimmer.npy")
 PY
 fi
 
+# 2c bis. Répartition des domaines par graine, requise par le dataloader d'entraînement
+#         (image seule / attributs seuls / paires, en proportions égales)
+if [ "$EVAL_ONLY" = 0 ]; then
+    for seed in 0 1 2; do
+        split="$GWT_DATASET_DIR/domain_splits_v2/train_attr:1.0_attr,v:1.0_v:1.0_seed:${seed}_ms:500000_domain_split.npy"
+        if [ ! -f "$split" ]; then
+            shapesd alignment add --dataset_path "$GWT_DATASET_DIR" --seed "$seed" --ms 500000 \
+                --domain_alignment attr 1.0 --domain_alignment v 1.0 --domain_alignment attr,v 1.0
+        fi
+    done
+fi
+
 # 2d. Jeu de test structuré du mémoire (153 600 images ; ~1 à 2 h sur CPU)
 if [ "$QUICK" = 1 ]; then
     python SSD_eval/SSD_generate_evalset.py --quick

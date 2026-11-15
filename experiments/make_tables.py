@@ -10,14 +10,23 @@ Critères (mémoire §2.3.2), appliqués aux analysis_results.pkl de chaque inst
   - Arbitraire : une catégorie est "spécifique" si sa distribution de teinte diffère
     significativement (KS, p < alpha) entre au moins une paire d'instances.
 
-Score d'arbitraire = Nb catégories spécifiques / Nb catégories ayant contribué à la régularité.
-Le dénominateur peut se lire de deux façons (option --denominator) :
-  - union (défaut) : catégories contribuant dans au moins une des instances ;
-  - sum            : somme, sur les instances, des catégories contribuant dans chacune.
+Score d'arbitraire = Nb catégories spécifiques / Nb catégories ayant contribué à la régularité
+(dans au moins une instance). Un tiret signale l'absence de régularité.
+Le numérateur peut se lire de deux façons (option --numerator) :
+  - all (défaut) : catégories spécifiques parmi toutes celles de l'attribut. C'est la lecture
+    qui redonne les scores Forme et Orientation du mémoire ; le numérateur peut alors dépasser
+    le dénominateur (ex. Taille) ;
+  - contributing : catégories spécifiques parmi celles qui ont contribué à la régularité.
+Avec --denominator sum, numérateur et dénominateur sont sommés sur les instances
+(catégories contribuant dans chaque instance).
+
+Si les Modèles Complets ont été évalués (results/regularity/<config>_control), le nombre de
+paires régulières de chacun est affiché à la suite (0 attendu partout).
 """
 
 import argparse
 import itertools
+import json
 import pickle
 import sys
 from pathlib import Path
@@ -61,6 +70,7 @@ def hue_values(results, attr, path, cat):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("results_dir", type=Path, help="ex. results/arbitrary")
+    parser.add_argument("--numerator", choices=["all", "contributing"], default="all")
     parser.add_argument("--denominator", choices=["union", "sum"], default="union")
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--num-bins", type=int, default=15)
@@ -90,8 +100,12 @@ def main():
                 if not union:
                     row_arb.append("-")
                     continue
+                categories = set()
+                for r in runs.values():
+                    categories.update((r.get(attr) or {}).get(f"{path}_distributions") or {})
+                candidates = categories if args.numerator == "all" and args.denominator == "union" else union
                 specific = set()
-                for cat in union:
+                for cat in candidates:
                     for r1, r2 in itertools.combinations(runs, 2):
                         h1, h2 = (hue_values(runs[r], attr, path, cat) for r in (r1, r2))
                         if len(h1) > 1 and len(h2) > 1 and comparison_metrics(h1, h2, args.num_bins)[4] < args.alpha:
@@ -111,8 +125,22 @@ def main():
 
     print("\nTableau B.2 — % d'instances avec au moins une paire de catégories régulière")
     print("\n".join(table_b2))
-    print(f"\nTableaux 3.1 / E.1 — scores d'arbitraire (dénominateur : {args.denominator})")
+    print(f"\nTableaux 3.1 / E.1 — scores d'arbitraire "
+          f"(numérateur : {args.numerator}, dénominateur : {args.denominator})")
     print("\n".join(table_arb))
+
+    # Modèles Complets (contrôles), évalués par scripts/evaluate_all.sh
+    control_lines = []
+    for exp_name in manifest:
+        for f in sorted((args.results_dir.parent / "regularity" / f"{exp_name}_control").glob(
+                "*/within_model_comparison_summary.json")):
+            stats = json.load(open(f))["path_stats"]
+            control_lines.append(f"{CONFIG_LABELS.get(exp_name, exp_name):36s}" + "".join(
+                f"{stats.get(path, {}).get('significant', 0):>15d}" for path, _ in PATHS))
+    if control_lines:
+        print("\nModèles Complets (contrôles) — nombre de paires de catégories régulières")
+        print(f"{'Configuration':36s}" + "".join(f"{lab:>15s}" for _, lab in PATHS))
+        print("\n".join(control_lines))
 
 
 if __name__ == "__main__":
