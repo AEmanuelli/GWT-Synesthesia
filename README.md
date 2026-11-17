@@ -174,11 +174,12 @@ Traduction et Demi-Cycle ont été évalués sur deux machines : résultats iden
 - **Tableau B.2** (régularité) : en entier, les trois chemins des cinq configurations.
 - **Modèles Complets** : aucune paire régulière sur aucun des trois chemins, pour les
   quatre contrôles disponibles.
-- **Tableau 3.1** (arbitraire) : scores d'Orientation (5/16, 14/16 et 1/15 en Traduction,
-  8/16 en Cycle-Complet pour Emphase Traduction) et nombre de formes spécifiques (2, 2, 1),
-  avec les formes citées dans le texte du mémoire.
+- **Tableau 3.1** (arbitraire) : toutes les cases sauf deux (Forme en Référence et en
+  Emphase Attributs Continus, voir plus bas), dont la ligne Emphase Cycle-Complet
+  (2/2, 0/3, 0/2, 14/16) et le 8/16 d'Emphase Traduction en Cycle-Complet.
 - **Tableau E.1**, Traduction Bruitée : Forme 3/3 et Orientation 16/16 dans les trois
-  configurations concernées, aucune régularité pour Emphase Traduction et Emphase Contrastive.
+  configurations concernées, numérateurs nuls ailleurs, aucune régularité pour Emphase
+  Traduction et Emphase Contrastive.
 - **Figures 3.1, E.1a, E.1b** : histogrammes de teinte identiques classe par classe.
 - **Tableau B.1** : les cinq losses des contrôles sont identiques au millième pour quatre
   configurations ; pour les modèles « vide sémantique », l'écart maximal est de 0,015.
@@ -187,16 +188,19 @@ Traduction et Demi-Cycle ont été évalués sur deux machines : résultats iden
 
 ### Écarts dans les résultats
 
-- **Taille et Pos X, tableaux 3.1 et E.1.** Le mémoire donne 0/3 et 0/2 (Emphase
-  Cycle-Complet) et conclut que ces associations ne sont pas propres à l'instance. Le test
-  direct donne l'inverse : les 8 tailles et les 4 positions X diffèrent significativement
-  entre au moins deux instances. Cause probable : le script d'origine ne comparait entre
-  instances que les attributs significatifs dans la première instance, or Taille et Pos X
-  ne sont réguliers que dans la graine 1. Ce filtre a été retiré. De même en Traduction
-  Bruitée, où les dénominateurs obtenus diffèrent aussi (Référence : Taille 3, Pos X 2 ;
-  Emphase Cycle-Complet : Taille 2 ; Emphase Attributs Continus : Pos X 4, Pos Y 4).
-- **Forme, configuration Référence, tableau 3.1.** Deux formes spécifiques, comme dans le
-  mémoire, mais trois formes contribuent à la régularité (2/3 au lieu de 2/2).
+- **Forme, tableau 3.1.** Le mémoire donne 2/2 (Référence) et 1/2 (Emphase Attributs
+  Continus). Le script d'origine donne 0/3 et 0/2 : la première instance n'y présente
+  aucune paire significative pour la Forme, donc l'attribut n'est pas comparé. Sans ce
+  filtre on obtient 2/3 et 1/2, avec les formes citées dans le texte du mémoire.
+- **Taille, Pos X et Pos Y, tableau E.1.** Les numérateurs sont retrouvés, pas les
+  dénominateurs (Référence : Taille 0/3 et Pos X 0/2 au lieu de 0/2 et 0/4 ; Emphase
+  Cycle-Complet : Taille 0/2 au lieu de « - » ; Emphase Attributs Continus : Pos X et
+  Pos Y 0/4 au lieu de 0/2). Cause non identifiée.
+- **Lecture des zéros.** Dans les tableaux 3.1 et E.1, un score nul pour Taille, Pos X ou
+  Pos Y signifie que l'attribut n'a pas été comparé entre instances (filtre sur la
+  première instance), et non que ses couleurs sont identiques d'une instance à l'autre :
+  testées directement, toutes ces catégories diffèrent entre au moins deux instances
+  (`make_tables.py --no-first-instance-filter`).
 - **Légendes.** Les figures 3.1 et E.1b (« configuration de référence », « Réf. ») sont
   obtenues avec les modèles Emphase Cycle-Complet, pas avec la configuration Référence.
 - **Contrôle de la configuration Emphase Traduction.** Le fichier publié sur Zenodo n'est

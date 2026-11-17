@@ -17,6 +17,10 @@ Le numérateur peut se lire de deux façons (option --numerator) :
     qui redonne les scores Forme et Orientation du mémoire ; le numérateur peut alors dépasser
     le dénominateur (ex. Taille) ;
   - contributing : catégories spécifiques parmi celles qui ont contribué à la régularité.
+Filtre du script d'origine (actif par défaut, --no-first-instance-filter pour le retirer) :
+un attribut n'est comparé entre instances que si la première instance présente au moins une
+paire significative sur la teinte, sur l'un des trois chemins. Sinon le numérateur vaut 0 :
+ce zéro signifie « non comparé », pas « identique entre instances ».
 Avec --denominator sum, numérateur et dénominateur sont sommés sur les instances
 (catégories contribuant dans chaque instance).
 
@@ -72,6 +76,8 @@ def main():
     parser.add_argument("results_dir", type=Path, help="ex. results/arbitrary")
     parser.add_argument("--numerator", choices=["all", "contributing"], default="all")
     parser.add_argument("--denominator", choices=["union", "sum"], default="union")
+    parser.add_argument("--no-first-instance-filter", action="store_true",
+                        help="Comparer aussi les attributs non significatifs dans la première instance")
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--num-bins", type=int, default=15)
     parser.add_argument("--details", action="store_true", help="Lister les catégories par instance")
@@ -104,8 +110,12 @@ def main():
                 for r in runs.values():
                     categories.update((r.get(attr) or {}).get(f"{path}_distributions") or {})
                 candidates = categories if args.numerator == "all" and args.denominator == "union" else union
+                first = next(iter(runs.values())).get(attr) or {}
+                compared = args.no_first_instance_filter or any(
+                    isinstance(m, dict) and m.get("ks_pval") is not None and m["ks_pval"] < args.alpha
+                    for p, _ in PATHS for m in (first.get(f"bin_comparison_metrics_{p}") or {}).values())
                 specific = set()
-                for cat in candidates:
+                for cat in (candidates if compared else ()):
                     for r1, r2 in itertools.combinations(runs, 2):
                         h1, h2 = (hue_values(runs[r], attr, path, cat) for r in (r1, r2))
                         if len(h1) > 1 and len(h2) > 1 and comparison_metrics(h1, h2, args.num_bins)[4] < args.alpha:
