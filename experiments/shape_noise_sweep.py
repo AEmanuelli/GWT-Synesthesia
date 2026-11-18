@@ -534,7 +534,7 @@ def figures(sweeps, keys, eps_ref, fig_dir):
             ax.set_yticklabels([])
             ax.set_title(f"{CONFIG_LABELS[exp_name]} — {SHAPES[t]}", fontsize=8)
     axes[0][0].legend(fontsize=7, loc="lower left")
-    fig.suptitle(f"Teinte traduite, résidu partagé moitié-moitié (270°), ε = {eps_ref:g} ; "
+    fig.suptitle(f"Teinte traduite, résidu partagé moitié-moitié (270°), ε = {eps_ref:g}\n"
                  "un cercle par instance, trait : teinte moyenne (longueur R̄)")
     fig.tight_layout()
     fig.savefig(fig_dir / "teintes_par_instance.png", dpi=110)
