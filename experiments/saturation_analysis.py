@@ -21,10 +21,10 @@ Trois critères pour dire que deux distributions de S diffèrent :
     le moindre écart est significatif) ;
   - effet : test brut significatif ET taille d'effet au moins « petite » (|delta de Cliff| >= 0,147).
 Régularité : au moins une paire de catégories d'un attribut diffère dans l'instance.
-Arbitraire : une catégorie est spécifique si sa distribution diffère entre au moins deux instances
-(numérateur : toutes les catégories de l'attribut ; dénominateur : catégories qui ont contribué
-à la régularité dans au moins une instance, comme experiments/make_tables.py ; sans le filtre
-« première instance »).
+Arbitraire : une catégorie est spécifique si sa distribution diffère entre au moins deux instances.
+Cellule « a/b (c) » : a catégories spécifiques parmi les b catégories de l'attribut, c catégories
+ayant contribué à la régularité dans au moins une instance (le score du mémoire, calculé par
+experiments/make_tables.py, vaut a/c) ; « - » : aucune régularité. Pas de filtre « première instance ».
 
 Sorties dans --out : niveaux_S_L.csv, paires_categories.csv, paires_instances.csv,
 synthese.md (tableaux) et figures/.
@@ -273,7 +273,9 @@ def regularity_tables(cat_rows, inst_rows, channel, criterion, alpha):
                     specific = {r["categorie"] for r in inst_rows
                                 if r["config"] == exp_name and r["chemin"] == path and r["canal"] == channel
                                 and r["attribut"] == attr and differs(r, criterion, alpha)}
-                    row_arb.append(f"{len(specific)}/{len(union)}")
+                    n_cats = len({c for r in sel if r["attribut"] == attr
+                                  for c in (r["categorie_1"], r["categorie_2"])})
+                    row_arb.append(f"{len(specific)}/{n_cats} ({len(union)})")
                 n_ctrl = sum(1 for r in sel if r["instance"] == "control" and r["attribut"] == attr
                              and differs(r, criterion, alpha))
                 n_pairs = sum(1 for r in sel if r["instance"] == "control" and r["attribut"] == attr)
@@ -417,7 +419,8 @@ def main():
             b2, arb, ctrl = regularity_tables(cat_rows, inst_rows, channel, criterion, args.alpha)
             md += [f"\n### Canal {channel}, critère « {criterion} »\n",
                    "% d'instances avec au moins une paire de catégories qui diffère (régularité) :\n", b2,
-                   "\nArbitraire (catégories spécifiques / catégories ayant contribué à la régularité) :\n", arb,
+                   "\nArbitraire (spécifiques / catégories de l'attribut, entre parenthèses : catégories ayant "
+                   "contribué à la régularité) :\n", arb,
                    "\nModèles Complets : paires de catégories qui diffèrent / paires testées :\n", ctrl]
     (out / "synthese.md").write_text("\n".join(md) + "\n")
     figures(models, out / "figures")
