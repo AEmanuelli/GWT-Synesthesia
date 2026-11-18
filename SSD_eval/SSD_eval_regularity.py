@@ -82,6 +82,7 @@ def eval_regularity(
     barycentre = False,
     conditioning = False,
     my_hparams={"temperature": 1, "alpha": 1}, # hyperparameters for the model
+    output_root=None,  # défaut : results/regularity ; results/saturation/regularity avec --hls
 ):
     """
     Evaluate model regularity on shape representations.
@@ -120,7 +121,7 @@ def eval_regularity(
     print("_______________________________________________________________________________")
 
     # Define output directory
-    output_base = str(paths.RESULTS_DIR / "regularity" / name)
+    output_base = str(Path(output_root or paths.RESULTS_DIR / "regularity") / name)
     run_specific_part = f"results_{config_suffix}"
     if run_id:
         run_specific_part += f"_{run_id}"
@@ -223,6 +224,9 @@ def parse_args(argv=None):
     parser.add_argument("--shape-noise", type=float, default=0.0,
                         help="Bruit sur les attributs de forme en traduction (0.01 = Annexe E)")
     parser.add_argument("--shape-noise-seed", type=int, default=42)
+    parser.add_argument("--hls", action="store_true",
+                        help="Extraire aussi la saturation S et la luminosité L (échelle 0-255) ; "
+                             "résultats dans results/saturation/regularity/")
     return parser.parse_args(argv)
 
 
@@ -230,9 +234,11 @@ if __name__ == "__main__":
     args = parse_args()
     SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
+    SSD_utils.HLS_CHANNELS = args.hls
     if args.shape_noise > 0 and args.name is None:
         args.name = f"{Path(args.checkpoint).parents[1].name}_shape_noise_{args.shape_noise:g}"
     eval_regularity(
+        output_root=paths.RESULTS_DIR / "saturation" / "regularity" if args.hls else None,
         full_attr=args.with_colors,
         run_id=args.run_id,
         checkpoint_base_path=args.checkpoint,

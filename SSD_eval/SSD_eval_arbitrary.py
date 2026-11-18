@@ -698,6 +698,9 @@ def parse_args(argv=None):
                              "(0 = chapitre 3 ; 0.01 = 'Traduction Bruitée' de l'Annexe E)")
     parser.add_argument("--shape-noise-seed", type=int, default=42,
                         help="Graine du bruit (42 dans le mémoire, identique pour toutes les instances)")
+    parser.add_argument("--hls", action="store_true",
+                        help="Extraire aussi la saturation S et la luminosité L (échelle 0-255) et les "
+                             "comparer entre catégories ; résultats dans results/saturation/")
     return parser.parse_args(argv)
 
 
@@ -708,9 +711,13 @@ if __name__ == "__main__":
     args = parse_args()
     SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
-    if args.shape_noise > 0 and args.output_dir == str(paths.RESULTS_DIR / "arbitrary"):
+    SSD_utils.HLS_CHANNELS = args.hls
+    if args.output_dir == str(paths.RESULTS_DIR / "arbitrary") and (args.shape_noise > 0 or args.hls):
         # Dossier distinct : les résultats déjà calculés sont réutilisés depuis le cache
-        args.output_dir = str(paths.RESULTS_DIR / f"arbitrary_shape_noise_{args.shape_noise:g}")
+        # (et ceux du chapitre 3, sans bruit ni S/L, ne sont jamais écrasés)
+        base_dir = paths.RESULTS_DIR / "saturation" if args.hls else paths.RESULTS_DIR
+        noise_suffix = f"_shape_noise_{args.shape_noise:g}" if args.shape_noise > 0 else ""
+        args.output_dir = str(base_dir / f"arbitrary{noise_suffix}")
     LOGGER.info(f"Bruit sur les attributs de forme (traduction) : {args.shape_noise} (graine {args.shape_noise_seed})")
     NUM_BINS = args.num_bins
     PARALLEL = args.parallel

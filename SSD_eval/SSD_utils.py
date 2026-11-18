@@ -17,6 +17,13 @@ LOGGER = logging.getLogger(__name__)
 SHAPE_NOISE_SCALE = float(os.environ.get("GWT_SHAPE_NOISE", "0"))
 SHAPE_NOISE_SEED = int(os.environ.get("GWT_SHAPE_NOISE_SEED", "42"))
 
+# Saturation S et luminosité L (HLS, colorsys) ajoutées aux couleurs extraites, en plus de
+# H, R, G, B (option --hls de SSD_eval_arbitrary.py et SSD_eval_regularity.py). Même masque
+# d'Otsu et même barycentre que la teinte. Échelle 0-255, comme R, G, B : le jeu de test est
+# généré avec L = 180 et S = 230 sur cette échelle (L = 0,706 et S = 0,907 en HLS 0-1).
+# Désactivé par défaut : les résultats du chapitre 3 ne changent pas.
+HLS_CHANNELS = os.environ.get("GWT_HLS_CHANNELS", "0") == "1"
+
 # Version de la méthode d'évaluation, enregistrée à côté des résultats mis en cache.
 # 2 : catégories de forme en probabilités à la sortie du décodeur d'attributs
 #     (chemin cycle complet corrigé, voir category_probs.py).
@@ -27,11 +34,14 @@ CACHE_FILES = ("analysis_results.pkl", "binned_results.pkl")
 
 def cache_signature() -> dict:
     """Ce qui doit être identique pour qu'un résultat en cache soit réutilisable."""
-    return {
+    signature = {
         "evaluation_version": EVALUATION_VERSION,
         "shape_noise": SHAPE_NOISE_SCALE,
         "shape_noise_seed": SHAPE_NOISE_SEED if SHAPE_NOISE_SCALE > 0 else None,
     }
+    if HLS_CHANNELS:  # clé absente sans --hls : les caches du chapitre 3 restent valides
+        signature["hls_channels"] = True
+    return signature
 
 
 def discard_stale_cache(output_dir) -> None:
@@ -1021,6 +1031,17 @@ def rgb_to_hls(rgb_values):
     return h, r, g, b
 
 
+def hls_lightness_saturation(rgb_values):
+    """Luminosité L et saturation S (HLS, colorsys) d'une couleur RGB 0-255, sur l'échelle 0-255.
+
+    Même couleur d'entrée que rgb_to_hls (barycentre du masque d'Otsu), mais sans arrondi
+    des canaux : S et L sont calculées sur les valeurs flottantes.
+    """
+    r, g, b = [x / 255.0 for x in rgb_values]
+    _, l, s = colorsys.rgb_to_hls(r, g, b)
+    return l * 255, s * 255
+
+
 # def initialize_h_binning_structures(
 #     analysis_attributes,
 #     binning_config, 
@@ -1467,7 +1488,15 @@ def bin_h_processed_samples_with_paths(
         translated_h, translated_r, translated_g, translated_b = rgb_to_hls(processed['translated_shape_color'])
         half_cycle_h, half_cycle_r, half_cycle_g, half_cycle_b = rgb_to_hls(processed['half_cycle_shape_color'])
         full_cycle_h, full_cycle_r, full_cycle_g, full_cycle_b = rgb_to_hls(processed['full_cycle_shape_color'])
-        
+        # Option --hls : luminosité et saturation des mêmes couleurs (en plus de H, R, G, B)
+        if rgb and HLS_CHANNELS:
+            ls_by_path = (
+                (input_colors_by_attr, hls_lightness_saturation(input_color)),
+                (translated_colors_by_attr, hls_lightness_saturation(processed['translated_shape_color'])),
+                (half_cycle_colors_by_attr, hls_lightness_saturation(processed['half_cycle_shape_color'])),
+                (full_cycle_colors_by_attr, hls_lightness_saturation(processed['full_cycle_shape_color'])),
+            )
+
         # Collecter les exemples diversifiés pour chaque forme
         if shape < len(shape_names):
             shape_name = shape_names[shape]
@@ -1588,7 +1617,12 @@ def bin_h_processed_samples_with_paths(
                     full_cycle_colors_by_attr[attr][bin_name]['R'].append(full_cycle_r)
                     full_cycle_colors_by_attr[attr][bin_name]['G'].append(full_cycle_g)
                     full_cycle_colors_by_attr[attr][bin_name]['B'].append(full_cycle_b)
-                
+
+                    if HLS_CHANNELS:
+                        for colors_by_attr, (l_value, s_value) in ls_by_path:
+                            colors_by_attr[attr][bin_name]['L'].append(l_value)
+                            colors_by_attr[attr][bin_name]['S'].append(s_value)
+
                 # Store example if needed
                 if display_examples and len(examples_by_attr[attr][bin_name]) < 5:
                     examples_by_attr[attr][bin_name].append({
@@ -2038,7 +2072,10 @@ def initialize_h_binning_structures(
                 translated_bins[bin_name] = {'H': [], 'R': [], 'G': [], 'B': []}
                 half_cycle_bins[bin_name] = {'H': [], 'R': [], 'G': [], 'B': []}
                 full_cycle_bins[bin_name] = {'H': [], 'R': [], 'G': [], 'B': []}
-            
+                if HLS_CHANNELS:  # option --hls : saturation et luminosité en plus
+                    for bins in (input_bins, translated_bins, half_cycle_bins, full_cycle_bins):
+                        bins[bin_name].update({'S': [], 'L': []})
+
             # Structure pour les exemples et les teintes représentées
             example_bins[bin_name] = [] # Initialiser comme liste vide
             represented_hues_bins[bin_name] = set() # Initialiser comme set vide

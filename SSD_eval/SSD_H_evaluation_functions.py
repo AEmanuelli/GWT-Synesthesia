@@ -821,7 +821,24 @@ def generate_metric_heatmaps(bin_comparison_results, bin_names, attribute, path_
                     vmin=0, vmax=1.0,
                     title=f"KS Statistic - {channel} Channel"
                 )
-                
+
+        # Option --hls : p-valeurs KS de la saturation et de la luminosité
+        for channel in ("S", "L"):
+            metric_key = f'ks_pval_{channel.lower()}'
+            if any(metric_key in m for m in bin_comparison_results.values()):
+                visualize_metric_heatmap_bin_pairs(
+                    metric_results=bin_comparison_results,
+                    metric_key=metric_key,
+                    bin_names=bin_names,
+                    attribute=attribute,
+                    path_name=path_name,
+                    save_path=os.path.join(output_dir, f'{path_name}_{attribute}_heatmap_KS_pvalue_{channel}.png'),
+                    cmap='viridis_r',
+                    vmin=0, vmax=1.0,
+                    annotation_fmt=".3f",
+                    title=f"KS p-value - {channel} Channel"
+                )
+
     except Exception as e:
         LOGGER.error(f"Failed to generate heatmaps for {attribute}, path {path_name}: {e}", exc_info=True)
 
@@ -932,9 +949,12 @@ def _compare_distributions_between_bins(
     # 1. Extract data for the two bins
     dist1_data = path_data_for_attribute.get(bin1_name, {})
     dist2_data = path_data_for_attribute.get(bin2_name, {})
-    
+
     # Define which channels to process
     channels = ["H", "R", "G", "B"] if rgb else ["H"]
+    # Option --hls : saturation et luminosité, si elles ont été extraites
+    hls_channels = [c for c in ("S", "L") if rgb and c in dist1_data and c in dist2_data]
+    channels = channels + hls_channels
     values1_dict = extract_valid_values(dist1_data, channels)
     values2_dict = extract_valid_values(dist2_data, channels)
     
@@ -1004,7 +1024,21 @@ def _compare_distributions_between_bins(
                            f"KL({bin2_name}||{bin1_name}): {kl_21:.4f}, "
                            f"Sym KL: {kl_sym:.4f}, "
                            f"KS Stat ({num_bins} bins): {channel_ks_stat:.4f}, KS p-val: {channel_ks_pval:.4f}")
-    
+
+    # Saturation et luminosité (option --hls) : mêmes métriques, enregistrées en plus.
+    # Elles ne changent pas le critère de régularité du mémoire (teinte ET un canal R, G ou B).
+    for channel in hls_channels:
+        values1 = values1_dict.get(channel, np.array([]))
+        values2 = values2_dict.get(channel, np.array([]))
+        if len(values1) <= 1 or len(values2) <= 1:
+            continue
+        kl_12, kl_21, kl_sym, channel_ks_stat, channel_ks_pval = comparison_metrics(values1, values2, num_bins)
+        results[f'kl_1_vs_2_{channel.lower()}'] = kl_12
+        results[f'kl_2_vs_1_{channel.lower()}'] = kl_21
+        results[f'kl_symmetric_{channel.lower()}'] = kl_sym
+        results[f'ks_stat_{channel.lower()}'] = channel_ks_stat
+        results[f'ks_pval_{channel.lower()}'] = channel_ks_pval
+
     # Log H channel results if they're significant
     if ks_pval < 0.05 and flag:
         LOGGER.info(f"    Path '{path_name}', {attribute} (H): '{bin1_name}' vs '{bin2_name}' -> "
