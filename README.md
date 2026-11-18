@@ -97,6 +97,22 @@ bash scripts/evaluate_annex_E.sh --use-original-names
 python experiments/make_tables.py results/arbitrary_shape_noise_0.01
 ```
 
+### Saturation et luminosité (prolongement de l'annexe E)
+
+Options ajoutées pour tester si la saturation est portée par les composantes résiduelles des
+attributs ; désactivées par défaut, elles ne changent pas les résultats du chapitre 3.
+
+- `--hls` (`SSD_eval_arbitrary.py`, `SSD_eval_regularity.py`) : extrait aussi la saturation S et la luminosité L (HLS, même masque et même barycentre que la teinte, échelle 0-255 comme R, G, B), les compare entre catégories et écrit dans `results/saturation/`.
+- `bash scripts/evaluate_saturation.sh --use-original-names` : évaluation `--hls` des 15 modèles et des contrôles, sans bruit puis avec le bruit de l'annexe E.
+- `python experiments/make_tables.py results/saturation/arbitrary --channel S` : tableaux B.2 et 3.1 sur S (ou L) au lieu de la teinte ; `--test raw` remplace le test KS sur histogrammes par le test KS sur valeurs brutes.
+- `python experiments/saturation_analysis.py` : niveaux de S et L par chemin, tests entre catégories et entre instances (test du mémoire, KS brut, δ de Cliff), figures ; `--from-rgb` donne un aperçu à partir des résultats du chapitre 3.
+- `python experiments/saturation_reference.py` : témoin de mesure, S et L extraites des images d'entrée et du VAE seul (sans GW).
+- `python experiments/shape_noise_sweep.py` : balayage du bruit sur le one-hot de forme (36 directions du plan tangent au simplexe × 9 amplitudes de 0,001 à 0,1), forme re-décodée depuis l'image, témoins (attributs continus, Modèles Complets).
+
+Sur disque dur, lire les 153 600 images prend l'essentiel du temps : une copie du jeu de test
+en mémoire (`cp -r data/evaluation_set /dev/shm/`, puis `export GWT_EVALSET_DIR=/dev/shm/evaluation_set`)
+ramène l'évaluation d'un modèle à quelques minutes.
+
 ### Tableau B.1 (losses de validation)
 
 Nécessite le dataset d'entraînement (`bash scripts/download_data.sh`, 7 Go) :
@@ -163,6 +179,7 @@ Pour vérifier que l'entraînement démarre, sans attendre (possible sans GPU) :
 | Tableau B.1 | `experiments/compute_table_B1.py` |
 | Sortie « probabilités » du décodeur d'attributs | `SSD_eval/category_probs.py` |
 | Modèles du mémoire (configuration, graine, run d'origine) | `experiments/thesis_runs.yaml` |
+| Saturation, luminosité, balayage du bruit sur la forme | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py` |
 
 ## 5. Ce qui est reproduit, et les écarts avec le mémoire
 
