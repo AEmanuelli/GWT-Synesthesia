@@ -104,6 +104,7 @@ attributs ; désactivées par défaut, elles ne changent pas les résultats du c
 
 - `--hls` (`SSD_eval_arbitrary.py`, `SSD_eval_regularity.py`) : extrait aussi la saturation S et la luminosité L (HLS, même masque et même barycentre que la teinte, échelle 0-255 comme R, G, B), les compare entre catégories et écrit dans `results/saturation/`.
 - `bash scripts/evaluate_saturation.sh --use-original-names` : évaluation `--hls` des 15 modèles et des contrôles, sans bruit puis avec le bruit de l'annexe E.
+- `--low-memory` (mêmes scripts) : une fois les couleurs extraites, garde les images reconstruites en uint8 (elles ne servent plus qu'aux planches d'exemples) et pas les masques ; mêmes résultats, environ 4 Go de mémoire vive par modèle au lieu de 9.
 - `python experiments/make_tables.py results/saturation/arbitrary --channel S` : tableaux B.2 et 3.1 sur S (ou L) au lieu de la teinte ; `--test raw` remplace le test KS sur histogrammes par le test KS sur valeurs brutes.
 - `python experiments/saturation_analysis.py` : niveaux de S et L par chemin, tests entre catégories et entre instances (test du mémoire, KS brut, δ de Cliff), figures ; `--from-rgb` donne un aperçu à partir des résultats du chapitre 3.
 - `python experiments/saturation_reference.py` : témoin de mesure, S et L extraites des images d'entrée et du VAE seul (sans GW).

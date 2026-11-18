@@ -224,6 +224,9 @@ def parse_args(argv=None):
     parser.add_argument("--shape-noise", type=float, default=0.0,
                         help="Bruit sur les attributs de forme en traduction (0.01 = Annexe E)")
     parser.add_argument("--shape-noise-seed", type=int, default=42)
+    parser.add_argument("--low-memory", action="store_true",
+                        help="Images reconstruites gardées en uint8 et masques non conservés après "
+                             "l'extraction des couleurs (environ 4 fois moins de mémoire, mêmes résultats)")
     parser.add_argument("--hls", action="store_true",
                         help="Extraire aussi la saturation S et la luminosité L (échelle 0-255) ; "
                              "résultats dans results/saturation/regularity/")
@@ -235,6 +238,7 @@ if __name__ == "__main__":
     SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
     SSD_utils.HLS_CHANNELS = args.hls
+    SSD_utils.LOW_MEMORY_IMAGES = args.low_memory
     if args.shape_noise > 0 and args.name is None:
         args.name = f"{Path(args.checkpoint).parents[1].name}_shape_noise_{args.shape_noise:g}"
     eval_regularity(

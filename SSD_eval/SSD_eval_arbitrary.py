@@ -698,6 +698,9 @@ def parse_args(argv=None):
                              "(0 = chapitre 3 ; 0.01 = 'Traduction Bruitée' de l'Annexe E)")
     parser.add_argument("--shape-noise-seed", type=int, default=42,
                         help="Graine du bruit (42 dans le mémoire, identique pour toutes les instances)")
+    parser.add_argument("--low-memory", action="store_true",
+                        help="Images reconstruites gardées en uint8 et masques non conservés après "
+                             "l'extraction des couleurs (environ 4 fois moins de mémoire, mêmes résultats)")
     parser.add_argument("--hls", action="store_true",
                         help="Extraire aussi la saturation S et la luminosité L (échelle 0-255) et les "
                              "comparer entre catégories ; résultats dans results/saturation/")
@@ -712,6 +715,7 @@ if __name__ == "__main__":
     SSD_utils.SHAPE_NOISE_SCALE = args.shape_noise
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
     SSD_utils.HLS_CHANNELS = args.hls
+    SSD_utils.LOW_MEMORY_IMAGES = args.low_memory
     if args.output_dir == str(paths.RESULTS_DIR / "arbitrary") and (args.shape_noise > 0 or args.hls):
         # Dossier distinct : les résultats déjà calculés sont réutilisés depuis le cache
         # (et ceux du chapitre 3, sans bruit ni S/L, ne sont jamais écrasés)

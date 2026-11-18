@@ -24,6 +24,15 @@ SHAPE_NOISE_SEED = int(os.environ.get("GWT_SHAPE_NOISE_SEED", "42"))
 # Désactivé par défaut : les résultats du chapitre 3 ne changent pas.
 HLS_CHANNELS = os.environ.get("GWT_HLS_CHANNELS", "0") == "1"
 
+# Option --low-memory : une fois les couleurs extraites (sur les images float32, calcul inchangé),
+# les images reconstruites ne servent plus qu'aux planches d'exemples ; elles sont alors gardées
+# en uint8 et les masques ne sont pas conservés (environ 4 fois moins de mémoire, mêmes résultats).
+LOW_MEMORY_IMAGES = os.environ.get("GWT_LOW_MEMORY", "0") == "1"
+
+
+def _image_to_uint8(image: np.ndarray) -> np.ndarray:
+    return np.round(np.clip(image, 0, 1) * 255).astype(np.uint8)
+
 # Version de la méthode d'évaluation, enregistrée à côté des résultats mis en cache.
 # 2 : catégories de forme en probabilités à la sortie du décodeur d'attributs
 #     (chemin cycle complet corrigé, voir category_probs.py).
@@ -799,6 +808,12 @@ def process_through_global_workspace(
 
                         full_cycle_mask = segment_shape(full_cycle_image_np)
                         full_cycle_shape_color = extract_shape_color(full_cycle_image_np, full_cycle_mask, barycentre) * 255
+
+                        if LOW_MEMORY_IMAGES:  # couleurs déjà extraites : images en uint8, sans masques
+                            translated_image_np = _image_to_uint8(translated_image_np)
+                            half_cycle_image_np = _image_to_uint8(half_cycle_image_np)
+                            full_cycle_image_np = _image_to_uint8(full_cycle_image_np)
+                            translated_mask = half_cycle_mask = full_cycle_mask = None
 
                         # Store results for this individual sample
                         batch_results_list.append({
