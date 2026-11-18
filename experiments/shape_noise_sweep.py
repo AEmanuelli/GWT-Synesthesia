@@ -357,6 +357,21 @@ def analyze(out_dir, eps_ref):
                     [f"ΔC forme ε={EPSILONS[0]:g}", f"ΔC continus ε={EPSILONS[0]:g}",
                      f"ΔC continus ε={EPSILONS[-1]:g}", "S bruit annexe E"], rows)]
 
+    # 2 bis. Saturation par forme
+    rows = []
+    for key in keys:
+        d = sweeps[key]
+        row = [group_label(key)]
+        for t in range(3):
+            vals = [np.median(d["S"][(d["kind"] == KIND_BASE) & (d["shape"] == t)])]
+            for e in (EPSILONS[0], EPSILONS[4]):
+                sel = (d["kind"] == KIND_SHAPE) & d["feasible"] & np.isclose(d["eps"], e) & (d["shape"] == t)
+                vals.append(np.median(d["S"][sel]))
+            row.append(" / ".join(f"{v:.2f}" for v in vals))
+        rows.append(row)
+    md += [f"\nS médiane par forme : sans bruit / ε={EPSILONS[0]:g} / ε={EPSILONS[4]:g} (directions admissibles).\n",
+           md_table(["Modèle"] + SHAPES, rows)]
+
     # 3. Teinte selon la direction (cône admissible)
     rows = []
     for key in keys:
