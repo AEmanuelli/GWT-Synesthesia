@@ -111,9 +111,12 @@ attributs ; désactivées par défaut, elles ne changent pas les résultats du c
 - `python experiments/saturation_reference.py` : témoin de mesure, S et L extraites des images d'entrée et du VAE seul (sans GW).
 - `python experiments/shape_noise_sweep.py` : balayage du bruit sur le one-hot de forme (36 directions du plan tangent au simplexe × 9 amplitudes de 0,001 à 0,1), forme re-décodée depuis l'image, témoins (attributs continus, Modèles Complets).
 - `python experiments/synesthesia_figure.py` : associations forme → couleur les plus nettes de chaque modèle (traduction avec le bruit de l'annexe E), redessinées avec de vraies traductions (`galerie.png`, `palettes.png`) ; à lancer après l'évaluation `--translation-only`.
+- `python experiments/residual_regression.py` : lecture des résidus par régression. La couleur d'une image d'entrée est-elle lisible dans les attributs que le GW en décode (image → VAE → GW → attributs) ? 19 200 images stratifiées (teinte × forme × taille) ; ridge, k plus proches voisins et petit perceptron multicouche sur le résidu des probabilités de forme (log-rapports des formes non cibles à la forme cible), sur les écarts des attributs continus à leurs vraies valeurs, ou sur les deux, avec ou sans les vraies valeurs des attributs ; R² en validation croisée, ligne de base à couleurs mélangées (`results/saturation/regression/`).
 
 Durée sur un GeForce 940MX : environ 35 min par modèle pour l'évaluation complète (le GPU est
 le facteur limitant : quatre passages dans le VAE par image), environ 10 min avec `--translation-only`.
+`residual_regression.py` demande environ 1 h 10 pour les 19 modèles, dont 50 min pour le perceptron
+(`--device cpu` sur une partie des configurations permet de le répartir entre GPU et CPU).
 Sur disque dur, une copie du jeu de test en mémoire évite en plus des lectures lentes
 (`cp -r data/evaluation_set /dev/shm/`, puis `export GWT_EVALSET_DIR=/dev/shm/evaluation_set`).
 
@@ -183,7 +186,7 @@ Pour vérifier que l'entraînement démarre, sans attendre (possible sans GPU) :
 | Tableau B.1 | `experiments/compute_table_B1.py` |
 | Sortie « probabilités » du décodeur d'attributs | `SSD_eval/category_probs.py` |
 | Modèles du mémoire (configuration, graine, run d'origine) | `experiments/thesis_runs.yaml` |
-| Saturation, luminosité, balayage du bruit sur la forme, figure de synesthésie | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py`, `experiments/synesthesia_figure.py` |
+| Saturation, luminosité, balayage du bruit sur la forme, figure de synesthésie, lecture des résidus par régression | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py`, `experiments/synesthesia_figure.py`, `experiments/residual_regression.py` |
 
 ## 5. Ce qui est reproduit, et les écarts avec le mémoire
 
