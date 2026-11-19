@@ -82,7 +82,7 @@ def eval_regularity(
     barycentre = False,
     conditioning = False,
     my_hparams={"temperature": 1, "alpha": 1}, # hyperparameters for the model
-    output_root=None,  # défaut : results/regularity ; results/saturation/regularity avec --hls
+    output_root=None,  # défaut : results/regularity (results/saturation/... avec --hls)
 ):
     """
     Evaluate model regularity on shape representations.
@@ -227,6 +227,9 @@ def parse_args(argv=None):
     parser.add_argument("--low-memory", action="store_true",
                         help="Images reconstruites gardées en uint8 et masques non conservés après "
                              "l'extraction des couleurs (environ 4 fois moins de mémoire, mêmes résultats)")
+    parser.add_argument("--translation-only", action="store_true",
+                        help="Ne calculer que le chemin de traduction (4 fois moins de calcul) ; "
+                             "demi-cycle et cycle complet restent vides")
     parser.add_argument("--hls", action="store_true",
                         help="Extraire aussi la saturation S et la luminosité L (échelle 0-255) ; "
                              "résultats dans results/saturation/regularity/")
@@ -239,10 +242,14 @@ if __name__ == "__main__":
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
     SSD_utils.HLS_CHANNELS = args.hls
     SSD_utils.LOW_MEMORY_IMAGES = args.low_memory
+    SSD_utils.TRANSLATION_ONLY = args.translation_only
     if args.shape_noise > 0 and args.name is None:
         args.name = f"{Path(args.checkpoint).parents[1].name}_shape_noise_{args.shape_noise:g}"
+    output_root = paths.RESULTS_DIR / "saturation" if args.hls else paths.RESULTS_DIR
+    if args.translation_only:  # jamais dans le dossier du chapitre 3 (signature de cache différente)
+        output_root = output_root / "traduction_seule"
     eval_regularity(
-        output_root=paths.RESULTS_DIR / "saturation" / "regularity" if args.hls else None,
+        output_root=output_root / "regularity",
         full_attr=args.with_colors,
         run_id=args.run_id,
         checkpoint_base_path=args.checkpoint,

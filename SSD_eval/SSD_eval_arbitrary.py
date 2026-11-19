@@ -701,6 +701,9 @@ def parse_args(argv=None):
     parser.add_argument("--low-memory", action="store_true",
                         help="Images reconstruites gardées en uint8 et masques non conservés après "
                              "l'extraction des couleurs (environ 4 fois moins de mémoire, mêmes résultats)")
+    parser.add_argument("--translation-only", action="store_true",
+                        help="Ne calculer que le chemin de traduction (4 fois moins de calcul) ; "
+                             "demi-cycle et cycle complet restent vides")
     parser.add_argument("--hls", action="store_true",
                         help="Extraire aussi la saturation S et la luminosité L (échelle 0-255) et les "
                              "comparer entre catégories ; résultats dans results/saturation/")
@@ -716,10 +719,14 @@ if __name__ == "__main__":
     SSD_utils.SHAPE_NOISE_SEED = args.shape_noise_seed
     SSD_utils.HLS_CHANNELS = args.hls
     SSD_utils.LOW_MEMORY_IMAGES = args.low_memory
-    if args.output_dir == str(paths.RESULTS_DIR / "arbitrary") and (args.shape_noise > 0 or args.hls):
+    SSD_utils.TRANSLATION_ONLY = args.translation_only
+    if args.output_dir == str(paths.RESULTS_DIR / "arbitrary") and (
+            args.shape_noise > 0 or args.hls or args.translation_only):
         # Dossier distinct : les résultats déjà calculés sont réutilisés depuis le cache
         # (et ceux du chapitre 3, sans bruit ni S/L, ne sont jamais écrasés)
         base_dir = paths.RESULTS_DIR / "saturation" if args.hls else paths.RESULTS_DIR
+        if args.translation_only:
+            base_dir = base_dir / "traduction_seule"
         noise_suffix = f"_shape_noise_{args.shape_noise:g}" if args.shape_noise > 0 else ""
         args.output_dir = str(base_dir / f"arbitrary{noise_suffix}")
     LOGGER.info(f"Bruit sur les attributs de forme (traduction) : {args.shape_noise} (graine {args.shape_noise_seed})")

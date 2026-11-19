@@ -33,6 +33,11 @@ LOW_MEMORY_IMAGES = os.environ.get("GWT_LOW_MEMORY", "0") == "1"
 def _image_to_uint8(image: np.ndarray) -> np.ndarray:
     return np.round(np.clip(image, 0, 1) * 255).astype(np.uint8)
 
+# Option --translation-only : seul le chemin de traduction est calculé (1 passage dans le décodeur
+# du VAE par image au lieu de 4). Les distributions du demi-cycle et du cycle complet restent vides ;
+# sur les planches d'exemples, ces chemins sont remplacés par une image noire.
+TRANSLATION_ONLY = os.environ.get("GWT_TRANSLATION_ONLY", "0") == "1"
+
 # Version de la méthode d'évaluation, enregistrée à côté des résultats mis en cache.
 # 2 : catégories de forme en probabilités à la sortie du décodeur d'attributs
 #     (chemin cycle complet corrigé, voir category_probs.py).
@@ -50,6 +55,8 @@ def cache_signature() -> dict:
     }
     if HLS_CHANNELS:  # clé absente sans --hls : les caches du chapitre 3 restent valides
         signature["hls_channels"] = True
+    if TRANSLATION_ONLY:
+        signature["translation_only"] = True
     return signature
 
 
@@ -761,7 +768,8 @@ def process_through_global_workspace(
                 # --- 2. Get batched visual latent vector from batched ground truth ---
                 visual_module = global_workspace.domain_mods["v_latents"]
                 # visual_module.visual_module.encode must accept (B, C, H, W)
-                batched_v_latent_vector = visual_module.visual_module.encode(batched_visual_ground_truth) # Should return (B, v_latent_dim)
+                if not TRANSLATION_ONLY:  # option --translation-only : pas besoin de l'image d'entrée
+                    batched_v_latent_vector = visual_module.visual_module.encode(batched_visual_ground_truth) # Should return (B, v_latent_dim)
 
 
                 # --- 3. Process the batch through different pathways ---
@@ -771,13 +779,17 @@ def process_through_global_workspace(
                     class_value=tilting, n=reverb_n
                 ) # (B, C, H, W)
 
-                batched_half_cycle_image_tensor = _process_half_cycle_path_batch(
-                    global_workspace, batched_v_latent_vector, device
-                ) # (B, C, H, W)
+                if TRANSLATION_ONLY:  # option --translation-only : images noires, non analysées
+                    batched_half_cycle_image_tensor = torch.zeros_like(batched_translated_image_tensor)
+                    batched_full_cycle_image_tensor = batched_half_cycle_image_tensor
+                else:
+                    batched_half_cycle_image_tensor = _process_half_cycle_path_batch(
+                        global_workspace, batched_v_latent_vector, device
+                    ) # (B, C, H, W)
 
-                batched_full_cycle_image_tensor = _process_full_cycle_path_batch(
-                    global_workspace, batched_v_latent_vector, device, n=reverb_n
-                ) # (B, C, H, W)
+                    batched_full_cycle_image_tensor = _process_full_cycle_path_batch(
+                        global_workspace, batched_v_latent_vector, device, n=reverb_n
+                    ) # (B, C, H, W)
 
                 # --- 4. Collect and post-process results on CPU ---
                 # Move batched tensors back to CPU and convert to NumPy batches
@@ -803,11 +815,15 @@ def process_through_global_workspace(
                         translated_mask = segment_shape(translated_image_np)
                         translated_shape_color = extract_shape_color(translated_image_np, translated_mask, barycentre) * 255
 
-                        half_cycle_mask = segment_shape(half_cycle_image_np)
-                        half_cycle_shape_color = extract_shape_color(half_cycle_image_np, half_cycle_mask, barycentre) * 255
+                        if TRANSLATION_ONLY:  # chemins non calculés : pas de couleur
+                            half_cycle_mask = full_cycle_mask = None
+                            half_cycle_shape_color = full_cycle_shape_color = None
+                        else:
+                            half_cycle_mask = segment_shape(half_cycle_image_np)
+                            half_cycle_shape_color = extract_shape_color(half_cycle_image_np, half_cycle_mask, barycentre) * 255
 
-                        full_cycle_mask = segment_shape(full_cycle_image_np)
-                        full_cycle_shape_color = extract_shape_color(full_cycle_image_np, full_cycle_mask, barycentre) * 255
+                            full_cycle_mask = segment_shape(full_cycle_image_np)
+                            full_cycle_shape_color = extract_shape_color(full_cycle_image_np, full_cycle_mask, barycentre) * 255
 
                         if LOW_MEMORY_IMAGES:  # couleurs déjà extraites : images en uint8, sans masques
                             translated_image_np = _image_to_uint8(translated_image_np)
@@ -1501,16 +1517,25 @@ def bin_h_processed_samples_with_paths(
         input_h, input_r, input_g, input_b = rgb_to_hls(input_color)
         # Get output colors from all paths
         translated_h, translated_r, translated_g, translated_b = rgb_to_hls(processed['translated_shape_color'])
-        half_cycle_h, half_cycle_r, half_cycle_g, half_cycle_b = rgb_to_hls(processed['half_cycle_shape_color'])
-        full_cycle_h, full_cycle_r, full_cycle_g, full_cycle_b = rgb_to_hls(processed['full_cycle_shape_color'])
+        # Option --translation-only : demi-cycle et cycle complet non calculés
+        cycles_computed = processed['half_cycle_shape_color'] is not None
+        if cycles_computed:
+            half_cycle_h, half_cycle_r, half_cycle_g, half_cycle_b = rgb_to_hls(processed['half_cycle_shape_color'])
+            full_cycle_h, full_cycle_r, full_cycle_g, full_cycle_b = rgb_to_hls(processed['full_cycle_shape_color'])
+        else:
+            half_cycle_h = half_cycle_r = half_cycle_g = half_cycle_b = None
+            full_cycle_h = full_cycle_r = full_cycle_g = full_cycle_b = None
         # Option --hls : luminosité et saturation des mêmes couleurs (en plus de H, R, G, B)
         if rgb and HLS_CHANNELS:
             ls_by_path = (
                 (input_colors_by_attr, hls_lightness_saturation(input_color)),
                 (translated_colors_by_attr, hls_lightness_saturation(processed['translated_shape_color'])),
-                (half_cycle_colors_by_attr, hls_lightness_saturation(processed['half_cycle_shape_color'])),
-                (full_cycle_colors_by_attr, hls_lightness_saturation(processed['full_cycle_shape_color'])),
             )
+            if cycles_computed:
+                ls_by_path += (
+                    (half_cycle_colors_by_attr, hls_lightness_saturation(processed['half_cycle_shape_color'])),
+                    (full_cycle_colors_by_attr, hls_lightness_saturation(processed['full_cycle_shape_color'])),
+                )
 
         # Collecter les exemples diversifiés pour chaque forme
         if shape < len(shape_names):
@@ -1613,8 +1638,9 @@ def bin_h_processed_samples_with_paths(
             if bin_name in input_colors_by_attr[attr]:
                 input_colors_by_attr[attr][bin_name]['H'].append(input_h)
                 translated_colors_by_attr[attr][bin_name]['H'].append(translated_h)
-                half_cycle_colors_by_attr[attr][bin_name]['H'].append(half_cycle_h)
-                full_cycle_colors_by_attr[attr][bin_name]['H'].append(full_cycle_h)
+                if cycles_computed:
+                    half_cycle_colors_by_attr[attr][bin_name]['H'].append(half_cycle_h)
+                    full_cycle_colors_by_attr[attr][bin_name]['H'].append(full_cycle_h)
 
                 if rgb:
                     input_colors_by_attr[attr][bin_name]['R'].append(input_r)
@@ -1625,13 +1651,14 @@ def bin_h_processed_samples_with_paths(
                     translated_colors_by_attr[attr][bin_name]['G'].append(translated_g)
                     translated_colors_by_attr[attr][bin_name]['B'].append(translated_b)
 
-                    half_cycle_colors_by_attr[attr][bin_name]['R'].append(half_cycle_r)
-                    half_cycle_colors_by_attr[attr][bin_name]['G'].append(half_cycle_g)
-                    half_cycle_colors_by_attr[attr][bin_name]['B'].append(half_cycle_b)
+                    if cycles_computed:
+                        half_cycle_colors_by_attr[attr][bin_name]['R'].append(half_cycle_r)
+                        half_cycle_colors_by_attr[attr][bin_name]['G'].append(half_cycle_g)
+                        half_cycle_colors_by_attr[attr][bin_name]['B'].append(half_cycle_b)
 
-                    full_cycle_colors_by_attr[attr][bin_name]['R'].append(full_cycle_r)
-                    full_cycle_colors_by_attr[attr][bin_name]['G'].append(full_cycle_g)
-                    full_cycle_colors_by_attr[attr][bin_name]['B'].append(full_cycle_b)
+                        full_cycle_colors_by_attr[attr][bin_name]['R'].append(full_cycle_r)
+                        full_cycle_colors_by_attr[attr][bin_name]['G'].append(full_cycle_g)
+                        full_cycle_colors_by_attr[attr][bin_name]['B'].append(full_cycle_b)
 
                     if HLS_CHANNELS:
                         for colors_by_attr, (l_value, s_value) in ls_by_path:

@@ -91,6 +91,8 @@ def _distributions(pkl_file, from_rgb):
             else:
                 dists = (data.get(attr) or {}).get(f"{path}_distributions") or {}
             for cat, dist in dists.items():
+                if len(dist.get("H") or []) == 0:  # chemin non calculé (--translation-only)
+                    continue
                 ch = _channels(dist, from_rgb)
                 if ch is None:
                     raise SystemExit(f"Pas de S/L dans {pkl_file} : évaluation sans --hls (utiliser --from-rgb).")

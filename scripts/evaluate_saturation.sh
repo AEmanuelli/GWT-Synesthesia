@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Saturation (S) et luminosité (L) des couleurs reconstruites (prolongement de l'annexe E).
-# Refait l'évaluation du chapitre 3 avec S et L en plus de H, R, G, B (option --hls), sans bruit
-# puis avec le bruit de l'annexe E (traduction bruitée), pour les 15 modèles « vide sémantique »
+# Refait l'évaluation du chapitre 3 avec S et L en plus de H, R, G, B (option --hls), avec le
+# bruit de l'annexe E (traduction bruitée) puis sans bruit, pour les 15 modèles « vide sémantique »
 # et les Modèles Complets disponibles. Les résultats du chapitre 3 ne sont pas touchés.
+# --translation-only : chemin de traduction seul (4 fois moins de calcul), résultats dans
+# results/saturation/traduction_seule/.
 #
 # --low-memory : images reconstruites gardées en uint8 après l'extraction des couleurs (même
 # résultat, environ 4 Go de mémoire vive au lieu de 9 par modèle).
@@ -16,9 +18,15 @@ source "$(dirname "$0")/_common.sh"
 cd "$REPO_ROOT"
 
 USE_ORIGINAL=0
-for arg in "$@"; do if [ "$arg" = "--use-original-names" ]; then USE_ORIGINAL=1; fi; done
+CONTROL_OPTIONS=()
+for arg in "$@"; do
+    case "$arg" in
+        --use-original-names) USE_ORIGINAL=1 ;;
+        --translation-only) CONTROL_OPTIONS+=(--translation-only) ;;
+    esac
+done
 
-for noise in 0 0.01; do
+for noise in 0.01 0; do
     # 1. Modèles « vide sémantique » : régularité par instance + arbitraire entre les 3 graines
     python SSD_eval/SSD_eval_arbitrary.py --all --hls --low-memory --shape-noise "$noise" --shape-noise-seed 42 \
         --dataset-csv "$GWT_EVALSET_DIR/attributes.csv" "$@"
@@ -38,7 +46,7 @@ for name, exp in yaml.safe_load(open(paths.THESIS_RUNS_FILE))["experiments"].ite
 PY
         if [ -e "$ckpt" ]; then
             python SSD_eval/SSD_eval_regularity.py --checkpoint "$ckpt" --with-colors --hls --low-memory \
-                --shape-noise "$noise" --shape-noise-seed 42 \
+                --shape-noise "$noise" --shape-noise-seed 42 "${CONTROL_OPTIONS[@]}" \
                 --name "${exp}_control${suffix}" --dataset-csv "$GWT_EVALSET_DIR/attributes.csv" < /dev/null
         else
             echo "Contrôle absent, ignoré : $ckpt"
