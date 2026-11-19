@@ -99,6 +99,8 @@ python experiments/make_tables.py results/arbitrary_shape_noise_0.01
 
 ### Saturation et luminosité (prolongement de l'annexe E)
 
+Compte rendu des résultats, avec les figures principales : [`docs/compte_rendu_saturation.md`](docs/compte_rendu_saturation.md).
+
 Options ajoutées pour tester si la saturation est portée par les composantes résiduelles des
 attributs ; désactivées par défaut, elles ne changent pas les résultats du chapitre 3.
 
