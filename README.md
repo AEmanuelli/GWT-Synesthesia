@@ -110,6 +110,7 @@ attributs ; désactivées par défaut, elles ne changent pas les résultats du c
 - `python experiments/saturation_analysis.py` : niveaux de S et L par chemin, tests entre catégories et entre instances (test du mémoire, KS brut, δ de Cliff), figures ; `--from-rgb` donne un aperçu à partir des résultats du chapitre 3.
 - `python experiments/saturation_reference.py` : témoin de mesure, S et L extraites des images d'entrée et du VAE seul (sans GW).
 - `python experiments/shape_noise_sweep.py` : balayage du bruit sur le one-hot de forme (36 directions du plan tangent au simplexe × 9 amplitudes de 0,001 à 0,1), forme re-décodée depuis l'image, témoins (attributs continus, Modèles Complets).
+- `python experiments/synesthesia_figure.py` : associations forme → couleur les plus nettes de chaque modèle (traduction avec le bruit de l'annexe E), redessinées avec de vraies traductions (`galerie.png`, `palettes.png`) ; à lancer après l'évaluation `--translation-only`.
 
 Durée sur un GeForce 940MX : environ 35 min par modèle pour l'évaluation complète (le GPU est
 le facteur limitant : quatre passages dans le VAE par image), environ 10 min avec `--translation-only`.
@@ -182,7 +183,7 @@ Pour vérifier que l'entraînement démarre, sans attendre (possible sans GPU) :
 | Tableau B.1 | `experiments/compute_table_B1.py` |
 | Sortie « probabilités » du décodeur d'attributs | `SSD_eval/category_probs.py` |
 | Modèles du mémoire (configuration, graine, run d'origine) | `experiments/thesis_runs.yaml` |
-| Saturation, luminosité, balayage du bruit sur la forme | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py` |
+| Saturation, luminosité, balayage du bruit sur la forme, figure de synesthésie | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py`, `experiments/synesthesia_figure.py` |
 
 ## 5. Ce qui est reproduit, et les écarts avec le mémoire
 
