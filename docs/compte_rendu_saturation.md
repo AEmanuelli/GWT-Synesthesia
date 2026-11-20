@@ -53,6 +53,7 @@ dans `results/saturation/`, non versionné ; les figures ci-dessous en sont tir�
 | `experiments/sweep_statistics.py` | statistiques du balayage : IC, tests appariés corrigés, spécificité, résidus réels (annexe A) |
 | `experiments/synesthesia_figure.py` | associations forme → couleur les plus nettes, avec de vraies traductions |
 | `experiments/residual_regression.py` | relecture de la couleur d'entrée dans les attributs décodés |
+| `experiments/saturation_robustness.py`, `multiple_testing.py`, `regression_sensitivity.py`, `robustness_statistics.py` | robustesse : extraction, graines et amplitudes du bruit, corrections, sous-ensembles (annexe B) |
 
 Reproduction vérifiée : les lignes Traduction des tableaux B.2 et 3.1, et la ligne Traduction Bruitée du
 tableau E.1, sont identiques à celles déjà reproduites.
@@ -223,11 +224,79 @@ k plus proches voisins, petit perceptron ; meilleure des trois, validation crois
 
 ![R² par modèle](figures_saturation/r2_par_modele.png)
 
-## 7. En cours et reste à faire
+## 7. Robustesse (étape 4)
 
-- **Étape 4, robustesse** (en cours) : autre extraction de la couleur (pixel le plus intérieur du
-  masque), autres graines et amplitudes du bruit de l'annexe E, correction pour comparaisons multiples,
-  sensibilité de la régression au tirage des images. Résultats à venir dans `results/saturation/robustesse/`.
+Tableaux complets : [annexe B](annexes/B_robustesse.md). Chemin de traduction, 4 608 attributs tirés
+du jeu d'évaluation (1 536 par forme, mêmes attributs pour les 19 modèles et toutes les conditions,
+donc comparaisons appariées). Unité statistique : l'image traduite (volets 1 et 2), la paire de
+catégories ou d'instances (volet 3), le modèle (volet 4). IC 95 % par bootstrap des images ou Wilson ;
+tests corrigés de Holm par tableau. **Hors de portée sur ce GPU : autres instances ou réentraînements** ;
+toute généralisation à une configuration repose sur 3 instances.
+
+**Extraction de la couleur (pixel le plus intérieur du masque au lieu de 3 × 3 pixels au barycentre).
+Tient.** Les médianes de S changent de moins de 0,005 (ΔS apparié, médiane par modèle : −0,000 à
++0,005 ; IC 95 % de largeur ≤ 0,001 ; significatif après Holm dans 36 tests sur 38 du seul fait de
+n = 4 608 images, effet négligeable). Les 15 associations sûres (borne basse de Wilson de la
+constance ≥ 60 %) sont les mêmes avec les deux extractions, constances à ±2 points, teintes
+dominantes identiques (écart 0°, IC inclus dans ±1°). La régularité et l'arbitraire de S sont
+inchangés (avec le bruit de l'annexe E, S diffère entre instances pour une même forme dans 7 à 9
+paires sur 9 dans les trois configurations qui répondent, |δ de Cliff| jusqu'à 1,00, avec l'une
+comme l'autre extraction). L'effet de mesure chez les contrôles diminue (|δ| maximal entre formes :
+0,73–0,81 → 0,58–0,64) sans disparaître : **la différence de S entre formes reste non interprétable
+seule**, il faut les contrôles.
+
+**Graines et amplitudes du bruit de l'annexe E.** La graine ne tire pas un bruit par image : c'est un
+seul vecteur pour toutes les images, donc une **direction** du résidu (vers quelle forme part la masse).
+- *Tient* : avec les 6 graines (42, 0 à 4) et les 3 amplitudes (0,003 ; 0,01 ; 0,03), les mêmes trois
+  configurations se colorent (S médiane, moyenne des instances, à 0,01 : Référence 0,24–0,48, Emphase
+  Cycle-Complet 0,40–0,58, Emphase Attributs Continus 0,29–0,64 selon la graine) et Emphase Traduction
+  et Emphase Contrastive restent grises à toute amplitude (S ≤ 0,06).
+- *Tient en partie* : le nombre d'associations sûres dépend de la direction (à 0,01 : 15, 11, 15, 9,
+  16 et 5 sur 45 selon la graine ; graine 4, la seule où le résidu du losange et de l'œuf part vers le
+  triangle : 5). Des 15 associations sûres du mémoire (graine 42), **aucune** ne reste sûre avec la même
+  couleur pour les 5 autres graines ; 12 le restent pour au moins 3 graines sur 5 et 9 pour les deux
+  autres amplitudes. Quand une association est perdue, la forme redevient surtout grise ou peu
+  constante, elle change rarement de couleur : à graine différente, la teinte dominante bouge de 0 à
+  13° (médiane 1° pour 104 paires de graines), sauf **Emphase Cycle-Complet graine 0** (œufs : −35 à
+  −101° selon la graine ; triangles : −55 à +29°), dont la couleur dépend donc de la graine du bruit.
+- *Ne tient pas* : « ce modèle voit les œufs en turquoise » ne vaut que pour une direction donnée du
+  résidu. Les affirmations défendables sont les 9 associations sûres, avec la même couleur, pour au moins
+  4 graines sur 6 et aux trois amplitudes : losanges verts, œufs et triangles vert-jaune de Référence
+  graine 1 ; losanges bleu-violet et œufs orange de Référence graine 2 ; œufs et triangles verts
+  d'Emphase Attributs Continus graine 1 ; œufs turquoise et triangles turquoise foncé d'Emphase
+  Attributs Continus graine 2.
+
+![Teinte selon la graine et l'amplitude du bruit](figures_saturation/teintes_par_graine.png)
+
+**Tests et comparaisons multiples (traduction, évaluation exacte).**
+- KS sur valeurs brutes : 100 % des instances « régulières », contrôles compris (n de 9 600 à 51 200
+  par catégorie) ; inutilisable, avec ou sans correction.
+- Critère d'effet (KS + |δ| ≥ 0,147) : **inchangé** par Holm ou Benjamini-Hochberg (p bruts ≈ 0).
+  Il sépare les modèles des contrôles : S selon l'orientation, sans bruit, 100 % des instances des 5
+  configurations contre 0 % des contrôles.
+- Test du mémoire : **fragile**. Après Holm, la régularité de la teinte selon l'orientation en
+  traduction sans bruit tombe de 100 % à 33 % des instances pour Référence, Emphase Cycle-Complet et
+  Emphase Attributs Continus, et celle selon la forme de 33 % à 0 %. Avec le bruit de l'annexe E, la
+  teinte reste propre à chaque instance pour une même forme dans 33 % (Référence), 78 % (Emphase
+  Cycle-Complet, Emphase Attributs Continus) des paires après Holm, contre 89 à 100 % sans correction ;
+  0 % pour Emphase Traduction et Emphase Contrastive. Benjamini-Hochberg garde l'essentiel des
+  résultats non corrigés.
+
+**Régression (étape 2) : sous-ensemble et nombre d'images.** Variantes avec ridge et kNN seulement
+(le perceptron coûte environ 1 h par variante) ; comparaison à la meilleure de ces deux régressions
+sur le sous-ensemble du mémoire. *Tient* : un autre tirage (graines 1 et 2, 32 images par case) change
+les R² de 0,01 au plus, sur les 19 modèles et pour tous les groupes de variables ; le classement des
+15 modèles est conservé (ρ de Spearman 0,98 à 1,00, p < 10⁻⁴ après Holm). Le R² du résidu seul ne
+dépend pas non plus du nombre d'images (16, 32 ou 64 par case : écart ≤ 0,02). *À nuancer* : les R²
+qui demandent la géométrie (kNN) croissent avec le nombre d'images (« tout » : −0,07 à 16 par case,
++0,09 à 64, médianes), chez les contrôles aussi (au plus 0,28 à 64 par case) ; l'écart aux contrôles
+et le classement (ρ ≥ 0,99) sont conservés, mais les valeurs absolues de ces R² ne sont que des
+bornes basses.
+
+## 8. En cours et reste à faire
+
+- **Robustesse, reste** : autres instances ou réentraînements (hors de portée sur le 940MX) ; perceptron
+  sur les variantes de la régression.
 - **Le GW lit-il les écarts des attributs continus ?** Les perturber selon les directions qui portent la
   couleur, et non au hasard, puis mesurer la couleur traduite.
 - **Plus d'instances** : 3 par configuration limitent la généralisation (Référence graine 0 se

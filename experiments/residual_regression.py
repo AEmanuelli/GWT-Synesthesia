@@ -446,7 +446,7 @@ def fit_all(data_dir, img, args, selected, device):
         cache = data_dir / f"{exp_name}_{instance}_r2_{args.target}.csv"
         refit = args.refit and (exp_name, instance) in selected
         model_rows = pd.read_csv(cache).to_dict("records") if cache.exists() and not refit else []
-        missing = [r for r in REGRESSIONS if r not in {row["regression"] for row in model_rows}]
+        missing = [r for r in args.regressions if r not in {row["regression"] for row in model_rows}]
         if missing and (exp_name, instance) in selected:
             t0 = time.time()
             model_rows += fit_model(d, img, args, missing, device)
@@ -935,6 +935,8 @@ def main():
     parser.add_argument("--out", type=Path, default=paths.RESULTS_DIR / "saturation" / "regression")
     parser.add_argument("--analyze-only", action="store_true", help="Sans passage dans les modèles")
     parser.add_argument("--refit", action="store_true", help="Recalcule les régressions déjà en cache")
+    parser.add_argument("--regressions", nargs="+", choices=REGRESSIONS, default=list(REGRESSIONS),
+                        help="Régressions à calculer (défaut : les trois ; ridge et kNN seuls vont bien plus vite)")
     parser.add_argument("--threads", type=int, default=None, help="Threads PyTorch sur CPU")
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"), default="auto",
                         help="Passage dans les modèles et perceptron multicouche (auto : GPU s'il y en a un)")
