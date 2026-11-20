@@ -112,6 +112,7 @@ attributs ; désactivées par défaut, elles ne changent pas les résultats du c
 - `python experiments/saturation_analysis.py` : niveaux de S et L par chemin, tests entre catégories et entre instances (test du mémoire, KS brut, δ de Cliff), figures ; `--from-rgb` donne un aperçu à partir des résultats du chapitre 3.
 - `python experiments/saturation_reference.py` : témoin de mesure, S et L extraites des images d'entrée et du VAE seul (sans GW).
 - `python experiments/shape_noise_sweep.py` : balayage du bruit sur le one-hot de forme (36 directions du plan tangent au simplexe × 9 amplitudes de 0,001 à 0,1), forme re-décodée depuis l'image, témoins (attributs continus, Modèles Complets).
+- `python experiments/sweep_statistics.py` : statistiques du balayage (intervalles de confiance, tests appariés corrigés de Holm, témoin de spécificité, masse résiduelle sur de vraies images, dépendance de la teinte à la direction) ; à lancer après le balayage et `residual_regression.py`. Résultat : `balayage/statistiques.md` (annexe A du compte rendu).
 - `python experiments/synesthesia_figure.py` : associations forme → couleur les plus nettes de chaque modèle (traduction avec le bruit de l'annexe E), redessinées avec de vraies traductions (`galerie.png`, `palettes.png`) ; à lancer après l'évaluation `--translation-only`.
 - `python experiments/residual_regression.py` : lecture des résidus par régression. La couleur d'une image d'entrée est-elle lisible dans les attributs que le GW en décode (image → VAE → GW → attributs) ? 19 200 images stratifiées (teinte × forme × taille) ; ridge, k plus proches voisins et petit perceptron multicouche sur le résidu des probabilités de forme (log-rapports des formes non cibles à la forme cible), sur les écarts des attributs continus à leurs vraies valeurs, ou sur les deux, avec ou sans les vraies valeurs des attributs ; R² en validation croisée, ligne de base à couleurs mélangées (`results/saturation/regression/`).
 
@@ -188,7 +189,7 @@ Pour vérifier que l'entraînement démarre, sans attendre (possible sans GPU) :
 | Tableau B.1 | `experiments/compute_table_B1.py` |
 | Sortie « probabilités » du décodeur d'attributs | `SSD_eval/category_probs.py` |
 | Modèles du mémoire (configuration, graine, run d'origine) | `experiments/thesis_runs.yaml` |
-| Saturation, luminosité, balayage du bruit sur la forme, figure de synesthésie, lecture des résidus par régression | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py`, `experiments/synesthesia_figure.py`, `experiments/residual_regression.py` |
+| Saturation, luminosité, balayage du bruit sur la forme, figure de synesthésie, lecture des résidus par régression | `experiments/saturation_analysis.py`, `experiments/shape_noise_sweep.py`, `experiments/sweep_statistics.py`, `experiments/synesthesia_figure.py`, `experiments/residual_regression.py` |
 
 ## 5. Ce qui est reproduit, et les écarts avec le mémoire
 

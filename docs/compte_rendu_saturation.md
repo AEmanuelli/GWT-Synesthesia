@@ -15,8 +15,13 @@ dans `results/saturation/`, non versionné ; les figures ci-dessous en sont tir�
 - Avec le petit bruit de l'annexe E (1 % de probabilité sur les formes non cibles), trois
   configurations sur cinq (Référence, Emphase Cycle-Complet, Emphase Attributs Continus) produisent des
   **couleurs saturées**, propres à chaque forme et à chaque instance : une vraie synesthésie visible.
-- Un balayage montre que c'est **causal** : 0,1 à 1 % de masse résiduelle sur les autres formes suffit
-  à colorer la traduction, et la teinte dépend de la direction de ce résidu.
+- Une **intervention** sur la seule entrée de forme (modèle déterministe, tout le reste fixé) le
+  confirme : retirer 0,7 à 0,8 % de masse à la forme cible fait passer S de 0,03–0,06 à 0,50–0,93
+  dans 8 des 9 instances de ces trois configurations (34 à 48 exemples colorés sur 48 ; Wilcoxon
+  apparié, p < 10⁻⁴ après correction de Holm), avec une relation dose-réponse monotone. La même
+  perturbation appliquée aux attributs continus déplace la couleur 10 à 166 fois moins. La teinte
+  obtenue dépend fortement de la forme qui reçoit le résidu dans 4 instances, faiblement (15 à 30°)
+  dans 4 autres (§ 4, annexe A).
 - Une régression montre que la couleur d'entrée est **relisible** dans les attributs décodés, qui n'en
   contiennent pas : en partie dans le résidu des probabilités de forme, en partie dans de petits écarts
   des attributs continus. Ce qui est relisible prédit ce que le cycle complet restitue (ρ = 0,99).
@@ -45,6 +50,7 @@ dans `results/saturation/`, non versionné ; les figures ci-dessous en sont tir�
 | `make_tables.py --channel H/S/L --test` | tableaux de régularité et d'arbitraire sur S et L |
 | `experiments/saturation_analysis.py` | régularité et arbitraire de S, avec un critère de taille d'effet |
 | `experiments/shape_noise_sweep.py` | balayage du bruit sur la forme, dans le plan tangent au simplexe |
+| `experiments/sweep_statistics.py` | statistiques du balayage : IC, tests appariés corrigés, spécificité, résidus réels (annexe A) |
 | `experiments/synesthesia_figure.py` | associations forme → couleur les plus nettes, avec de vraies traductions |
 | `experiments/residual_regression.py` | relecture de la couleur d'entrée dans les attributs décodés |
 
@@ -74,9 +80,91 @@ chapitre 3 (erreur médiane vérifiée < 0,005). En cycle complet, S est souvent
 de façon propre à chaque instance. Pour la forme et la taille sans bruit, les contrôles diffèrent aussi
 (effet de mesure) : non concluant.
 
-## 4. Balayage du bruit sur la forme (cause)
+## 4. Balayage du bruit sur la forme : effet de la masse résiduelle
 
-Sur 48 exemples et 36 directions du plan tangent au simplexe, ε de 0,001 à 0,1 :
+**Protocole.** Chemin de traduction (attributs → GW → image). On ne modifie que le vecteur de forme
+donné en entrée : one-hot + ε·u, où u est un vecteur unitaire du plan tangent au simplexe. Toutes les
+autres entrées restent fixes et le modèle est déterministe : sur un exemple donné, l'écart observé est
+donc l'effet de cette seule modification. Les directions admissibles (240° à 300°) gardent le vecteur
+dans le simplexe et retirent 0,71 ε à 0,82 ε de masse à la forme cible, soit 0,07–0,08 % à ε = 0,001
+et 0,7–0,8 % à ε = 0,01. 48 exemples (3 formes × 4 orientations × 2 tailles × 2 positions),
+7 directions admissibles, 9 amplitudes de 0,001 à 0,1.
+
+- **Témoin de spécificité** : même norme ε appliquée aux 5 attributs continus (36 directions
+  aléatoires).
+- **Témoins négatifs** : les 4 Modèles Complets.
+- **Statistiques** : l'unité est l'exemple, avec une valeur par exemple (médiane sur les directions).
+  Tests appariés de Wilcoxon, intervalles de confiance par bootstrap des exemples, correction de Holm.
+  Il n'y a que 3 instances par configuration : la généralisation à une configuration repose sur ce
+  nombre.
+
+Tableaux complets : [annexe A](annexes/A_statistiques_balayage.md), produite par
+`experiments/sweep_statistics.py`.
+
+**Résultat 1 : la masse résiduelle colore la traduction.**
+
+| Instance | S sans bruit | S à ε = 0,001 [IC 95 %] | S à ε = 0,01 [IC 95 %] | colorés (S ≥ 0,3) à ε = 0,01 | ΔC forme / ΔC continus à ε = 0,001 [IC 95 %] |
+|---|---|---|---|---|---|
+| Référence graine 0 | 0,05 | 0,07 [0,05–0,09] | 0,10 [0,06–0,30] | 17/48 | 2,2 [1,5–12,0] |
+| Référence graine 1 | 0,05 | 0,23 [0,19–0,27] | 0,71 [0,66–0,76] | 48/48 | 118 [93–134] |
+| Référence graine 2 | 0,06 | 0,45 [0,42–0,49] | 0,81 [0,78–0,84] | 48/48 | 166 [134–176] |
+| Emphase Cycle-Complet graine 0 | 0,03 | 0,24 [0,17–0,40] | 0,81 [0,76–0,88] | 48/48 | 133 [118–152] |
+| Emphase Cycle-Complet graine 1 | 0,03 | 0,04 [0,03–0,06] | 0,85 [0,79–0,90] | 46/48 | 84 [64–118] |
+| Emphase Cycle-Complet graine 2 | 0,03 | 0,04 [0,04–0,06] | 0,59 [0,46–0,68] | 39/48 | 85 [67–103] |
+| Emphase Attributs Continus graine 0 | 0,05 | 0,09 [0,07–0,13] | 0,50 [0,37–0,60] | 34/48 | 10 [8–16] |
+| Emphase Attributs Continus graine 1 | 0,05 | 0,38 [0,31–0,41] | 0,75 [0,71–0,78] | 48/48 | 108 [83–120] |
+| Emphase Attributs Continus graine 2 | 0,05 | 0,30 [0,27–0,33] | 0,93 [0,89–0,95] | 48/48 | 95 [88–113] |
+| Emphase Traduction (3 graines) | 0,04–0,05 | 0,04–0,05 | 0,04–0,06 | 0/48 | 0,6 à 2,1 |
+| Emphase Contrastive (3 graines) | 0,04–0,06 | 0,04–0,06 | 0,05 | 0 à 3/48 | 0,4 à 1,1 |
+| Modèles Complets (4) | 0,80–0,83 | 0,80–0,83 | 0,80–0,83 | 48/48 | 0,5 à 56 |
+
+- **Effet** : dans 8 des 9 instances de Référence, Emphase Cycle-Complet et Emphase Attributs
+  Continus, S passe de 0,03–0,06 à 0,50–0,93 à ε = 0,01, avec 34 à 48 exemples colorés sur 48
+  (p < 10⁻⁴ après correction de Holm sur 57 tests).
+- **Dose-réponse** : S croît avec ε pour 45 à 48 exemples sur 48 (ρ de Spearman médian par exemple :
+  0,91 à 1,00).
+- **Seuil** : dès ε = 0,001 (0,07 % de masse), la médiane atteint S ≥ 0,3 dans 2 instances, et dès
+  ε = 0,0018 dans 2 autres.
+- **Exception** : Référence graine 0 ne répond presque pas (S = 0,10 à ε = 0,01), sauf pour les
+  losanges.
+- **Spécificité** : à norme égale, perturber les attributs continus déplace la couleur 10 à 166 fois
+  moins (borne basse des IC ≥ 7,8), sauf chez Référence graine 0 (2,2).
+- **Témoins négatifs** : chez les Modèles Complets, S ne change pas (écart ≤ 0,01). Chez Emphase
+  Traduction et Emphase Contrastive, la traduction reste grise (S ≤ 0,06). Quelques p y sont faibles,
+  mais l'effet est négligeable (ΔS ≤ 0,01) : un p seul ne suffit pas, d'où les tailles d'effet.
+- **Réserve** : chez le contrôle d'Emphase Cycle-Complet, la masse résiduelle déplace aussi la couleur
+  (ΔC = 32 à ε = 0,01, rapport 56 à ε = 0,001) sans changer S. La sensibilité au résidu de forme est
+  donc en partie une propriété de cette configuration, indépendamment du vide sémantique.
+
+**Plage balayée et résidus réels.** Le décodeur d'attributs, appliqué à 19 200 vraies images, produit
+lui-même une masse résiduelle :
+- **Emphase Cycle-Complet** : médiane de 0,4 à 1 %, en plein dans la plage balayée ; c'est aussi le cas
+  de son contrôle.
+- **Référence et Emphase Attributs Continus** : médiane de 0,01 à 0,02 %, mais 25 à 31 % des images
+  dépassent 0,07 %.
+- **Emphase Traduction et Emphase Contrastive** : masse résiduelle quasi nulle, ce qui est cohérent avec
+  le R² nul du résidu au § 6.
+
+**Résultat 2 : la teinte dépend de la forme qui reçoit le résidu, nettement dans 4 instances.** On
+compare la teinte entre les deux répartitions extrêmes (tout le résidu sur l'une ou l'autre des formes
+non cibles), à ε = 0,01. Seuls entrent les exemples colorés aux deux extrêmes (S ≥ 0,3), car la teinte
+d'un gris n'a pas de sens. Le plancher de mesure, 99e centile de l'écart chez les contrôles, vaut 15°.
+- **Forte dépendance** : Emphase Cycle-Complet, 3 instances sur 3 (écart médian de 65° à 156°, 100 % des
+  exemples au-dessus du plancher, n = 16 à 43), et Emphase Attributs Continus graine 0 (140°, 8/8).
+- **Faible dépendance** : Référence graine 1 (18°, 6/11 au-dessus du plancher) et Emphase Attributs
+  Continus graine 1 (16°, 8/16).
+- **Trop peu d'exemples à S ≥ 0,3** : Référence graine 2 (n = 2) et Emphase Attributs Continus graine 2
+  (n = 3). Avec un seuil S ≥ 0,15, on obtient respectivement 27° (14/18) et 14° (3/7).
+- **Non testable** : Référence graine 0, Emphase Traduction et Emphase Contrastive, faute d'exemples
+  colorés.
+- **Continuité non établie** : entre directions voisines (10°), le plus grand saut atteint 74° en
+  médiane chez Emphase Cycle-Complet graine 0, et la teinte ne varie dans un seul sens que dans 25 à
+  82 % des exemples selon l'instance (instances avec n ≥ 8).
+- **Correction** : la version précédente de ce compte rendu annonçait « 60° à 150° » entre les deux
+  extrêmes. Ce chiffre comptait aussi des couleurs presque grises, dont la teinte n'est pas fiable ; il
+  est remplacé par les valeurs ci-dessus.
+
+**Récapitulatif de la saturation selon ε** (médiane sur exemples et directions admissibles) :
 
 | Médiane de S | sans bruit | ε = 0,001 | ε = 0,01 | ε = 0,1 |
 |---|---|---|---|---|
@@ -88,10 +176,11 @@ Sur 48 exemples et 36 directions du plan tangent au simplexe, ε de 0,001 à 0,1
 | Modèles Complets (4) | 0,80–0,83 | inchangée | inchangée | inchangée |
 
 - Les trois configurations qui répondent sont celles où le tableau E.1 trouve de l'arbitraire sous bruit.
-- La forme reste reconnue (95 à 100 % jusqu'à ε = 0,01).
-- La teinte varie continûment avec la direction du résidu (60° à 150° d'un extrême à l'autre), diffère
-  entre instances et reste stable au sein d'une instance.
-- La même perturbation des attributs continus déplace la couleur 10 à 150 fois moins.
+- La forme reste reconnue (image traduite → GW → attributs) dans 95 à 100 % des cas jusqu'à ε = 0,01,
+  sauf Emphase Cycle-Complet graine 1 (72 %) et son contrôle (85 %).
+- À répartition du résidu égale (270°), la teinte diffère entre les 3 instances d'une configuration
+  (test de permutation, p ≤ 0,04 pour chaque forme et chaque direction testée, dans les 3
+  configurations qui répondent).
 
 ![Saturation selon ε](figures_saturation/saturation_vs_epsilon.png)
 
@@ -141,6 +230,10 @@ k plus proches voisins, petit perceptron ; meilleure des trois, validation crois
   sensibilité de la régression au tirage des images. Résultats à venir dans `results/saturation/robustesse/`.
 - **Le GW lit-il les écarts des attributs continus ?** Les perturber selon les directions qui portent la
   couleur, et non au hasard, puis mesurer la couleur traduite.
+- **Plus d'instances** : 3 par configuration limitent la généralisation (Référence graine 0 se
+  comporte autrement que les graines 1 et 2).
+- Mêmes statistiques (IC, tailles d'effet, correction) pour les §§ 3, 5 et 6, sur le modèle de
+  l'annexe A.
 - Évaluation exacte de S en demi-cycle et en cycle complet (environ 35 min par modèle), si les valeurs
   approchées ne suffisent pas.
 - Récupérer `epoch=599.ckpt` sur Anita (§ 1).
