@@ -326,22 +326,33 @@ def figures(models, out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
     shapes = ["diamond", "egg", "triangle"]
     configs = [c for c in CONFIG_LABELS if any(k[0] == c for k in models)]
+    order = ["control", "seed0", "seed1", "seed2"]
 
-    # 1. Niveau de saturation par chemin
+    def colour(instance):  # même couleur pour une graine donnée dans tous les panneaux
+        return "grey" if instance == "control" else f"C{int(instance[-1])}"
+
+    # 1. Niveau de saturation par chemin (seuls les chemins calculés sont affichés)
+    from matplotlib.patches import Patch
     fig, axes = plt.subplots(1, len(configs), figsize=(4 * len(configs), 4), sharey=True, squeeze=False)
     for ax, exp_name in zip(axes[0], configs):
-        keys = sorted(k for k in models if k[0] == exp_name)
+        keys = sorted((k for k in models if k[0] == exp_name),
+                      key=lambda k: order.index(k[1]) if k[1] in order else 9)
         positions, data, labels, colors = [], [], [], []
-        for i, (path, label) in enumerate(PATHS):
-            for j, key in enumerate(keys):
-                cats = (models[key].get(path) or {}).get("shape")
-                if not cats:
-                    continue
+        x = 0
+        for path, label in PATHS:
+            present = [k for k in keys if (models[k].get(path) or {}).get("shape")]
+            if not present:
+                continue
+            start = x
+            for key in present:
+                cats = models[key][path]["shape"]
                 v = np.concatenate([cats[s]["S"] for s in shapes if s in cats]) / 255
-                positions.append(i * (len(keys) + 1) + j)
+                positions.append(x)
                 data.append(v[::10])
-                colors.append("grey" if key[1] == "control" else f"C{j}")
-            labels.append((i * (len(keys) + 1) + (len(keys) - 1) / 2, label))
+                colors.append(colour(key[1]))
+                x += 1
+            labels.append(((start + x - 1) / 2, label))
+            x += 1
         if data:
             parts = ax.violinplot(data, positions=positions, showmedians=True, widths=0.9)
             for body, c in zip(parts["bodies"], colors):
@@ -349,17 +360,22 @@ def figures(models, out_dir):
                 body.set_alpha(0.6)
         ax.axhline(0.907, color="k", ls=":", lw=1)
         ax.set_xticks([p for p, _ in labels])
-        ax.set_xticklabels([l for _, l in labels], rotation=30, ha="right")
+        ax.set_xticklabels([l for _, l in labels], fontsize=9)
         ax.set_title(CONFIG_LABELS[exp_name], fontsize=10)
-    axes[0][0].set_ylabel("Saturation S (barycentre)")
-    fig.suptitle("Saturation reconstruite par chemin (couleurs : instances ; gris : contrôle ; pointillés : entrée)")
+    axes[0][0].set_ylabel("Saturation S (barycentre du masque)")
+    axes[0][0].legend(handles=[Patch(color=colour(i), alpha=0.6,
+                                     label="contrôle (Modèle Complet)" if i == "control" else f"graine {i[-1]}")
+                               for i in order], fontsize=7, loc="center left")
+    fig.suptitle("Saturation reconstruite par chemin (une forme par violon et par instance ; pointillés : entrée, S = 0,91)")
     fig.tight_layout()
     fig.savefig(out_dir / "S_par_chemin.png", dpi=120)
     plt.close(fig)
 
     # 2. S par forme et par instance, traduction et traduction bruitée
+    shape_fr = {"diamond": "losange", "egg": "œuf", "triangle": "triangle"}
     for exp_name in configs:
-        keys = sorted(k for k in models if k[0] == exp_name)
+        keys = sorted((k for k in models if k[0] == exp_name),
+                      key=lambda k: order.index(k[1]) if k[1] in order else 9)
         paths_here = [(p, l) for p, l in PATHS if p in ("translated", "translated_noisy", "full_cycle")
                       and any(models[k].get(p) for k in keys)]
         fig, axes = plt.subplots(len(paths_here), len(keys), figsize=(3.2 * len(keys), 2.6 * len(paths_here)),
@@ -372,10 +388,14 @@ def figures(models, out_dir):
                 lo, hi = np.quantile(allv, [0.005, 0.995]) if len(allv) > 2 else (0, 1)
                 for s in shapes:
                     if s in cats:
-                        ax.hist(cats[s]["S"] / 255, bins=60, range=(lo, hi), histtype="step", density=True, label=s)
-                ax.set_title(f"{'contrôle' if key[1] == 'control' else key[1]} — {label}", fontsize=9)
+                        ax.hist(cats[s]["S"] / 255, bins=60, range=(lo, hi), histtype="step", density=True,
+                                label=shape_fr[s])
+                who = "contrôle (Modèle Complet)" if key[1] == "control" else f"graine {key[1][-1]}"
+                ax.set_title(f"{who} — {label}", fontsize=9)
                 if i == len(paths_here) - 1:
                     ax.set_xlabel("S")
+                if j == 0:
+                    ax.set_ylabel("densité")
         axes[0][0].legend(fontsize=8)
         fig.suptitle(f"{CONFIG_LABELS[exp_name]} : saturation par forme")
         fig.tight_layout()
@@ -393,6 +413,8 @@ def main():
                         help="Recalculer S et L depuis R, G, B si elles n'ont pas été extraites (aperçu)")
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--num-bins", type=int, default=15)
+    parser.add_argument("--figures-only", action="store_true",
+                        help="Seulement les figures (depuis le cache), sans refaire les tests ni synthese.md")
     args = parser.parse_args()
     out = args.out or args.results_dir / "analysis"
     out.mkdir(parents=True, exist_ok=True)
@@ -401,6 +423,10 @@ def main():
     if not models:
         raise SystemExit(f"Aucun résultat dans {args.results_dir}")
     print(f"{len(models)} modèles : {sorted(models)}")
+    if args.figures_only:
+        figures(models, out / "figures")
+        print(f"Figures dans {out / 'figures'}")
+        return
 
     levels = level_rows(models)
     write_csv(levels, out / "niveaux_S_L.csv")

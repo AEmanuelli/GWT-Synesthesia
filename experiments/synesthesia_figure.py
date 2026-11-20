@@ -367,6 +367,30 @@ class Canvas:
         self.fig.text(x / self.w, 1 - y / self.h, s, **kw)
 
 
+def noise_robust(csv_file, min_other_seeds=3):
+    """Associations sûres (graine 42, 0,01) qui restent sûres avec la même couleur pour au moins
+    `min_other_seeds` des 5 autres graines du bruit (0,01) et aux deux autres amplitudes (graine 42),
+    d'après `saturation_robustness.py` (bruit_conditions.csv). Ensemble vide si le fichier manque."""
+    if csv_file is None or not Path(csv_file).exists():
+        return set()
+    import csv
+    rows = list(csv.DictReader(open(csv_file, encoding="utf-8")))
+    by = {}
+    for r in rows:
+        key = (r["config"], r["instance"], r["forme"])
+        same = r["sure"] == "True" and float(r["dh_lo"]) >= -30 and float(r["dh_hi"]) <= 30
+        by.setdefault(key, {})[(int(r["graine"]), round(float(r["amplitude"]), 3))] = (r["sure"] == "True", same)
+    out = set()
+    for key, cond in by.items():
+        if not cond.get((42, 0.01), (False, False))[0]:
+            continue
+        seeds = sum(cond.get((g, 0.01), (False, False))[1] for g in (0, 1, 2, 3, 4))
+        amps = all(cond.get((42, a), (False, False))[1] for a in (0.003, 0.03))
+        if seeds >= min_other_seeds and amps:
+            out.add(key)
+    return out
+
+
 def model_label(r, short=True):
     labels = SHORT_LABELS if short else CONFIG_LABELS
     return f"{labels[r['config']]}, graine {r['instance'][-1]}"
@@ -377,11 +401,11 @@ def fr(x, fmt=".2f"):
     return format(x, fmt).replace(".", ",")
 
 
-def gallery_figure(stats, strips, images, out_file):
+def gallery_figure(stats, strips, images, out_file, stable=frozenset()):
     selection = select_gallery(stats)
     img, gap, arrow, strip_h = 0.62, 0.05, 0.34, 0.09
     label_h, row_sp, block_sp, margin = 0.30, 0.24, 0.5, 0.35
-    title_h, head_h, foot_h = 1.0, 0.62, 0.95
+    title_h, head_h, foot_h = 1.0, 0.62, 1.15
     noisy_w = N_EXAMPLES * img + (N_EXAMPLES - 1) * gap
     entry_w = img + arrow + noisy_w
     row_h = label_h + img + 0.05 + strip_h + row_sp
@@ -389,7 +413,7 @@ def gallery_figure(stats, strips, images, out_file):
     width = 2 * margin + 3 * entry_w + 2 * block_sp
     height = title_h + head_h + n_rows * row_h + foot_h
     c = Canvas(width, height)
-    c.text(width / 2, 0.38, "Synesthésie artificielle : chaque modèle voit les formes dans ses couleurs",
+    c.text(width / 2, 0.38, "Associations forme → couleur en traduction bruitée (attributs sans couleur)",
            ha="center", va="center", fontsize=15, weight="bold")
     c.text(width / 2, 0.72, "Traduction attributs → image, sans couleur dans les attributs. Pour chaque forme, "
            f"les {TOP_PER_SHAPE} associations les plus vives et constantes parmi les 15 modèles.",
@@ -401,13 +425,13 @@ def gallery_figure(stats, strips, images, out_file):
         c.text(x0 + img / 2, title_h + head_h - 0.1, "sans bruit", ha="center", va="bottom",
                fontsize=7.5, color="0.35")
         c.text(x0 + img + arrow + noisy_w / 2, title_h + head_h - 0.1,
-               "avec le bruit de l'annexe E (1 % sur la forme)", ha="center", va="bottom", fontsize=7.5,
+               "avec un bruit fixe de 1 % sur la forme", ha="center", va="bottom", fontsize=7.5,
                color="0.35")
         t = SHAPES.index(shape)
         for i, r in enumerate(selection[shape]):
             y = title_h + head_h + i * row_h
             c.text(x0, y + label_h / 2, model_label(r), ha="left", va="center", fontsize=8.5, weight="bold")
-            mark = " ★" if r["robuste"] else ""
+            mark = (" ★" if r["robuste"] else "") + (" ◆" if (r["config"], r["instance"], r["forme"]) in stable else "")
             c.text(x0 + entry_w - 0.24, y + label_h / 2, f"{r['nom']} · {100 * r['constance']:.0f} %{mark}",
                    ha="right", va="center", fontsize=8.5)
             c.rect(x0 + entry_w - 0.18, y + label_h / 2 - 0.09, 0.18, 0.18,
@@ -427,6 +451,8 @@ def gallery_figure(stats, strips, images, out_file):
             "dominante, puis les autres teintes, puis les grises. Pourcentage : part des traductions\n"
             "dont la teinte est à ±30° de la teinte dominante.   ★ : même couleur quelle que soit la forme vers "
             f"laquelle part le résidu (balayage, ε = {fr(SWEEP_EPS, 'g')}).\n"
+            "◆ : même couleur pour au moins 4 graines du bruit sur 6 et aux trois amplitudes (0,003 ; 0,01 ; 0,03), "
+            "constance sûre (borne basse de Wilson ≥ 60 %).\n"
             "Attr. Continus et Cycle-Complet : configurations Emphase Attributs Continus et Emphase Cycle-Complet. "
             "Emphase Traduction et Emphase Contrastive restent grises.")
     c.text(margin, height - foot_h + 0.14, foot, ha="left", va="top", fontsize=7.5, color="0.3", linespacing=1.5)
@@ -450,7 +476,7 @@ def palettes_figure(stats, strips, images, out_file):
     c = Canvas(width, height)
     c.text(width / 2, 0.35, "Palette de chaque modèle : la couleur imaginée pour chaque forme",
            ha="center", va="center", fontsize=14, weight="bold")
-    c.text(width / 2, 0.66, "Traduction attributs → image avec le bruit de l'annexe E (1 % sur la forme) ; "
+    c.text(width / 2, 0.66, "Traduction attributs → image avec un bruit fixe de 1 % sur la forme ; "
            "dans chaque case : losange, œuf, triangle (4 exemples chacun)",
            ha="center", va="center", fontsize=9, color="0.3")
     for ci, config in enumerate(configs):
@@ -592,6 +618,10 @@ def main():
     parser.add_argument("--stats-only", action="store_true", help="Tableau seulement (pas de checkpoint chargé)")
     parser.add_argument("--recompute", action="store_true", help="Ignorer les fichiers intermédiaires en cache")
     parser.add_argument("--cpu", action="store_true", help="Traductions sur CPU même si un GPU est disponible")
+    parser.add_argument("--noise-robustness", type=Path,
+                        default=paths.RESULTS_DIR / "saturation" / "robustesse" / "bruit_conditions.csv",
+                        help="Résultats de saturation_robustness.py : marque ◆ les associations stables "
+                             "selon la graine et l'amplitude du bruit (ignoré si absent)")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
 
@@ -615,7 +645,8 @@ def main():
             cache.unlink()
         images = generate_examples(pick_examples(args.dataset_csv), device, cache)
         checks = check_examples(stats, images)
-        selection = gallery_figure(stats, strips, images, args.out / "galerie.png")
+        selection = gallery_figure(stats, strips, images, args.out / "galerie.png",
+                                   noise_robust(args.noise_robustness))
         palettes_figure(stats, strips, images, args.out / "palettes.png")
     write_synthesis(stats, selection, checks, args.out / "synthese.md")
     print(f"Écrit dans {args.out}")

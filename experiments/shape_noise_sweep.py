@@ -41,6 +41,11 @@ from SSD_utils import (extract_shape_color, generate_fixed_colors, normalize_pos
                        normalize_rotation, normalize_size, segment_shape)
 
 SHAPES = ["diamond", "egg", "triangle"]
+SHAPE_LABELS = ["losange", "œuf", "triangle"]  # pour les figures
+
+
+def instance_label(instance):
+    return "contrôle (Modèle Complet)" if instance == "control" else f"graine {instance[-1]}"
 CONFIG_LABELS = {"base_params": "Référence", "high_translation": "Emphase Traduction",
                  "high_contrastive": "Emphase Contrastive", "high_cycles": "Emphase Cycle-Complet",
                  "high_alpha": "Emphase Attributs Continus"}
@@ -494,14 +499,14 @@ def figures(sweeps, keys, eps_ref, fig_dir):
                     da.append(np.mean(d["a"][sel]) - np.mean(d["a"][base]))
                     db.append(np.mean(d["b"][sel]) - np.mean(d["b"][base]))
                 da, db = np.array(da + da[:1]), np.array(db + db[:1])
-                color = "grey" if key[1] == "control" else f"C{i}"
-                ax.plot(da, db, "-", lw=0.8, color=color, label="contrôle" if key[1] == "control" else key[1])
+                color = "grey" if key[1] == "control" else f"C{int(key[1][-1])}"
+                ax.plot(da, db, "-", lw=0.8, color=color, label=instance_label(key[1]))
                 feas = [m for m in range(N_DIRECTIONS) if 240 <= 360 * m / N_DIRECTIONS <= 300]
                 ax.plot(da[feas], db[feas], "o-", ms=4, lw=2, color=color)
             ax.axhline(0, color="k", lw=0.5)
             ax.axvline(0, color="k", lw=0.5)
             ax.set_aspect("equal", "datalim")
-            ax.set_title(SHAPES[t])
+            ax.set_title(SHAPE_LABELS[t])
             ax.set_xlabel("Δa (unités RGB)")
         axes[0].set_ylabel("Δb (unités RGB)")
         axes[0].legend(fontsize=8)
@@ -527,12 +532,12 @@ def figures(sweeps, keys, eps_ref, fig_dir):
                 import matplotlib.colors as mcolors
                 ax.scatter(np.radians(d["H"][sel]), np.full(sel.sum(), 1 + 0.25 * i), s=28,
                            c=mcolors.hsv_to_rgb(hsv), marker=markers[i % 3], edgecolors="k", linewidths=0.3,
-                           label=key[1])
+                           label=instance_label(key[1]))
                 mu, rbar = mean_direction(np.radians(d["H"][sel]))
                 ax.plot([mu, mu], [0, rbar], color="k", lw=1.5, ls=["-", "--", ":"][i % 3])
             ax.set_ylim(0, 1.7)
             ax.set_yticklabels([])
-            ax.set_title(f"{CONFIG_LABELS[exp_name]} — {SHAPES[t]}", fontsize=8)
+            ax.set_title(f"{CONFIG_LABELS[exp_name]} — {SHAPE_LABELS[t]}", fontsize=8)
     axes[0][0].legend(fontsize=7, loc="lower left")
     fig.suptitle(f"Teinte traduite, résidu partagé moitié-moitié (270°), ε = {eps_ref:g}\n"
                  "un cercle par instance, trait : teinte moyenne (longueur R̄)")
