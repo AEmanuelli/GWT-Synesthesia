@@ -14,17 +14,28 @@ dans `results/saturation/`, non versionné ; les figures ci-dessous en sont tir�
   légèrement teinté.
 - Avec le petit bruit de l'annexe E (1 % de probabilité sur les formes non cibles), trois
   configurations sur cinq (Référence, Emphase Cycle-Complet, Emphase Attributs Continus) produisent des
-  **couleurs saturées**, propres à chaque forme et à chaque instance : une vraie synesthésie visible.
+  **couleurs saturées**, propres à chaque forme et à chaque instance. Mais la couleur que prend une
+  forme dépend en général de la direction du bruit, c'est-à-dire du vecteur tiré par sa graine. Sur 15
+  associations sûres avec le bruit du mémoire, 9 gardent la même couleur pour au moins 4 graines du
+  bruit sur 6 et aux trois amplitudes testées, et aucune pour les 6 graines (§ 7, annexe B).
 - Une **intervention** sur la seule entrée de forme (modèle déterministe, tout le reste fixé) le
   confirme : retirer 0,7 à 0,8 % de masse à la forme cible fait passer S de 0,03–0,06 à 0,50–0,93
   dans 8 des 9 instances de ces trois configurations (34 à 48 exemples colorés sur 48 ; Wilcoxon
-  apparié, p < 10⁻⁴ après correction de Holm), avec une relation dose-réponse monotone. La même
+  apparié, p < 10⁻⁴ après correction de Holm), avec une relation dose-réponse croissante (ρ de
+  Spearman médian par exemple : 0,91 à 1,00). La même
   perturbation appliquée aux attributs continus déplace la couleur 10 à 166 fois moins. La teinte
   obtenue dépend fortement de la forme qui reçoit le résidu dans 4 instances, faiblement (15 à 30°)
   dans 4 autres (§ 4, annexe A).
 - Une régression montre que la couleur d'entrée est **relisible** dans les attributs décodés, qui n'en
   contiennent pas : en partie dans le résidu des probabilités de forme, en partie dans de petits écarts
   des attributs continus. Ce qui est relisible prédit ce que le cycle complet restitue (ρ = 0,99).
+- Le **test statistique du mémoire** (KS sur histogrammes) ne résiste pas à la correction pour
+  comparaisons multiples. En traduction sans bruit, la régularité de la teinte selon l'orientation ne
+  subsiste, après correction de Holm, que dans 1 instance sur 3 de Référence, d'Emphase Cycle-Complet et
+  d'Emphase Attributs Continus. Un critère de taille d'effet (KS significatif et |δ de Cliff| ≥ 0,147),
+  stable sous correction, retrouve la conclusion qualitative du mémoire : régularité selon
+  l'orientation dans toutes les instances des 5 configurations, dans aucun contrôle. Mais elle porte
+  sur des couleurs presque grises (§ 7, annexe B).
 - Le checkpoint du contrôle Emphase Traduction (`epoch=599.ckpt`) reste **introuvable** ici.
 
 ## 1. Checkpoint manquant (contrôle Emphase Traduction)
@@ -194,8 +205,16 @@ bleu-violet (Référence graine 2, 79 %, seul bleu), losanges cramoisis (Emphase
 graine 1, 66 %). Aucun triangle rouge. Sans bruit, tout est gris ; Emphase Traduction et Emphase
 Contrastive restent grises même avec le bruit.
 
-Seules 4 associations gardent leur couleur quelle que soit la forme vers laquelle part le résidu : ce
-sont les plus défendables.
+Ces associations dépendent de la direction du résidu, et deux tests le mesurent différemment :
+- 4 gardent leur couleur aux deux extrêmes du balayage (tout le résidu sur l'une ou l'autre forme non
+  cible, § 4) ;
+- 9 restent sûres, avec la même couleur, pour au moins 4 graines du bruit sur 6 et aux trois
+  amplitudes (§ 7).
+
+Deux passent les deux tests : les losanges verts de Référence graine 1 et les triangles turquoise
+foncé d'Emphase Attributs Continus graine 2. Ce sont les affirmations « ce modèle voit les X en Y »
+les plus défendables. Les losanges bleu-violet de Référence graine 2 passent le second test, pas le
+premier.
 
 ![Galerie des associations](figures_saturation/galerie.png)
 
