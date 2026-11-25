@@ -298,20 +298,20 @@ géométrie : la forme de la formule tient, pas des primaires communes.
 
 **Une palette canonique.** Plutôt qu'un vecteur de bruit tiré au hasard, trois directions de référence
 caractérisent chaque modèle : tout le résidu vers l'une des formes absentes, moitié-moitié, ou tout vers
-l'autre (figure 8, m = 1 %).
+l'autre (figure 8, m = 0,9 %).
 
 - *Référence : une « clé » par forme.* Seule l'une des deux formes absentes colore la traduction, toujours
   de la même teinte. Graine 2 : du résidu sur l'œuf rend les losanges violet-bleu (249°) ; du résidu sur le
   losange rend les œufs orange (28°) ; vers l'autre forme absente, rien.
 - *La palette prédit les associations observées avec le bruit.* Le vecteur de [1] envoie 35 % du résidu
   du losange vers l'œuf, d'où les losanges violet-bleu de Référence graine 2 (figure 1).
-- *Emphase Cycle-Complet graine 0 : deux primaires vives et presque opposées.* Pour l'œuf : jaune-vert
-  (93°) vers le losange, violet-bleu (275°) vers le triangle, cyan (187°) moitié-moitié ; d'où une gamme
+- *Emphase Cycle-Complet graine 0 : deux primaires très différentes, presque opposées.* Pour l'œuf : jaune-vert
+  (93°) vers le losange, lavande très pâle (275°) vers le triangle, cyan (187°) moitié-moitié ; d'où une gamme
   complète de teintes.
 
 ![Figure 8](figures/fig8_palette_canonique.png)
 
-**Figure 8 — Palette canonique des 6 modèles.** Pour chaque forme, couleur produite quand 1 % de résidu va
+**Figure 8 — Palette canonique des 6 modèles.** Pour chaque forme, couleur produite quand 0,9 % de résidu va
 tout vers l'une des formes absentes (à gauche, à droite) ou moitié-moitié (au centre) ; médiane sur 8
 géométries.
 
