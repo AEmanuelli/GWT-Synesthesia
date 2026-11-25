@@ -103,6 +103,29 @@ traductions de la forme ; pourcentage : part des traductions à ±30° de la tei
 directions de résidu sur 6 et trois amplitudes. Pour chaque forme, les associations les plus nettes parmi
 les 6 modèles (au plus 5 ; seules celles de constance ≥ 60 % sont retenues).
 
+**Les associations ne dépendent ni de l'orientation ni de la taille.** Pour chaque modèle et chaque
+forme colorée, nous avons retrouvé la géométrie de chacune des 51 200 traductions de la forme (figure 1b ;
+constance : part des traductions colorées, S ≥ 0,3, à ±30° de la teinte dominante). Dans les associations
+les plus nettes, la teinte dominante est la même pour les 16 orientations et les 8 tailles, et pour 94 à
+100 % des 16 positions : œufs cyan d'Emphase Cycle-Complet graine 0 (constance 99 % ; 95 à 100 % pour
+chaque orientation), œufs et triangles jaunes de Référence graine 1 (88 et 86 %), losanges violets de
+Référence graine 2 (72 %). La position est le facteur qui affaiblit le plus la constance (jusqu'à 9 % pour
+certaines positions des œufs de Référence graine 1). Les associations faibles (constance < 50 %,
+Emphase Cycle-Complet graines 1 et 2) changent au contraire de teinte avec l'orientation.
+
+**Pas d'association universelle.** D'un modèle à l'autre, une forme ne prend pas la même couleur : les
+losanges ne sont colorés que dans 2 des 6 modèles (vert, violet). Les œufs et les triangles, colorés dans
+5 des 6 modèles, prennent des teintes allant de l'orange au cyan (26° à 181°), jamais de bleu, de violet
+ou de magenta, mais cette concentration n'est pas significative avec si peu de modèles (test de Rayleigh,
+p = 0,13 et 0,27 ; figure S15).
+
+![Figure 1b](figures/fig1b_associations_par_geometrie.png)
+
+**Figure 1b — La couleur d'une forme ne dépend pas de sa géométrie.** Une ligne par forme colorée de
+chacun des 6 modèles (traduction avec un résidu fixe de 1 %) ; chaque case : couleur médiane des
+traductions colorées pour une orientation (16), une taille (8) ou une position (16) ; pourcentage :
+constance sur toutes les géométries.
+
 ![Figure 2](figures/fig2_saturation_dose_reponse.png)
 
 **Figure 2 — Effet dose-réponse de la masse résiduelle.** Gauche : saturation médiane des traductions

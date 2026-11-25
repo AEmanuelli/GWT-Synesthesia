@@ -127,6 +127,14 @@ pour la seconde ; losanges magenta ou bruns selon la géométrie.
 **Figure S14 — Écriture d'une teinte chez Référence graine 2** (comme la figure 7) : 3 teintes cibles sur
 12 atteignables par forme ; 50 à 67 % de réussite sur les géométries non vues.
 
+![Figure S15](../figures/figS15_teintes_entre_modeles.png)
+
+**Figure S15 — Teinte dominante de chaque modèle, par forme** (traduction avec un résidu fixe de 1 % ;
+formes colorées seulement ; cercle extérieur : les 6 modèles de l'article ; cercle intérieur : réglages
+exploratoires ; taille : constance). Aucune teinte n'est partagée par tous les modèles ; les œufs et les
+triangles se colorent de l'orange au cyan, les losanges dans tout le cercle. Script :
+`association_recurrence.py`.
+
 ## Comparaisons multiples
 
 | % d'instances régulières | Teinte selon l'orientation, traduction : test de [1] → Holm ; critère d'effet | Teinte selon la forme, traduction avec résidu : test de [1] → Holm ; critère d'effet |
