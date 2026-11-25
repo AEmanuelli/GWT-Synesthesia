@@ -1,4 +1,4 @@
-> Annexe A du compte rendu `docs/compte_rendu_saturation.md`. Fichier généré par `python experiments/sweep_statistics.py` (copie de `results/saturation/balayage/statistiques.md`, données du balayage `experiments/shape_noise_sweep.py`).
+> Supplément S1 de l'article (`paper/article.md`), § « Une infime masse résiduelle colore la traduction ». Dans ces tableaux, « annexe E » désigne la traduction bruitée (vecteur de bruit fixe, graine 42, amplitude 0,01). Fichier généré par `python experiments/sweep_statistics.py` (copie de `results/saturation/balayage/statistiques.md`, données du balayage `experiments/shape_noise_sweep.py`).
 
 # Balayage du bruit sur la forme : statistiques
 

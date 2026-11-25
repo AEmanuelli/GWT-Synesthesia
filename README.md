@@ -5,6 +5,11 @@ Code du mémoire de M2 d'Alexis Emanuelli,
 profond inspiré de la théorie du Global Workspace »** ([PDF](docs/EMANUELLI_Memoire_M2.pdf)).
 Modèles entraînés : [doi:10.5281/zenodo.24208192](https://doi.org/10.5281/zenodo.24208192).
 
+> **Branche `publication`.** Article en préparation : [`paper/article.md`](paper/article.md)
+> (résultats nouveaux : code couleur caché dans les attributs décodés, lu par le GW ; supplément dans
+> [`paper/supplementaire/`](paper/supplementaire/README.md)). La reproduction du mémoire est sur la
+> branche `reproducibility`.
+
 Un Global Workspace bimodal (image ↔ vecteur d'attributs) est entraîné sur le
 [Simple Shapes Dataset](https://github.com/ruflab/simple-shapes-dataset) sans la couleur
 dans les attributs (« vide sémantique »). On teste ensuite si le modèle associe malgré
@@ -99,7 +104,7 @@ python experiments/make_tables.py results/arbitrary_shape_noise_0.01
 
 ### Saturation et luminosité (prolongement de l'annexe E)
 
-Compte rendu des résultats, avec les figures principales : [`docs/compte_rendu_saturation.md`](docs/compte_rendu_saturation.md).
+Article en préparation, avec les figures et le supplément : [`paper/article.md`](paper/article.md).
 
 Options ajoutées pour tester si la saturation est portée par les composantes résiduelles des
 attributs ; désactivées par défaut, elles ne changent pas les résultats du chapitre 3.
@@ -113,11 +118,12 @@ attributs ; désactivées par défaut, elles ne changent pas les résultats du c
 - `python experiments/saturation_analysis.py --figures-only` : refait seulement les figures depuis le cache (`cache_distributions.pkl`), sans refaire les tests.
 - `python experiments/saturation_reference.py` : témoin de mesure, S et L extraites des images d'entrée et du VAE seul (sans GW).
 - `python experiments/shape_noise_sweep.py` : balayage du bruit sur le one-hot de forme (36 directions du plan tangent au simplexe × 9 amplitudes de 0,001 à 0,1), forme re-décodée depuis l'image, témoins (attributs continus, Modèles Complets).
-- `python experiments/sweep_statistics.py` : statistiques du balayage (intervalles de confiance, tests appariés corrigés de Holm, témoin de spécificité, masse résiduelle sur de vraies images, dépendance de la teinte à la direction) ; à lancer après le balayage et `residual_regression.py`. Résultat : `balayage/statistiques.md` (annexe A du compte rendu).
+- `python experiments/sweep_statistics.py` : statistiques du balayage (intervalles de confiance, tests appariés corrigés de Holm, témoin de spécificité, masse résiduelle sur de vraies images, dépendance de la teinte à la direction) ; à lancer après le balayage et `residual_regression.py`. Résultat : `balayage/statistiques.md` (supplément S1 de l'article).
 - `python experiments/synesthesia_figure.py` : associations forme → couleur les plus nettes de chaque modèle (traduction avec le bruit de l'annexe E), redessinées avec de vraies traductions (`galerie.png`, `palettes.png`) ; à lancer après l'évaluation `--translation-only`.
 - `python experiments/synesthesia_figure.py --noise-robustness <csv>` : marque ◆ dans la galerie les associations stables selon la graine et l'amplitude du bruit (par défaut `results/saturation/robustesse/bruit_conditions.csv`, produit par `saturation_robustness.py` ; ignoré s'il manque).
+- `python experiments/colour_code_transplant.py` : greffe du code couleur. Les attributs que le GW décode d'une image (probabilités de forme, attributs continus), réinjectés en traduction entiers, en partie ou greffés sur la géométrie d'une autre image, transmettent-ils la couleur de cette image ? À lancer après `residual_regression.py` ; `--per-cell 8` : 4 800 images par modèle, environ 5 min par modèle sur un GeForce 940MX (`results/publication/greffe/`).
 - `python experiments/residual_regression.py` : lecture des résidus par régression. La couleur d'une image d'entrée est-elle lisible dans les attributs que le GW en décode (image → VAE → GW → attributs) ? 19 200 images stratifiées (teinte × forme × taille) ; ridge, k plus proches voisins et petit perceptron multicouche sur le résidu des probabilités de forme (log-rapports des formes non cibles à la forme cible), sur les écarts des attributs continus à leurs vraies valeurs, ou sur les deux, avec ou sans les vraies valeurs des attributs ; R² en validation croisée, ligne de base à couleurs mélangées (`results/saturation/regression/`).
-- `python experiments/saturation_robustness.py` puis `multiple_testing.py`, `regression_sensitivity.py` (après `residual_regression.py --seed 1 --regressions ridge kNN --out results/saturation/robustesse/regression/graine1_par_case32`, etc.) et `robustness_statistics.py` : robustesse (étape 4) — extraction par le pixel le plus intérieur du masque, 6 graines × 3 amplitudes du bruit de l'annexe E, corrections de Holm et Benjamini-Hochberg, sensibilité de la régression au tirage et au nombre d'images ; `results/saturation/robustesse/` (annexe B du compte rendu).
+- `python experiments/saturation_robustness.py` puis `multiple_testing.py`, `regression_sensitivity.py` (après `residual_regression.py --seed 1 --regressions ridge kNN --out results/saturation/robustesse/regression/graine1_par_case32`, etc.) et `robustness_statistics.py` : robustesse (étape 4) — extraction par le pixel le plus intérieur du masque, 6 graines × 3 amplitudes du bruit de l'annexe E, corrections de Holm et Benjamini-Hochberg, sensibilité de la régression au tirage et au nombre d'images ; `results/saturation/robustesse/` (supplément S2 de l'article).
 
 Durée sur un GeForce 940MX : environ 35 min par modèle pour l'évaluation complète (le GPU est
 le facteur limitant : quatre passages dans le VAE par image), environ 10 min avec `--translation-only`.

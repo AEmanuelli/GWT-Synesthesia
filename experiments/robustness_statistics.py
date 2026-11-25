@@ -1,4 +1,4 @@
-"""Statistiques de robustesse (étape 4 du protocole « saturation ») : annexe B du compte rendu.
+"""Statistiques de robustesse (étape 4 du protocole « saturation ») : supplément S2 de l'article (paper/supplementaire/).
 
 Ne relance aucun modèle. Lit :
   - results/saturation/robustesse/extraction_bruit/donnees/ (saturation_robustness.py) : volets 1 et 2 ;
