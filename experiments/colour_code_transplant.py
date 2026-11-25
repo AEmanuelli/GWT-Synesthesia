@@ -199,7 +199,53 @@ def analyze(data_dir, img, out_dir):
         w.writerows(rows)
     write_synthesis(rows, out_dir / "synthese.md")
     figure(rows, out_dir / "greffe.png")
+    hue_figure(data_dir, img, out_dir / "greffe_par_teinte.png", out_dir / "synthese.md")
     return rows
+
+
+def hue_figure(data_dir, img, out_file, synthesis_file, conds=("cycle", "forme", "continus")):
+    """Part des traductions correctes (colorées, à ±30° de la teinte de la source) selon la teinte d'entrée :
+    quels canaux transmettent quelles teintes ?"""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    palette_h = hls_arrays(img["rgb_palette"].astype(float))[0]
+    files = sorted(data_dir.glob("*.npz"), key=lambda f: (CONFIG_ORDER.index(str(np.load(f)["config"]))
+                                                          if str(np.load(f)["config"]) in CONFIG_ORDER else 9, f.name))
+    fig, axes = plt.subplots(1, len(files), figsize=(2.6 * len(files), 2.9), sharey=True, squeeze=False)
+    colours = {"cycle": "0.2", "forme": "#2a78d6", "continus": "#eb6834"}
+    lines = ["", "## Transmission selon la teinte d'entrée", "",
+             "Part des traductions colorées (S ≥ 0,3) dont la teinte est à ±30° de celle de l'image source, "
+             "par teinte d'entrée (moyenne des teintes chaudes, 0–90° et 300–360°, et froides, 90–300°).", "",
+             "| Instance | " + " | ".join(f"{CONDITIONS[c]} : chaudes / froides" for c in conds) + " |",
+             "|---|" + "---|" * len(conds)]
+    for ax, f in zip(axes[0], files):
+        z = np.load(f)
+        keep = z["indices"]
+        h_src = palette_h[keep]
+        order = np.argsort(np.unique(h_src))
+        hues = np.unique(h_src)[order]
+        cells = []
+        for c in conds:
+            h, _, s = hls_arrays(z[f"rgb_{c}"].astype(float))
+            ok = (s >= S_COLOURED) & (np.abs((h - h_src + 180) % 360 - 180) <= 30)
+            frac = np.array([ok[np.isclose(h_src, u)].mean() for u in hues])
+            ax.plot(hues, frac, "o-", ms=3, lw=1.2, color=colours[c], label=CONDITIONS[c])
+            warm = (hues < 90) | (hues >= 300)
+            cells.append(f"{100 * frac[warm].mean():.0f} % / {100 * frac[~warm].mean():.0f} %")
+        cfg, inst = str(z["config"]), str(z["instance"])
+        lines.append(f"| {CONFIG_LABELS.get(cfg, cfg)} {inst} | " + " | ".join(cells) + " |")
+        ax.set_title(f"{CONFIG_LABELS.get(cfg, cfg)}\ngraine {inst[-1]}", fontsize=8)
+        ax.set_xlabel("teinte d'entrée (°)", fontsize=8)
+        ax.set_xticks([0, 120, 240, 360])
+        ax.grid(alpha=0.3)
+    axes[0][0].set_ylabel("part transmise (±30°)", fontsize=8)
+    axes[0][0].legend(fontsize=6.5)
+    fig.tight_layout()
+    fig.savefig(out_file, dpi=140)
+    plt.close(fig)
+    with open(synthesis_file, "a", encoding="utf-8") as fh:
+        fh.write("\n".join(lines) + "\n")
 
 
 def fr(x, nd=2):
@@ -290,8 +336,8 @@ def figure(rows, out_file):
     axes[0][0].set_ylim(0, 1.02)
     axes[1][0].set_ylim(0, 1.0)
     axes[0][0].legend(fontsize=7)
-    fig.suptitle("Greffe du code couleur : traduction d'attributs décodés, entiers ou en partie (fond gris : "
-                 "code pris sur une autre image)", fontsize=11)
+    fig.suptitle("Greffe du code couleur : traduction d'attributs décodés, entiers ou en partie\n"
+                 "(fond gris : code pris sur une autre image, de même forme et d'une autre teinte)", fontsize=10)
     fig.tight_layout()
     fig.savefig(out_file, dpi=130)
     plt.close(fig)

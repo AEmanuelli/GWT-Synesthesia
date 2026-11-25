@@ -93,6 +93,40 @@ Wilson de la constance ≥ 60 %). Les associations perdues redeviennent surtout 
 dominante entre directions : médiane 1°), sauf chez Emphase Cycle-Complet graine 0, dont la couleur change
 avec la direction du résidu.
 
+## Greffe et carte du code : compléments
+
+![Figure S10](../figures/figS10_greffe_par_teinte.png)
+
+**Figure S10 — Quelles teintes passe chaque canal ?** Part des traductions colorées dont la teinte est à
+±30° de celle de l'image source, selon la teinte d'entrée ; noir : attributs décodés entiers ; bleu :
+résidu de forme seul ; orange : écarts continus seuls. Chez Référence, les trois graines se ressemblent :
+le résidu transmet une bande jaune-orangé (environ 40 à 110°), les écarts continus les verts (environ 120
+à 170°) et les bleu-violet (environ 240 à 300°). Chez Emphase Cycle-Complet, les attributs décodés
+entiers transmettent toutes les teintes ; graine 0 : le résidu seul presque toutes ; graines 1 et 2 :
+chaque canal seul, une bande différente.
+
+![Figure S11](../figures/figS11_greffe_exemples_reference.png)
+
+**Figure S11 — Comme la figure 4b, pour Référence graine 2 (œufs).** Le résidu seul restitue les jaunes
+et les orangés, les écarts continus seuls les verts et les bleus ; greffé, le résidu transmet la teinte
+du donneur quand elle tombe dans sa bande (jaune, rose).
+
+![Figure S12](../figures/figS12_carte_du_code_cycle_complet_graine1.png)
+
+**Figure S12 — Carte du code de forme d'Emphase Cycle-Complet graine 1** (comme la figure 6). Le code est
+plus pauvre et dépend de la géométrie : œufs presque blancs pour la première géométrie, bleus à jaunes
+pour la seconde ; losanges magenta ou bruns selon la géométrie.
+
+![Figure S13](../figures/figS13_carte_du_code_reference_graine2.png)
+
+**Figure S13 — Carte du code de forme de Référence graine 2.** Les traductions se colorent dès 0,08 à
+0,15 % de masse, mais dans une gamme étroite de teintes (1 ou 2 secteurs de 30°).
+
+![Figure S14](../figures/figS14_ecriture_reference_graine2.png)
+
+**Figure S14 — Écriture d'une teinte chez Référence graine 2** (comme la figure 7) : 3 teintes cibles sur
+12 atteignables par forme ; 50 à 67 % de réussite sur les géométries non vues.
+
 ## Comparaisons multiples
 
 | % d'instances régulières | Teinte selon l'orientation, traduction : test de [1] → Holm ; critère d'effet | Teinte selon la forme, traduction avec résidu : test de [1] → Holm ; critère d'effet |
@@ -138,6 +172,6 @@ conclusions et ne sont pas présentés dans l'article :
 
 Figures 1, 2, 3, 5, S1 à S7 : `python experiments/paper_figures.py` (à partir des données de
 `synesthesia_figure.py`, `shape_noise_sweep.py`, `residual_regression.py`, `saturation_analysis.py`) ;
-figure 4 : `colour_code_transplant.py` ; figures 6 et 7 : `colour_code_map.py` ; supplément S1 :
+figures 4, 4b, S10 et S11 : `colour_code_transplant.py` (`--examples` pour 4b et S11) ; figures 6, 7, S12 à S14 : `colour_code_map.py` (`--demo` pour 7 et S14) ; supplément S1 :
 `sweep_statistics.py` ; figures S8, S9 et supplément S2 : `saturation_robustness.py`,
 `multiple_testing.py`, `regression_sensitivity.py`, `robustness_statistics.py`.
