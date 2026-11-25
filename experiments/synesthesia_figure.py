@@ -403,6 +403,14 @@ def fr(x, fmt=".2f"):
 
 def gallery_figure(stats, strips, images, out_file, stable=frozenset()):
     selection = select_gallery(stats)
+    present = {r["config"] for r in stats if r["condition"] == "annexe_E"}
+    n_models = len({(r["config"], r["instance"]) for r in stats if r["condition"] == "annexe_E"})
+    abbrev = [f"{SHORT_LABELS[c]} : configuration {CONFIG_LABELS[c]}" for c in ("high_cycles", "high_alpha")
+              if c in present and SHORT_LABELS[c] != CONFIG_LABELS[c]]
+    grey = [CONFIG_LABELS[c] for c in ("high_translation", "high_contrastive") if c in present]
+    last_line = " ; ".join(abbrev) + ("." if abbrev else "")
+    if grey:
+        last_line += f" {' et '.join(grey)} restent grises."
     img, gap, arrow, strip_h = 0.62, 0.05, 0.34, 0.09
     label_h, row_sp, block_sp, margin = 0.30, 0.24, 0.5, 0.35
     title_h, head_h, foot_h = 1.0, 0.62, 1.15
@@ -416,7 +424,7 @@ def gallery_figure(stats, strips, images, out_file, stable=frozenset()):
     c.text(width / 2, 0.38, "Associations forme → couleur en traduction bruitée (attributs sans couleur)",
            ha="center", va="center", fontsize=15, weight="bold")
     c.text(width / 2, 0.72, "Traduction attributs → image, sans couleur dans les attributs. Pour chaque forme, "
-           f"les {TOP_PER_SHAPE} associations les plus vives et constantes parmi les 15 modèles.",
+           f"les {TOP_PER_SHAPE} associations les plus vives et constantes parmi les {n_models} modèles.",
            ha="center", va="center", fontsize=9.5, color="0.3")
     for b, shape in enumerate(SHAPES):
         x0 = margin + b * (entry_w + block_sp)
@@ -452,9 +460,7 @@ def gallery_figure(stats, strips, images, out_file, stable=frozenset()):
             "dont la teinte est à ±30° de la teinte dominante.   ★ : même couleur quelle que soit la forme vers "
             f"laquelle part le résidu (balayage, ε = {fr(SWEEP_EPS, 'g')}).\n"
             "◆ : même couleur pour au moins 4 graines du bruit sur 6 et aux trois amplitudes (0,003 ; 0,01 ; 0,03), "
-            "constance sûre (borne basse de Wilson ≥ 60 %).\n"
-            "Attr. Continus et Cycle-Complet : configurations Emphase Attributs Continus et Emphase Cycle-Complet. "
-            "Emphase Traduction et Emphase Contrastive restent grises.")
+            "constance sûre (borne basse de Wilson ≥ 60 %).\n" + last_line)
     c.text(margin, height - foot_h + 0.14, foot, ha="left", va="top", fontsize=7.5, color="0.3", linespacing=1.5)
     c.fig.savefig(out_file, dpi=200)
     plt.close(c.fig)
