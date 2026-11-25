@@ -135,6 +135,23 @@ exploratoires ; taille : constance). Aucune teinte n'est partagée par tous les 
 triangles se colorent de l'orange au cyan, les losanges dans tout le cercle. Script :
 `association_recurrence.py`.
 
+## Formule : étages et ajustements
+
+Réponse au résidu étage par étage (médiane sur les géométries, les formes et trois répartitions) : gain
+|Δ|/m à m = 0,01 % / 0,1 % / 1 % / 5 %, et cosinus entre la direction de la réponse à m = 5 % et à 0,001 %.
+
+| Modèle | e (sortie de l'encodeur du GW) | z = tanh(e) | couleur RGB | cos à 5 % (e / RGB) |
+|---|---|---|---|---|
+| Référence g1 | 115 / 111 / 19 / 4 | 109 / 106 / 18 / 4 | 232 / 243 / 47 / 9 | 0,92 / 0,95 |
+| Référence g2 | 172 / 125 / 22 / 5 | 155 / 113 / 20 / 5 | 381 / 321 / 59 / 12 | 0,86 / 0,91 |
+| Emphase Cycle-Complet g0 | 143 / 102 / 24 / 7 | 136 / 97 / 23 / 7 | 339 / 321 / 56 / 13 | 0,63 / 0,16 |
+| Emphase Cycle-Complet g1 | 155 / 151 / 78 / 21 | 147 / 145 / 73 / 19 | 69 / 71 / 52 / 12 | 0,87 / 0,38 |
+| Emphase Cycle-Complet g2 | 58 / 58 / 37 / 15 | 55 / 55 / 36 / 14 | 49 / 47 / 47 / 12 | 0,78 / 0,71 |
+
+Référence graine 0 ne répond presque pas (gain ≈ 1). La compression est déjà dans e : elle ne vient ni de
+tanh ni de la sigmoïde de sortie. Ajustement de la formule, détail par modèle et par forme :
+`results/publication/formule/synthese.md` (`experiments/colour_code_formula.py`).
+
 ## Comparaisons multiples
 
 | % d'instances régulières | Teinte selon l'orientation, traduction : test de [1] → Holm ; critère d'effet | Teinte selon la forme, traduction avec résidu : test de [1] → Holm ; critère d'effet |
@@ -180,6 +197,6 @@ conclusions et ne sont pas présentés dans l'article :
 
 Figures 1, 2, 3, 5, S1 à S7 : `python experiments/paper_figures.py` (à partir des données de
 `synesthesia_figure.py`, `shape_noise_sweep.py`, `residual_regression.py`, `saturation_analysis.py`) ;
-figures 4, 4b, S10 et S11 : `colour_code_transplant.py` (`--examples` pour 4b et S11) ; figures 6, 7, S12 à S14 : `colour_code_map.py` (`--demo` pour 7 et S14) ; supplément S1 :
+figure 1b et S15 : `association_recurrence.py` ; figure 8 : `colour_code_map.py --analyze-only` ; figure 9 : `colour_code_formula.py` ; figures 4, 4b, S10 et S11 : `colour_code_transplant.py` (`--examples` pour 4b et S11) ; figures 6, 7, S12 à S14 : `colour_code_map.py` (`--demo` pour 7 et S14) ; supplément S1 :
 `sweep_statistics.py` ; figures S8, S9 et supplément S2 : `saturation_robustness.py`,
 `multiple_testing.py`, `regression_sensitivity.py`, `robustness_statistics.py`.

@@ -17,8 +17,10 @@ exacts donne un gris ; réinjecter les attributs décodés redonne exactement la
 cycle complet ; greffer le seul résidu de forme d'une image sur la géométrie d'une autre transmet la
 teinte du donneur. Dans un modèle, le résidu seul est un code couleur complet : il couvre tout le cercle
 des teintes, ne dépend presque pas de la géométrie et permet d'**écrire** une teinte choisie sur des
-formes jamais vues (94 % de réussite pour les œufs). La synesthésie artificielle est la lecture de ce
-canal à partir d'un petit résidu fixe. Renforcer la cohérence de cycle amplifie le phénomène et déplace
+formes jamais vues (94 % de réussite pour les œufs). Une formule simple décrit ce code : chaque forme absente agit comme une
+primaire de couleur dont l'effet croît comme le logarithme de sa probabilité (loi de Weber–Fechner), et
+les deux primaires s'additionnent. La synesthésie artificielle est la lecture de ce canal à partir d'un
+petit résidu fixe. Renforcer la cohérence de cycle amplifie le phénomène et déplace
 le code vers le résidu de forme, ce qui le rapproche de la stéganographie des modèles à cohérence de
 cycle [4].
 
@@ -41,7 +43,9 @@ Nous identifions le mécanisme de ce phénomène :
    écarts des attributs continus, liés à la géométrie (§ 3.3).
 4. Le canal de forme se cartographie et s'écrit : une teinte choisie s'obtient en dosant le résidu
    (§ 3.4).
-5. Renforcer la cohérence de cycle amplifie le canal caché (§ 3.5).
+5. Une formule explique le code : deux primaires à réponse logarithmique, additionnées ; elle
+   fournit une palette canonique de chaque modèle (§ 3.5).
+6. Renforcer la cohérence de cycle amplifie le canal caché (§ 3.6).
 
 ## 2. Méthodes
 
@@ -254,7 +258,72 @@ haut : teinte demandée ; dessous : traduction, sur des géométries non utilis�
 avec la masse et la répartition choisies pour cette teinte (moins de 3 % de masse ; « – » : teinte non
 atteignable pour cette forme).
 
-### 3.5 La cohérence de cycle amplifie le canal caché
+### 3.5 Pourquoi : deux primaires, une réponse logarithmique
+
+**Où naît la non-linéarité.** En suivant la réponse au résidu étage par étage (sortie e de l'encodeur du
+GW, état z = tanh(e) de l'espace de travail, latent du VAE, valeurs avant la sigmoïde de sortie, couleur),
+on la trouve fixée dès l'encodeur du GW, un perceptron ReLU qui reçoit les 3 probabilités de forme et les
+5 attributs continus. Son gain |Δe|/m vaut 60 à 170 tant que m ≤ 0,1 %, puis chute (4 à 21 à m = 5 %),
+sauf chez Référence graine 0, qui ne répond presque pas :
+la réponse est très sensible aux masses infimes, puis compressive. La tangente hyperbolique ne fait que
+suivre (z ≈ e) et la sigmoïde de sortie n'est pas en cause : un mélange linéaire placé juste avant elle
+prédit mal les grandes quantités. Chez Référence, la direction de la réponse reste la même quand m
+augmente (cosinus 0,86 à 0,99 entre 0,001 % et 5 %) ; chez Emphase Cycle-Complet, elle tourne (0,62 à
+0,87), ce qui fait tourner la teinte. Détails : supplément.
+
+**Une formule.** La sortie de l'encodeur se décrit par deux contributions, une par forme absente, dont
+l'effet croît comme le logarithme de la probabilité qu'on lui donne, et qui s'additionnent :
+
+    e(m, w) = e0 + φ(m·w)·g_j + φ(m·(1 − w))·g_k,     φ(x) = x0·log(1 + x / x0)
+
+Ajustée géométrie par géométrie sur la moitié des quantités, elle prédit l'autre moitié (0,001 % à 5 %)
+avec R² = 0,76 à 0,99 pour les 6 modèles et les 3 formes, contre −0,34 à 0,77 sans compression
+(φ(x) = x ; seule exception, les œufs de Référence graine 0, dont la réponse, minuscule, est linéaire). Chez Emphase Cycle-Complet graine 0, les directions g_j et g_k sont les mêmes pour
+toutes les géométries : ajustée sur 3 géométries, la formule prédit la couleur produite sur 3 autres,
+après passage dans le reste du réseau (erreur de teinte médiane 5 à 16°, R² de la saturation 0,78 à 0,95,
+contre 0,07 à 0,48 sans compression ; figure 9). Chez Référence, ces directions changent avec la
+géométrie : la forme de la formule tient, pas des primaires communes.
+
+**Ce qu'elle explique, par analogie avec la vision des couleurs.**
+
+- *Gain énorme pour des masses infimes, puis compression* : comme la loi de Weber–Fechner, la réponse
+  croît comme le logarithme de l'intensité du stimulus.
+- *La teinte* : à faible quantité, c'est celle du mélange des deux primaires dans la proportion
+  w : (1 − w), comme deux projecteurs colorés dont on dose les intensités.
+- *La teinte qui tourne avec la quantité* : la compression change le rapport effectif des deux
+  contributions quand m grandit (φ(0,8 m)/φ(0,2 m) se rapproche de 1). C'est l'analogue de l'effet
+  Bezold–Brücke, où la teinte perçue change avec l'intensité parce que les canaux de couleur sont
+  compressés inégalement.
+- *Une teinte par forme chez Référence* : une seule des deux primaires est active (voir ci-dessous).
+
+**Une palette canonique.** Plutôt qu'un vecteur de bruit tiré au hasard, trois directions de référence
+caractérisent chaque modèle : tout le résidu vers l'une des formes absentes, moitié-moitié, ou tout vers
+l'autre (figure 8, m = 1 %).
+
+- *Référence : une « clé » par forme.* Seule l'une des deux formes absentes colore la traduction, toujours
+  de la même teinte. Graine 2 : du résidu sur l'œuf rend les losanges violet-bleu (249°) ; du résidu sur le
+  losange rend les œufs orange (28°) ; vers l'autre forme absente, rien.
+- *La palette prédit les associations observées avec le bruit.* Le vecteur de [1] envoie 35 % du résidu
+  du losange vers l'œuf, d'où les losanges violet-bleu de Référence graine 2 (figure 1).
+- *Emphase Cycle-Complet graine 0 : deux primaires vives et presque opposées.* Pour l'œuf : jaune-vert
+  (93°) vers le losange, violet-bleu (275°) vers le triangle, cyan (187°) moitié-moitié ; d'où une gamme
+  complète de teintes.
+
+![Figure 8](figures/fig8_palette_canonique.png)
+
+**Figure 8 — Palette canonique des 6 modèles.** Pour chaque forme, couleur produite quand 1 % de résidu va
+tout vers l'une des formes absentes (à gauche, à droite) ou moitié-moitié (au centre) ; médiane sur 8
+géométries.
+
+![Figure 9](figures/fig9_formule.png)
+
+**Figure 9 — La formule prédit la carte du code sur une géométrie non vue.** Couleur selon la quantité m
+(ordonnée, de 0,001 % à 5 %) et la répartition w du résidu : observée (gauche), prédite par la formule
+(centre, primaires communes ajustées sur d'autres géométries), prédite sans compression (droite). Haut :
+Emphase Cycle-Complet graine 0, où la formule reproduit la carte ; bas : Référence graine 1, où les
+primaires dépendent de la géométrie et la formule à primaires communes échoue.
+
+### 3.6 La cohérence de cycle amplifie le canal caché
 
 | | Référence | Emphase Cycle-Complet |
 |---|---|---|
@@ -286,6 +355,11 @@ peut cartographier, transporter et écrire. Les écarts des attributs continus f
 géométrie : ils ne prennent sens qu'avec la position, la taille et l'orientation de l'image. Chez
 Référence, les deux canaux se partagent le cercle des teintes de façon reproductible d'une graine à
 l'autre ; chez Emphase Cycle-Complet, ils se combinent en un code conjoint.
+
+**Un code perceptif.** Le GW lit ce canal comme un système sensoriel lit une lumière : une réponse
+logarithmique à l'intensité, un mélange de deux primaires pour la teinte, et une teinte qui dérive avec
+l'intensité. La formule en fait une description fermée et vérifiable, et la palette canonique une
+signature reproductible de chaque modèle, indépendante du tirage d'un bruit.
 
 **Conséquences.** (i) Un « vide sémantique » n'est pas vide : la couleur passe par les canaux censés
 l'exclure. (ii) Une teinte de gris n'est pas une couleur : les mesures de synesthésie doivent contrôler

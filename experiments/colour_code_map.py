@@ -264,7 +264,52 @@ def analyze(data_dir, out_dir, n_geo):
     (out_dir / "synthese.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     for key in keys:
         map_figure(res[key], key, out_dir / f"carte_{key[0]}_{key[1]}.png")
+    canonical_palette(res, [k for k in keys if k[1] != "control"], out_dir)
     return all_rows
+
+
+def canonical_palette(res, keys, out_dir, m_target=0.01):
+    """Palette canonique : couleur de chaque forme quand m = 1 % de résidu va tout vers l'une des formes
+    absentes, moitié-moitié, ou tout vers l'autre (médiane sur les géométries). Remplace la direction de
+    résidu arbitraire (vecteur de bruit tiré au hasard) par trois directions de référence."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    m_ref = M_GRID[np.argmin(np.abs(M_GRID - m_target))]
+    fig, axes = plt.subplots(len(keys), 3, figsize=(7.2, 0.62 * len(keys) + 0.9), squeeze=False)
+    lines = ["", f"## Palette canonique (m = {pct(m_ref)})", "",
+             "Teinte, saturation et part colorée quand le résidu va tout vers une forme absente, moitié-moitié, ou "
+             "tout vers l'autre forme absente (médiane sur les géométries).", "",
+             "| Modèle | Forme | tout vers la 1re forme absente | moitié-moitié | tout vers la 2e |", "|---|---|---|---|---|"]
+    for r, key in enumerate(keys):
+        d = res[key]
+        for t in range(3):
+            j, k = [c for c in range(3) if c != t]
+            swatches, cells = [], []
+            for w in (1.0, 0.5, 0.0):
+                sel = (d["t"] == t) & np.isclose(d["m"], m_ref) & np.isclose(d["w"], w)
+                rgb = np.median(d["rgb"][sel], axis=0)
+                h, _, s = hls_arrays(rgb[None].astype(float))
+                swatches.append(rgb / 255)
+                cells.append(f"{h[0]:.0f}°, S {fr(s[0])} ({100 * np.mean(d['S'][sel] >= S_COLOURED):.0f} %)")
+            ax = axes[r][t]
+            ax.imshow(np.array(swatches)[None], aspect="auto")
+            ax.set_xticks([0, 1, 2])
+            ax.set_xticklabels([f"→ {SHAPE_LABELS[j]}", "½", f"→ {SHAPE_LABELS[k]}"], fontsize=6)
+            ax.set_yticks([])
+            if r == 0:
+                ax.set_title(SHAPE_LABELS[t], fontsize=9)
+            if t == 0:
+                ax.set_ylabel(f"{CONFIG_LABELS[key[0]]} g{key[1][-1]}", rotation=0, ha="right", va="center", fontsize=7)
+            lines.append(f"| {CONFIG_LABELS[key[0]]} g{key[1][-1]} | {SHAPE_LABELS[t]} | {cells[0]} ({SHAPE_LABELS[j]}) "
+                         f"| {cells[1]} | {cells[2]} ({SHAPE_LABELS[k]}) |")
+    fig.suptitle(f"Palette canonique : couleur de chaque forme quand {pct(m_ref)} de résidu va tout vers l'une des "
+                 "formes absentes,\nmoitié-moitié, ou tout vers l'autre (médiane sur les géométries)", fontsize=8)
+    fig.tight_layout()
+    fig.savefig(out_dir / "palette_canonique.png", dpi=150)
+    plt.close(fig)
+    with open(out_dir / "synthese.md", "a", encoding="utf-8") as fh:
+        fh.write("\n".join(lines) + "\n")
 
 
 def map_figure(d, key, out_file):
